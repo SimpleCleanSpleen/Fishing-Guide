@@ -41,40 +41,61 @@ Live site (after setup): `https://simplecleanspleen.github.io/Fishing-Guide/`
 
 ## Setup, step by step
 
-You need a Google account, this GitHub repo, and (for local testing only) [Node.js 20+](https://nodejs.org).
+### Current setup: shared with Zombie Evac's Firebase project
 
-### 1. Create the Firebase project
+This app currently uses the **Zombie Evac** Firebase project (`zombie-evac-vl6cz`). Google sign-in, Firestore,
+and the `simplecleanspleen.github.io` authorized domain were already set up there, and the config is already in
+[`src/firebase/config.js`](src/firebase/config.js). Fishing data is stored in its own `anglers/` collection,
+separate from the game's `users/`, `screenNames/` and `leaderboard/`.
+
+**One-time steps remaining:**
+
+1. **Publish the combined Firestore rules.** Firebase console → project *zombie-evac-vl6cz* → **Firestore Database → Rules**.
+   Replace everything with the contents of [`firestore.rules`](firestore.rules) and click **Publish**.
+   The file covers **both** apps. The same file is in the Zombie-Evac repo, so whichever copy you publish, keep the two identical.
+   *(Or with the Firebase CLI from this folder: `npm i -g firebase-tools`, `firebase login`, `firebase deploy --only firestore:rules`.)*
+2. **Enable GitHub Pages:** repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+   Then re-run the failed "Deploy to GitHub Pages" workflow in the **Actions** tab, or push any commit.
+
+Until step 1 is done, signing in works but saving catches and pins fails with *"Missing or insufficient permissions"*.
+
+### Moving to a separate Firebase project later (optional)
+
+When the app outgrows the shared project, follow steps 1-7 below with a new project, paste its config into
+`src/firebase/config.js`, keep only the `anglers` section in `firestore.rules`, and update `.firebaserc`.
+Existing catches can be exported from the old project with the Firebase CLI or a small script.
+
+#### 1. Create the Firebase project
 1. Go to <https://console.firebase.google.com> and click **Create a project**.
 2. Name it (e.g. `fishing-guide`). Google Analytics is optional; you can turn it off.
 3. Stay on the free **Spark** plan. Don't upgrade.
 
-### 2. Turn on Google Sign-In
+#### 2. Turn on Google Sign-In
 1. In the left menu: **Build → Authentication → Get started**.
 2. **Sign-in method** tab → **Google** → **Enable**, pick a support email → **Save**.
 
-### 3. Create the Firestore database
+#### 3. Create the Firestore database
 1. **Build → Firestore Database → Create database**.
 2. Choose a location close to you (e.g. `nam5 (United States)`). This can't be changed later.
 3. Start in **production mode**.
-4. Open the **Rules** tab, delete what's there, paste the contents of [`firestore.rules`](firestore.rules) from this repo, and click **Publish**.
-   These rules let each signed-in user read and write **only** `users/{their uid}/...`.
-   *(Optional, with the Firebase CLI: `npm i -g firebase-tools`, `firebase login`, `firebase use --add`, `firebase deploy --only firestore:rules`.)*
+4. Open the **Rules** tab, paste the rules from [`firestore.rules`](firestore.rules), and click **Publish**.
+   They let each signed-in user read and write **only** `anglers/{their uid}/...` (`request.auth.uid == userId`).
 
-### 4. Paste your web config
+#### 4. Paste your web config
 1. Firebase console → ⚙️ **Project settings → General → Your apps → Web (`</>`)**. Register an app (any nickname, **no** Hosting needed).
-2. Copy the `firebaseConfig` values into [`src/firebase/config.js`](src/firebase/config.js), replacing the `PASTE_...` placeholders.
+2. Copy the `firebaseConfig` values into [`src/firebase/config.js`](src/firebase/config.js).
 
 > The web config is **not secret**. It only identifies your project, and the security rules protect the data, so it's fine to commit.
 > **Never commit a service-account key** (`*-firebase-adminsdk-*.json`). `.gitignore` blocks the usual filenames, and this app never needs one.
 
-### 5. Push to GitHub
+#### 5. Push to GitHub
 ```bash
 git add src/firebase/config.js
 git commit -m "Add Firebase config"
 git push origin main
 ```
 
-### 6. Enable GitHub Pages
+#### 6. Enable GitHub Pages
 1. On GitHub: repo **Settings → Pages**.
 2. Under **Build and deployment → Source**, choose **GitHub Actions**.
 3. Every push to `main` now runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds and publishes the site. Watch progress in the **Actions** tab. The URL appears there and in Settings → Pages.
@@ -82,18 +103,19 @@ git push origin main
 The workflow sets Vite's `base` to `/<repo-name>/` automatically. If you rename the repo, nothing else needs to change.
 (If you ever deploy from a repo named `username.github.io`, set `VITE_BASE: /` in the workflow.)
 
-### 7. Authorize your GitHub Pages domain for sign-in
+#### 7. Authorize your GitHub Pages domain for sign-in
 Google Sign-In only works on domains you approve:
 1. Firebase console → **Authentication → Settings → Authorized domains**.
 2. Click **Add domain** and enter **`simplecleanspleen.github.io`**: just the domain, no `https://` and no `/Fishing-Guide` path.
 3. Save. `localhost` is already on the list for local testing.
 
 If you see *"This website isn't on your Firebase Authorized domains list"* when signing in, this step is missing.
+(Already done for the shared Zombie Evac project.)
 
-### 8. Install it on your phone (optional)
+### Install it on your phone (optional)
 Open the site on your phone → browser menu → **Add to Home Screen / Install app**. It now opens like an app and works with weak or no signal.
 
-### 9. Before you fish
+### Before you fish
 - 🪪 **Buy a Tennessee fishing license** (required for ages 13+): <https://www.gooutdoorstennessee.com/>
 - 📜 **Read the current TWRA regulations** (size and creel limits vary by water body): <https://www.tn.gov/twra/fishing.html>
 - 📍 **All suggested spot coordinates are approximate.** Verify access, parking, hours and posted rules before visiting.
@@ -116,8 +138,8 @@ npm run preview    # serve the production build (PWA enabled)
 
 ```
 .github/workflows/deploy.yml   Build + deploy to GitHub Pages on push to main
-firestore.rules                Per-user security rules
-firebase.json                  Lets `firebase deploy --only firestore:rules` find the rules
+firestore.rules                Per-user security rules (shared with Zombie Evac, see header)
+firebase.json, .firebaserc     Let `firebase deploy --only firestore:rules` target the project
 vite.config.js                 Base path, Tailwind, PWA (offline caching rules)
 public/                        Icons (favicon, PWA icons)
 src/
@@ -147,14 +169,14 @@ src/
 
 ### Data model (Firestore)
 ```
-users/{uid}/catches/{catchId}
+anglers/{uid}/catches/{catchId}
   species, weightLb, lengthIn, bait, spotId, spotName, lat, lng, locationId,
   date "YYYY-MM-DD", time "HH:MM", timeOfDay, notes, released, photo (base64 JPEG),
   conditions { tempF, pressureHpa, pressureInHg, pressureTrend, cloudCover, windMph,
                precipIn, weatherCode, sunrise, sunset, moon, moonIllumination,
                riverSite, riverFlowCfs, riverStageFt, riverTrend, waterTempF },
   conditionsPending, createdAt, updatedAt
-users/{uid}/spots/{spotId}
+anglers/{uid}/spots/{spotId}
   name, type, notes, lat, lng, locationId, createdAt
 ```
 
@@ -182,7 +204,7 @@ JPEG-compressed to about **350 KB or less**, and saved as a base64 string inside
 document).
 
 To switch to Firebase Storage later:
-1. Upgrade if required, enable **Storage**, and add rules allowing `users/{uid}/**` only when `request.auth.uid == uid`.
+1. Upgrade if required, enable **Storage**, and add rules allowing `anglers/{uid}/**` only when `request.auth.uid == uid`.
 2. In `src/services/image.js`, produce a Blob (`canvas.toBlob`) and upload it with `uploadBytes(ref(storage, \`users/${uid}/catches/${id}.jpg\`), blob)`, then `getDownloadURL()`.
 3. Save `photoUrl` instead of `photo` on the catch, and render `photoUrl` in `CatchCard`/`LogCatch`.
 4. Optionally run a one-time migration that uploads existing base64 photos and clears the `photo` field.

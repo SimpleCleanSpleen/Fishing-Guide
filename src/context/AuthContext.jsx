@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
           await signInWithRedirect(auth, googleProvider);
         } else if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
           setError(e.code === 'auth/unauthorized-domain'
-            ? 'This website isn\'t on your Firebase "Authorized domains" list yet. See README step 7.'
+            ? 'This website isn\'t on your Firebase "Authorized domains" list yet. See the README (Authorized domains).'
             : e.message);
         }
       }

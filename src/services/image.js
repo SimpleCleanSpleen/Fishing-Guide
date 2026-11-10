@@ -5,7 +5,7 @@
 //
 // Switching to Firebase Storage later (optional, needs Blaze plan for new projects):
 //   1. Enable Storage in the console and add storage.rules allowing
-//      users/{uid}/** only for request.auth.uid == uid.
+//      anglers/{uid}/** only for request.auth.uid == uid.
 //   2. Here, upload the Blob from canvas.toBlob() with uploadBytes(ref(storage,
 //      `users/${uid}/catches/${id}.jpg`), blob), then getDownloadURL().
 //   3. Save `photoUrl` on the catch instead of `photo`, and show <img src={photoUrl}>.

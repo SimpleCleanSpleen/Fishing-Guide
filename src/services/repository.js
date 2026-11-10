@@ -1,15 +1,18 @@
 // Data access layer. Components never talk to Firestore directly; they call these
 // functions, which use Cloud Firestore when Firebase is configured and fall back to
 // browser localStorage in demo mode. Collections:
-//   users/{uid}/catches/{catchId}
-//   users/{uid}/spots/{spotId}
+//   anglers/{uid}/catches/{catchId}
+//   anglers/{uid}/spots/{spotId}
+// (The Firebase project is shared with Zombie Evac, which uses users/{uid}; the
+// separate top-level collection keeps the two apps' data apart.)
 import {
   collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc,
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase/init.js';
 
 // ---------- Firestore implementation ----------
-const fsCol = (uid, name) => collection(db, 'users', uid, name);
+const ROOT = 'anglers';
+const fsCol = (uid, name) => collection(db, ROOT, uid, name);
 
 function fsSubscribe(uid, name, cb, onError) {
   const q = query(fsCol(uid, name), orderBy('createdAt', 'desc'));
@@ -32,11 +35,11 @@ const fsAdd = (uid, name, data) => {
   return settle(p).then(() => ref.id);
 };
 const fsUpdate = (uid, name, id, data) => {
-  const p = updateDoc(doc(db, 'users', uid, name, id), { ...stripUndefined(data), updatedAt: serverTimestamp() });
+  const p = updateDoc(doc(db, ROOT, uid, name, id), { ...stripUndefined(data), updatedAt: serverTimestamp() });
   return settle(p);
 };
 const fsDelete = (uid, name, id) => {
-  const p = deleteDoc(doc(db, 'users', uid, name, id));
+  const p = deleteDoc(doc(db, ROOT, uid, name, id));
   return settle(p);
 };
 
