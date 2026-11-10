@@ -1,0 +1,22 @@
+// How to recognize each fish (beginner field-guide style) and typical sizes.
+export const IDENTIFY = {
+  'Largemouth Bass': { look: 'Green with a dark, blotchy stripe along the side. The upper jaw extends PAST the back of the eye when the mouth is closed.', size: '1-4 lb typical; 8+ lb is a trophy', habitat: 'Ponds, lakes and slow river backwaters near weeds, logs and docks.' },
+  'Smallmouth Bass': { look: 'Bronze/brown with vertical dark bars and red eyes. Jaw does NOT extend past the eye.', size: '1-3 lb typical', habitat: 'Rocky, clearer creeks and rivers with current.' },
+  'Spotted Bass': { look: 'Like a largemouth but with rows of small dark spots below the side stripe and a rough tongue patch. Jaw ends near the back of the eye.', size: '0.5-2.5 lb typical', habitat: 'Rocky river banks and current breaks: very common in the Cumberland.' },
+  Bluegill: { look: 'Deep, round body with a dark "ear flap" on the gill cover and a dark spot at the back of the top fin. Often a blue tint under the chin.', size: '3-8 inches', habitat: 'Shallow water near cover in ponds, lakes and slow rivers.' },
+  'Redear Sunfish': { look: 'Like a bluegill but with a red or orange edge on the ear flap and no dark spot on the top fin.', size: '6-10 inches', habitat: 'Near the bottom in ponds and lakes.' },
+  'Green Sunfish': { look: 'Thicker body and a bigger mouth than bluegill, with blue-green wavy lines on the cheek.', size: '3-7 inches', habitat: 'Creeks and ponds, around rocks.' },
+  'Rock Bass': { look: 'Bronze with rows of dark spots and big red eyes.', size: '6-10 inches', habitat: 'Rocky creeks with current.' },
+  Crappie: { look: 'Silvery-green with black speckles (black crappie) or vertical bars (white crappie), a big paper-thin mouth.', size: '8-12 inches', habitat: 'Brush piles, docks, fallen trees. Shallow in spring.' },
+  'Channel Catfish': { look: 'Gray/silver, sometimes with small black spots, deeply forked tail, whiskers (barbels).', size: '1-6 lb typical', habitat: 'Bottom of rivers, lakes and ponds.' },
+  'Blue Catfish': { look: 'Blue-gray and white belly, forked tail, NO spots, straight-edged anal fin.', size: '2-20 lb; can exceed 50 lb', habitat: 'Main river channels, below dams.' },
+  'Flathead Catfish': { look: 'Mottled brown/yellow, wide flat head, squared (not forked) tail, lower jaw sticks out.', size: '3-30 lb', habitat: 'Log jams and deep holes in rivers.' },
+  'Rainbow Trout': { look: 'Silver with a pink-red stripe along the side and small black spots.', size: '9-14 inches (stocked)', habitat: 'Cold water. Stocked in some Tennessee waters in winter.' },
+  Sauger: { look: 'Long, round body, brown blotches, glassy eyes, sharp teeth, spotted top fin.', size: '12-18 inches', habitat: 'River current and below dams, especially in winter.' },
+  'White Bass': { look: 'Silver with thin dark horizontal stripes, deep body.', size: '0.5-2 lb', habitat: 'Open water in schools; up rivers in spring.' },
+  'Striped Bass': { look: 'Like white bass but longer with bold, unbroken stripes.', size: '5-20+ lb', habitat: 'Big rivers and below dams.' },
+  'Freshwater Drum': { look: 'Silver, humped back, long top fin, rounded tail. Makes a croaking sound.', size: '1-5 lb', habitat: 'Bottom of rivers and lakes.' },
+  'Common Carp': { look: 'Large gold-bronze scales and two pairs of small barbels by the mouth.', size: '3-15 lb', habitat: 'Muddy shallows in rivers and lakes.' },
+  'Skipjack Herring': { look: 'Slender, bright silver, jumps when hooked.', size: '10-16 inches', habitat: 'Fast water below dams. Great catfish bait.' },
+  Catfish: { look: 'Whiskers (barbels) around the mouth and no scales.', size: 'Varies', habitat: 'Bottom of rivers and lakes.' },
+};

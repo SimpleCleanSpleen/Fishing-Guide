@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Everything a user saves lives under users/{userId}/...
+    //   users/{userId}                 profile (optional)
+    //   users/{userId}/catches/{id}    logged catches (photo stored inline as base64)
+    //   users/{userId}/spots/{id}      custom map pins
+    // Only the signed-in owner can read or write them.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      match /catches/{catchId} {
+        allow read, delete: if request.auth != null && request.auth.uid == userId;
+        // Firestore's hard limit is 1 MiB per document; the app keeps photos ~150-400 KB.
+        allow create, update: if request.auth != null && request.auth.uid == userId
+          && request.resource.data.species is string
+          && request.resource.data.species.size() <= 60;
+      }
+
+      match /spots/{spotId} {
+        allow read, delete: if request.auth != null && request.auth.uid == userId;
+        allow create, update: if request.auth != null && request.auth.uid == userId
+          && request.resource.data.name is string
+          && request.resource.data.name.size() <= 80
+          && request.resource.data.lat is number
+          && request.resource.data.lng is number;
+      }
+    }
+
+    // Deny everything else.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

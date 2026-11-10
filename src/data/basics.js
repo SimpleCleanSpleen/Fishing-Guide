@@ -1,0 +1,125 @@
+export const BASICS = [
+  {
+    id: 'first-trip',
+    icon: '🗺️',
+    title: 'Your first trip checklist',
+    steps: [
+      'Buy your Tennessee fishing license (13+) and keep it on your phone.',
+      'Check the Home screen: weather, wind, storms, and the river gauge.',
+      'Pick a calm, easy spot: Liberty Park or Dunbar Cave are great starters.',
+      'Rig two setups at home: a Trout Magnet under a bobber, and a weightless Senko.',
+      'Pack: pliers, net, scale, water, sunscreen, bug spray, a towel, phone in a zip bag.',
+      'Go early morning or the last 2 hours before sunset: fish feed most then.',
+    ],
+  },
+  {
+    id: 'casting',
+    icon: '🎯',
+    title: 'Casting a spinning reel',
+    steps: [
+      'Reel until the lure hangs 8-12 inches below the rod tip.',
+      'Hold the rod with the reel stem between your middle and ring fingers.',
+      'Pick up the line with the tip of your index finger and press it against the rod handle.',
+      'Open the bail (flip the wire arm over) while keeping the line pinned with your finger.',
+      'Look at your target. Bring the rod back smoothly over your shoulder to about 1 o\'clock.',
+      'Snap the rod forward and release your finger when the rod points at about 10 o\'clock, toward your target.',
+      'When the lure lands, turn the reel handle to close the bail, and reel up any slack.',
+    ],
+    tips: [
+      'Lure goes straight up? You let go too early. Slams into the water at your feet? Too late.',
+      'Practice in a park with a weight (no hook) before your trip.',
+      'Always look behind you before casting: trees, people, power lines.',
+    ],
+  },
+  {
+    id: 'bites',
+    icon: '👀',
+    title: 'Detecting a bite',
+    steps: [
+      'Bobber: it bobs, slides sideways, or disappears underwater.',
+      'Rod tip (rod holder): repeated taps, or a steady pull down.',
+      'Feel (Senko, jig): a "tick", a sudden heaviness, or the line going slack when it should be sinking.',
+      'Line watching: the line jumps, twitches or swims sideways.',
+    ],
+    tips: ['Most beginners miss bites because there\'s too much slack. Keep the line just tight.'],
+  },
+  {
+    id: 'hookset',
+    icon: '🪝',
+    title: 'Setting the hook',
+    steps: [
+      'When you feel or see a bite, reel down until the line is tight.',
+      'Sweep the rod firmly upward or sideways in one quick, smooth motion (not a wild jerk).',
+      'Keep the line tight and start reeling steadily.',
+    ],
+    tips: [
+      'Panfish and trout: a gentle lift is enough.',
+      'Bass with a Texas-rigged Senko: a firm, strong sweep to drive the 3/0 hook through the plastic.',
+      'Catfish with dough/bait: when the rod loads up and stays bent, lift and reel. Don\'t jerk at taps.',
+    ],
+  },
+  {
+    id: 'fighting',
+    icon: '💪',
+    title: 'Fighting & landing a fish',
+    steps: [
+      'Keep the rod tip up at about 45° and let the rod\'s bend absorb the fish\'s pulls.',
+      'If the drag is slipping (buzzing sound), STOP reeling: reeling against slipping drag twists line. Wait until the fish stops running.',
+      'Pump and reel: lift the rod slowly, then reel as you lower it.',
+      'When the fish is tired and close, use the net (head-first) or grab small fish around the body / bass by the lower lip.',
+    ],
+    tips: ['Never grab the line to lift a fish out of the water: 8 lb line can snap.'],
+  },
+  {
+    id: 'handling',
+    icon: '🤲',
+    title: 'Safe fish handling',
+    steps: [
+      'Wet your hands before touching a fish: dry hands remove its protective slime.',
+      'Support the body horizontally. Hold big fish with one hand under the belly.',
+      'Don\'t squeeze, and keep fingers out of the gills (the red feathery parts).',
+      'Bluegill & sunfish: smooth the spiny top fin down from front to back before gripping.',
+      'Catfish: they have sharp spines on the top fin and side fins. Slide your hand from the front, behind the side fins, so the spines sit between your fingers.',
+      'Keep the fish out of water for less time than you could hold your breath.',
+    ],
+  },
+  {
+    id: 'release',
+    icon: '🔄',
+    title: 'Catch-and-release',
+    steps: [
+      'Have pliers ready before the fish is landed.',
+      'Remove the hook quickly. If it\'s swallowed deep, cut the line instead.',
+      'Hold the fish upright in the water, facing into gentle current, until it swims off on its own.',
+      'Don\'t throw fish back. Lower them in.',
+    ],
+    tips: [
+      'Pinching barbs flat makes release faster and is easier on fish (and on you, if you hook yourself).',
+      'In summer, deep-hooked fish and long fights cause more deaths, so play fish quickly.',
+    ],
+  },
+  {
+    id: 'safety',
+    icon: '🦺',
+    title: 'Bank safety on rivers',
+    steps: [
+      'The Cumberland has strong currents, sudden drop-offs and barge traffic. Don\'t wade.',
+      'Below dams, water levels rise quickly when generators turn on. Horns and sirens mean get back.',
+      'Wear a life jacket on riprap banks and when fishing with kids.',
+      'Lightning: carbon rods conduct electricity. Leave at the first thunder.',
+      'Tell someone where you\'re going. Bring water, sunscreen and a hat.',
+    ],
+  },
+];
+
+export const GLOSSARY = {
+  Riprap: 'Large rocks placed along a bank to stop erosion. Fish (and crawfish) hide in the gaps.',
+  Structure: 'Anything that changes the bottom or gives fish cover: rocks, logs, docks, drop-offs, weed edges.',
+  'Current seam': 'The line where fast water meets slow water. Fish wait in the slow side for food to drift by.',
+  'Barometric pressure': 'Air pressure. Fish often feed actively while it\'s falling before a storm and slow down right after a front when it rises.',
+  'Creel limit': 'The maximum number of a species you may keep per day.',
+  'Slot limit': 'A size range you must release (or the only size you may keep), set by TWRA for some waters.',
+  Drag: 'The reel\'s brake. It lets a strong fish pull line out instead of breaking it.',
+  Tailwater: 'The river just below a dam. Often full of fish, but water levels change fast.',
+  Solunar: 'A theory that fish feed more when the moon is overhead/underfoot and around new & full moons.',
+};
