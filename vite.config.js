@@ -26,9 +26,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Clarksville Fishing Buddy',
-        short_name: 'Fish CKV',
-        description: 'Beginner-friendly fishing log, map and guide for Clarksville, TN.',
+        name: 'Fishing Guide',
+        short_name: 'Fishing Guide',
+        description: 'Beginner-friendly fishing log, map and guide for Clarksville, TN and Severn & Elkridge, MD.',
         theme_color: '#0f766e',
         background_color: '#f0fdfa',
         display: 'standalone',
@@ -47,11 +47,22 @@ export default defineConfig({
         runtimeCaching: [
           {
             // Map tiles: keep the ones you've viewed so the map still shows at the bank.
-            urlPattern: /^https:\/\/[abc]?\.?tile\.openstreetmap\.org\/.*/i,
+            // Covers every basemap style: OSM, OpenTopoMap and Esri (map, satellite, night, labels).
+            urlPattern: /^https:\/\/([abc]\.)?tile\.openstreetmap\.org\/|^https:\/\/[abc]\.tile\.opentopomap\.org\/|^https:\/\/server\.arcgisonline\.com\/ArcGIS\/rest\/services\/.*\/MapServer\/tile\//i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'osm-tiles',
-              expiration: { maxEntries: 800, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              expiration: { maxEntries: 1500, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // Spot photos (Wikimedia Commons thumbnails) and Esri aerial snapshots.
+            urlPattern: /^https:\/\/(commons\.wikimedia\.org\/wiki\/Special:FilePath|upload\.wikimedia\.org|thumb\.wikimedia\.org|server\.arcgisonline\.com\/ArcGIS\/rest\/services\/World_Imagery\/MapServer\/export)/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'spot-photos',
+              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 60 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

@@ -1,0 +1,354 @@
+{
+  "id": "elkridge-md",
+  "name": "Elkridge, MD",
+  "region": "Howard County - Patapsco River valley",
+  "center": {
+    "lat": 39.2126,
+    "lng": -76.77
+  },
+  "zoom": 12,
+  "timezone": "America/New_York",
+  "usgs": {
+    "bbox": "-76.95,39.10,-76.65,39.35",
+    "preferName": "patapsco"
+  },
+  "spotsNotice": "All coordinates are APPROXIMATE. Verify access, parking, park hours and posted rules before visiting. Fishing in Maryland requires a license for anglers 16 and older, and a trout stamp to keep trout from non-tidal water.",
+  "commonSpecies": [
+    "Largemouth Bass",
+    "Smallmouth Bass",
+    "Bluegill",
+    "Pumpkinseed",
+    "Crappie",
+    "Channel Catfish",
+    "Rainbow Trout",
+    "Yellow Perch",
+    "White Perch",
+    "Common Carp",
+    "Northern Snakehead"
+  ],
+  "regulations": {
+    "agency": "Maryland Department of Natural Resources (DNR)",
+    "summary": "Anglers 16 and older need a Maryland fishing license. The Patapsco above Elkridge and the Columbia lakes are non-tidal (non-tidal license, plus a trout stamp to keep trout). Size limits, creel limits and seasons differ by species and water, and they change, so read the current DNR regulations every year.",
+    "links": [
+      {
+        "label": "DNR fishing regulations",
+        "url": "https://dnr.maryland.gov/fisheries/Pages/regulations/index.aspx"
+      },
+      {
+        "label": "Buy a license: Maryland Compass",
+        "url": "https://compass.dnr.maryland.gov/"
+      },
+      {
+        "label": "DNR trout stocking",
+        "url": "https://dnr.maryland.gov/fisheries/Pages/trout/stocking.aspx"
+      },
+      {
+        "label": "Patapsco Valley State Park",
+        "url": "https://dnr.maryland.gov/publiclands/Pages/central/patapsco.aspx"
+      }
+    ],
+    "tips": [
+      "DNR stocks trout in the Patapsco at Avalon in spring. Check the stocking page to see what was stocked this week.",
+      "Patapsco Valley State Park charges a day-use fee at some entrances and closes at sunset.",
+      "Northern snakehead are invasive: DNR asks anglers to keep and kill any they catch. It is illegal to move them alive.",
+      "Columbia's lakes (Kittamaqundi, Elkhorn) are run by the Columbia Association. Follow posted rules for each lake."
+    ]
+  },
+  "advisories": {
+    "agency": "Maryland Department of the Environment (MDE)",
+    "summary": "MDE publishes fish consumption advisories for every county, plus a dedicated chart for the Patapsco River and Baltimore Harbor. The tidal Patapsco below Elkridge flows into the harbor, so check that chart before keeping fish from the lower river.",
+    "items": [
+      {
+        "title": "Patapsco River / Baltimore Harbor",
+        "level": "Precautionary",
+        "detail": "PCBs and other contaminants: limits on how often to eat certain species (especially catfish, carp, white perch and striped bass) from the tidal Patapsco and harbor. Children and women who are or may become pregnant should follow the strictest guidance."
+      },
+      {
+        "title": "Howard County lakes & streams",
+        "level": "General",
+        "detail": "MDE's Howard County chart lists recommended meal limits for bass, sunfish and catfish from local waters. Small panfish and stocked trout are usually the safest to keep."
+      },
+      {
+        "title": "After heavy rain",
+        "level": "Bacterial / no contact",
+        "detail": "Stormwater and sewer overflows raise bacteria levels in the Patapsco for a day or two. Avoid wading, wash hands and gear, and cover cuts."
+      }
+    ],
+    "links": [
+      {
+        "label": "MDE fish consumption advisories",
+        "url": "https://mde.maryland.gov/programs/Marylander/fishandshellfish/Pages/fishconsumptionadvisory.aspx"
+      },
+      {
+        "label": "MDE fish & shellfish",
+        "url": "https://mde.maryland.gov/programs/marylander/fishandshellfish/pages/index.aspx"
+      }
+    ]
+  },
+  "bankSafety": [
+    "The Patapsco rises fast after storms upstream. If the water turns muddy and starts climbing, get off the rocks.",
+    "Rocks along the river are slick. Wear shoes with grip, and don't climb on old dam remains or bridge piers."
+  ],
+  "spots": [
+    {
+      "id": "seed-md-avalon",
+      "name": "Patapsco Valley SP: Avalon Area",
+      "type": "River (Patapsco)",
+      "lat": 39.2274,
+      "lng": -76.7252,
+      "approximate": true,
+      "description": "The park's main entrance on the Elkridge side, beside the historic Thomas Viaduct railroad bridge. Long stretches of easy bank along riffles and pools. DNR stocks trout here in spring.",
+      "species": [
+        "Rainbow Trout",
+        "Smallmouth Bass",
+        "Bluegill",
+        "Channel Catfish"
+      ],
+      "beginnerTip": "In spring, drift a Trout Magnet under a small float through the deeper pools right after a stocking. In summer, switch to a green pumpkin Senko for smallmouth along the rocks.",
+      "access": "Bank, paved paths (park fee)",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Picnic shelters",
+        "Trails"
+      ],
+      "photos": [
+        {
+          "file": "Avalon Area Patapsco Valley State Park 17.JPG",
+          "caption": "The Patapsco in the Avalon Area"
+        },
+        {
+          "file": "Thomas Viaduct wide angle shot.jpg",
+          "caption": "Thomas Viaduct (1835), at the park entrance"
+        },
+        {
+          "file": "Avalon Area Patapsco Valley State Park 22.JPG",
+          "caption": "Old railroad tunnel along the river trail"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-glen-artney",
+      "name": "Patapsco Valley SP: Glen Artney Area",
+      "type": "River & stream",
+      "lat": 39.2343,
+      "lng": -76.7296,
+      "approximate": true,
+      "description": "Quieter picnic area just upstream of Avalon, where a small rocky stream tumbles down to the river. Good for walking the bank and trying different pools.",
+      "species": [
+        "Smallmouth Bass",
+        "Rock Bass",
+        "Bluegill",
+        "Rainbow Trout"
+      ],
+      "beginnerTip": "Fish where the side stream enters the river: food washes in there and fish wait for it.",
+      "access": "Bank, short walk",
+      "amenities": [
+        "Parking",
+        "Picnic shelters"
+      ],
+      "photos": [
+        {
+          "file": "Glen Artney Stream (15978065635).jpg",
+          "caption": "Glen Artney stream"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-orange-grove",
+      "name": "Patapsco Valley SP: Orange Grove & Swinging Bridge",
+      "type": "River (Patapsco)",
+      "lat": 39.2412,
+      "lng": -76.7495,
+      "approximate": true,
+      "description": "Famous swinging footbridge over the Patapsco, with Cascade Falls a short hike away. Riffles and boulders on both sides hold smallmouth and sunfish.",
+      "species": [
+        "Smallmouth Bass",
+        "Rock Bass",
+        "Bluegill",
+        "Common Carp"
+      ],
+      "beginnerTip": "Cast upstream and let a small spinner or Trout Magnet tumble back with the current, reeling just fast enough to stay in touch.",
+      "access": "Bank, trails",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Trails"
+      ],
+      "photos": [
+        {
+          "file": "Orange Grove Bridge - HDR (15938911802).jpg",
+          "caption": "The Swinging Bridge at Orange Grove"
+        },
+        {
+          "file": "Orange Grove Stream (15861443812).jpg",
+          "caption": "Stream near Orange Grove in autumn"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-bloede",
+      "name": "Former Bloede Dam site",
+      "type": "River (Patapsco)",
+      "lat": 39.247,
+      "lng": -76.7575,
+      "approximate": true,
+      "description": "Bloede Dam was removed in 2018, reopening the river to migrating herring, shad and eels. The free-flowing water is now classic riffle-and-pool smallmouth habitat.",
+      "species": [
+        "Smallmouth Bass",
+        "Channel Catfish",
+        "Bluegill",
+        "White Perch"
+      ],
+      "beginnerTip": "In April and May, watch for schools of migrating fish moving upstream. Check DNR rules first: river herring and shad are protected and must be released.",
+      "access": "Trail from Orange Grove or Ilchester",
+      "amenities": [
+        "Trails"
+      ],
+      "photos": [
+        {
+          "file": "Bloede Dam (29865612801).jpg",
+          "caption": "Bloede Dam before it was removed in 2018"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-daniels",
+      "name": "Patapsco Valley SP: Daniels Area",
+      "type": "River (above dam)",
+      "lat": 39.3138,
+      "lng": -76.8071,
+      "approximate": true,
+      "description": "Wide, slow pool above Daniels Dam with mill ruins nearby. Calmer water than downstream, good for bass and sunfish. About 20 minutes up the valley.",
+      "species": [
+        "Largemouth Bass",
+        "Smallmouth Bass",
+        "Bluegill",
+        "Channel Catfish"
+      ],
+      "beginnerTip": "The flat water above the dam is great for practicing casts. Try a weightless Senko along the shady bank.",
+      "access": "Bank; stay off the dam",
+      "amenities": [
+        "Parking",
+        "Trails"
+      ],
+      "photos": [
+        {
+          "file": "Daniels Dam Daniels Maryland 01.JPG",
+          "caption": "Daniels Dam on the Patapsco"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-centennial",
+      "name": "Centennial Lake",
+      "type": "Lake",
+      "lat": 39.2426,
+      "lng": -76.8561,
+      "approximate": true,
+      "description": "54-acre Howard County park lake with a paved loop around it. Lots of shoreline, piers and rental boats in season. A very easy family trip.",
+      "species": [
+        "Largemouth Bass",
+        "Bluegill",
+        "Crappie",
+        "Channel Catfish",
+        "Rainbow Trout"
+      ],
+      "beginnerTip": "Walk the loop and fish anywhere you see weeds or fallen branches. Worms under a float catch bluegill all summer.",
+      "access": "Bank, paved loop, piers",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Boat rentals (seasonal)",
+        "Playground"
+      ],
+      "photos": [
+        {
+          "file": "Centennial Lake.jpg",
+          "caption": "Centennial Lake"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-kittamaqundi",
+      "name": "Lake Kittamaqundi",
+      "type": "Lake",
+      "lat": 39.2162,
+      "lng": -76.8537,
+      "approximate": true,
+      "description": "Downtown Columbia lakefront with a boardwalk, steps to the water, and a path around the lake. Plenty of bass and sunfish close to shore.",
+      "species": [
+        "Largemouth Bass",
+        "Bluegill",
+        "Pumpkinseed",
+        "Common Carp",
+        "Northern Snakehead"
+      ],
+      "beginnerTip": "Fish the quieter north end, away from the lakefront crowds. If you catch a snakehead, don't release it. See the Safety page.",
+      "access": "Bank, boardwalk",
+      "amenities": [
+        "Parking",
+        "Restaurants nearby",
+        "Paths"
+      ],
+      "photos": [
+        {
+          "file": "Lake Kittamaqundi in September 2022.jpg",
+          "caption": "Lake Kittamaqundi"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-elkhorn",
+      "name": "Lake Elkhorn",
+      "type": "Lake",
+      "lat": 39.1837,
+      "lng": -76.8386,
+      "approximate": true,
+      "description": "Columbia's largest lake, with fishing docks and a 2-mile path. Docks give you a clear cast over deeper water.",
+      "species": [
+        "Largemouth Bass",
+        "Bluegill",
+        "Crappie",
+        "Channel Catfish",
+        "Northern Snakehead"
+      ],
+      "beginnerTip": "From the docks, drop a worm straight down next to the posts: crappie and bluegill hide under them.",
+      "access": "Bank, fishing docks",
+      "amenities": [
+        "Parking",
+        "Docks",
+        "Paths",
+        "Playground"
+      ],
+      "photos": [
+        {
+          "file": "Lake Elkhorn docks 2016.jpg",
+          "caption": "Anglers on the Lake Elkhorn docks"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-savage",
+      "name": "Savage Park: Little Patuxent River",
+      "type": "River (Little Patuxent)",
+      "lat": 39.1346,
+      "lng": -76.8206,
+      "approximate": true,
+      "description": "Wooded county park along the Little Patuxent, below historic Savage Mill and the Bollman Truss Bridge. Small river with rocky runs and deeper bends.",
+      "species": [
+        "Smallmouth Bass",
+        "Bluegill",
+        "Channel Catfish",
+        "Common Carp"
+      ],
+      "beginnerTip": "Fish the outside of bends, where the current digs deeper water. A small spinnerbait reeled slowly works well here.",
+      "access": "Bank, trails",
+      "amenities": [
+        "Parking",
+        "Trails",
+        "Restrooms (seasonal)"
+      ]
+    }
+  ]
+}

@@ -34,5 +34,52 @@
 }
 
 /* Leaflet: keep the map under the bottom nav / popovers */
-.leaflet-container { font: inherit; z-index: 0; }
-.spot-pin { background: none; border: none; }
+.leaflet-container { font: inherit; z-index: 0; background: #dbeafe; }
+
+/* ---- Map styling ---- */
+/* Soft inner vignette so the map reads as a framed panel. */
+.fg-map::after {
+  content: ''; position: absolute; inset: 0; z-index: 450; pointer-events: none; border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.4), inset 0 -40px 60px -40px rgb(15 23 42 / 0.25), inset 0 40px 60px -40px rgb(15 23 42 / 0.2);
+}
+.fg-glass {
+  background: rgb(255 255 255 / 0.82);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4); backdrop-filter: blur(10px) saturate(1.4);
+  box-shadow: 0 4px 16px rgb(15 23 42 / 0.15), inset 0 0 0 1px rgb(255 255 255 / 0.6);
+}
+.fg-map.is-night .fg-glass { background: rgb(15 23 42 / 0.75); color: #e2e8f0; }
+.fg-map.is-night .fg-glass p, .fg-map.is-night .fg-glass li, .fg-map.is-night .fg-glass button:not([aria-pressed='true']) { color: #e2e8f0; }
+.fg-map-btn { @apply flex h-9 w-9 items-center justify-center rounded-xl text-base font-bold text-slate-700 transition hover:scale-105; }
+
+/* Teardrop pins: gradient fill by water type, white rim, drop shadow. */
+.fg-pin-wrap { background: none; border: none; }
+.fg-pin { position: relative; width: var(--size); height: var(--size); filter: drop-shadow(0 3px 4px rgb(15 23 42 / 0.4)); transition: transform 0.15s; }
+.fg-pin:hover { transform: translateY(-3px); }
+.fg-pin-body {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  background: radial-gradient(circle at 30% 30%, var(--c2), var(--c1) 70%);
+  border: 3px solid #fff;
+}
+.fg-pin-body span { transform: rotate(45deg); font-size: calc(var(--size) * 0.42); line-height: 1; }
+.fg-pin-pulse {
+  position: absolute; left: 50%; bottom: -6px; width: 26px; height: 12px; margin-left: -13px; border-radius: 50%;
+  background: var(--c2); opacity: 0.6; animation: fg-pulse 1.6s ease-out infinite;
+}
+@keyframes fg-pulse { from { transform: scale(0.5); opacity: 0.7; } to { transform: scale(2.4); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .fg-pin-pulse { animation: none; } }
+
+.fg-legend-dot { display: inline-block; width: 12px; height: 12px; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, var(--c2), var(--c1) 70%); box-shadow: 0 0 0 2px #fff; }
+
+/* Photo-card popups */
+.fg-popup .leaflet-popup-content-wrapper { padding: 0; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 32px rgb(15 23 42 / 0.3); }
+.fg-popup .leaflet-popup-content { margin: 0; width: 272px !important; line-height: 1.4; }
+.fg-popup .leaflet-popup-content p { margin: 0; }
+.fg-popup .leaflet-popup-tip { box-shadow: none; }
+.fg-tooltip { border: none; border-radius: 9999px; padding: 3px 10px; font-weight: 600; font-size: 12px; color: #0f172a; box-shadow: 0 4px 12px rgb(15 23 42 / 0.2); }
+.fg-tooltip::before { display: none; }
+
+/* Zoom buttons to match the glass controls */
+.fg-map .leaflet-control-zoom { border: none; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgb(15 23 42 / 0.15); margin: 0 12px 12px 0 !important; }
+.fg-map .leaflet-control-zoom a { width: 36px; height: 36px; line-height: 36px; font-size: 18px; color: #0f766e; background: rgb(255 255 255 / 0.88); border-color: rgb(226 232 240); }
+.fg-map .leaflet-control-attribution { border-radius: 8px 0 0 0; font-size: 10px; background: rgb(255 255 255 / 0.7); }

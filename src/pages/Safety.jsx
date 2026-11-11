@@ -56,8 +56,7 @@ export default function Safety() {
       <section className="card space-y-2 text-sm">
         <h2 className="text-lg font-semibold">🦺 Bank safety</h2>
         <ul className="list-disc space-y-1.5 pl-5">
-          <li>Don&apos;t wade in the Cumberland: currents are strong and the bottom drops off suddenly. Watch for barge wakes.</li>
-          <li>Below dams, water can rise fast when generators start. Horns or sirens mean move to high ground.</li>
+          {(location.bankSafety || []).map((t) => <li key={t}>{t}</li>)}
           <li>Lightning: carbon rods conduct electricity. Leave at the first thunder and wait 30 minutes after the last.</li>
           <li>Heat: bring water, use the chair umbrella, and wear sunscreen and a hat.</li>
           <li>Ticks & mosquitoes: use bug spray (away from your tackle) and check for ticks afterwards.</li>

@@ -84,15 +84,19 @@
       }
     ]
   },
+  "bankSafety": [
+    "Don't wade in the Cumberland: currents are strong and the bottom drops off suddenly. Watch for barge wakes.",
+    "Below dams, water can rise fast when generators start. Horns or sirens mean move to high ground."
+  ],
   "spots": [
     {
       "id": "seed-liberty-park",
       "name": "Liberty Park",
       "type": "River & pond",
-      "lat": 36.5438,
-      "lng": -87.3806,
+      "lat": 36.5095,
+      "lng": -87.3712,
       "approximate": true,
-      "description": "City park on the Cumberland River with paved paths, a marina area and open bank. Easy parking and restrooms make it a great first trip.",
+      "description": "City park on the Cumberland River beside Clarksville Marina, with paved paths, a pond and open bank. Easy parking and restrooms make it a great first trip.",
       "species": [
         "Bluegill",
         "Largemouth Bass",
@@ -111,8 +115,8 @@
       "id": "seed-mcgregor-riverwalk",
       "name": "McGregor Park & RiverWalk",
       "type": "River (Cumberland)",
-      "lat": 36.5306,
-      "lng": -87.3633,
+      "lat": 36.531,
+      "lng": -87.365,
       "approximate": true,
       "description": "Downtown riverfront park with a long walkway along the Cumberland and a public boat ramp. Lots of rock bank and current breaks.",
       "species": [
@@ -129,14 +133,24 @@
         "Restrooms",
         "Boat ramp",
         "Lighting"
+      ],
+      "photos": [
+        {
+          "file": "American Queen Clarksville Riverfront.jpg",
+          "caption": "The American Queen riverboat at the Clarksville riverfront"
+        },
+        {
+          "file": "Cumberland River Swing Bridge.jpg",
+          "caption": "Cumberland River swing bridge, downtown"
+        }
       ]
     },
     {
       "id": "seed-red-river-mouth",
       "name": "Red River mouth (near Fort Defiance)",
       "type": "River confluence",
-      "lat": 36.5372,
-      "lng": -87.3735,
+      "lat": 36.5407,
+      "lng": -87.3722,
       "approximate": true,
       "description": "Where the Red River meets the Cumberland. Confluences mix current and food, which attracts predator fish. Bank access is limited; scout first.",
       "species": [
@@ -149,14 +163,20 @@
       "access": "Limited bank, steep in places",
       "amenities": [
         "Historic park nearby"
+      ],
+      "photos": [
+        {
+          "file": "Fort Defiance, Clarksville, TN (54).jpg",
+          "caption": "View from Fort Defiance over the confluence"
+        }
       ]
     },
     {
       "id": "seed-dunbar-swan-lake",
       "name": "Dunbar Cave State Park (Swan Lake)",
       "type": "Lake / pond",
-      "lat": 36.5512,
-      "lng": -87.3058,
+      "lat": 36.5503,
+      "lng": -87.3039,
       "approximate": true,
       "description": "State park with a small lake in front of the cave entrance. Calm water and easy walking: very beginner friendly. Follow state park rules and hours.",
       "species": [
@@ -172,14 +192,24 @@
         "Restrooms",
         "Trails",
         "Visitor center"
+      ],
+      "photos": [
+        {
+          "file": "Dunbar Cave.jpg",
+          "caption": "Swan Lake in front of the Dunbar Cave entrance"
+        },
+        {
+          "file": "Dunbar cave sp pano.jpg",
+          "caption": "Dunbar Cave State Park"
+        }
       ]
     },
     {
       "id": "seed-red-river-ringgold",
-      "name": "Red River at Ringgold Rd area",
+      "name": "Red River (north Clarksville)",
       "type": "River (Red River)",
-      "lat": 36.5652,
-      "lng": -87.3312,
+      "lat": 36.5445,
+      "lng": -87.3367,
       "approximate": true,
       "description": "Smaller, slower river than the Cumberland with wooded banks. Good for sunfish and bass around fallen trees. Confirm public access before fishing.",
       "species": [
@@ -211,14 +241,20 @@
       "amenities": [
         "Parking",
         "Picnic area"
+      ],
+      "photos": [
+        {
+          "file": "A historic trail trace and bridge at Port Royal State Historic Park in Adams, Tennessee (f22ef1eb-31bf-43ec-8b48-5c85c8f8458f).JPG",
+          "caption": "Trail and bridge at Port Royal State Historic Park"
+        }
       ]
     },
     {
       "id": "seed-west-fork-red",
       "name": "West Fork Red River",
       "type": "Creek",
-      "lat": 36.5928,
-      "lng": -87.3958,
+      "lat": 36.6002,
+      "lng": -87.3692,
       "approximate": true,
       "description": "Creek running through north Clarksville toward Fort Campbell. Small water, light tackle. Many banks are private: only fish where access is clearly public.",
       "species": [
@@ -233,12 +269,12 @@
     },
     {
       "id": "seed-yellow-creek",
-      "name": "Yellow Creek (south county)",
+      "name": "Yellow Creek at Ellis Mills",
       "type": "Creek",
-      "lat": 36.4428,
-      "lng": -87.4732,
+      "lat": 36.3106,
+      "lng": -87.5539,
       "approximate": true,
-      "description": "Rural creek feeding the Cumberland south of the river. Clear pools in summer. Access is mostly at road crossings; respect private land.",
+      "description": "Rural creek southwest of Clarksville near the Houston County line, about 35 minutes away. Clear pools in summer. Access is mostly at road crossings; respect private land.",
       "species": [
         "Smallmouth Bass",
         "Rock Bass",
@@ -250,12 +286,12 @@
     },
     {
       "id": "seed-lock-b",
-      "name": "Cumberland River at Lock B Rd",
+      "name": "Cumberland River at Seven Mile Ferry Rd",
       "type": "River (Cumberland)",
-      "lat": 36.4986,
-      "lng": -87.2932,
+      "lat": 36.4928,
+      "lng": -87.34,
       "approximate": true,
-      "description": "Area near the old lock site east of downtown with river bank access. Barge traffic and current: keep kids and gear back from the edge.",
+      "description": "Public boat ramp on the Cumberland south of downtown, with some bank access around it. Barge traffic and current: keep kids and gear back from the edge, and stay clear of boats launching.",
       "species": [
         "Channel Catfish",
         "Blue Catfish",
@@ -265,7 +301,8 @@
       "beginnerTip": "Use enough sinker weight to hold bottom in the current (add a sliding egg sinker above a swivel). Put the rod in the bank holder and watch the tip.",
       "access": "Bank; verify",
       "amenities": [
-        "Parking (verify)"
+        "Parking",
+        "Boat ramp"
       ]
     },
     {
@@ -289,7 +326,13 @@
         "Parking",
         "Restrooms (seasonal)"
       ],
-      "advisory": "PCB advisory area: see Safety page."
+      "advisory": "PCB advisory area: see Safety page.",
+      "photos": [
+        {
+          "file": "D-Day vessel navigates through Cheatham Lock - 7996403785.jpg",
+          "caption": "A vessel in Cheatham Lock"
+        }
+      ]
     }
   ]
 }

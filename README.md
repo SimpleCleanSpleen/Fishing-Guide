@@ -4,8 +4,8 @@
 Live conditions, a "what's biting now" list, a fish encyclopedia you fill in as you
 catch fish, a map of spots, and a personal journal that learns your best times and baits.
 
-**Clarksville, Tennessee is the first location.** The app is built so new cities can be
-added with one JSON file (see [Adding a location](#adding-a-new-location)).
+**Locations:** Clarksville, TN · Elkridge, MD · Severn, MD. Pick one from the 📍 menu in the header.
+New areas can be added with one JSON file (see [Adding a location](#adding-a-new-location)).
 
 Live site (after setup): `https://simplecleanspleen.github.io/Fishing-Guide/`
 
@@ -19,7 +19,8 @@ Live site (after setup): `https://simplecleanspleen.github.io/Fishing-Guide/`
 | 📖 **Fish Guide** | A game-style fish encyclopedia: how to identify each local species, season and time-of-day charts, best baits *from your own tackle box*, where to find it locally, and a **collection tracker** (X / 15 species caught, personal bests). |
 | ➕ **Catch logger** | Species, weight (lb + oz, straight off the scale), length, bait, spot, date, time, photo, notes, released. Weather, pressure trend, moon and river level are **recorded automatically** for each catch. |
 | 📓 **Journal & Insights** | Catch history with filters and search. Insights show your best **time of day**, **time of year** and **most successful bait** per species, plus the weather patterns behind your catches. All analysis runs in the browser. |
-| 🗺️ **Map** | Leaflet + OpenStreetMap, 10 suggested Clarksville spots, and **your own pins**: tap the map, use GPS, or type coordinates. |
+| 🗺️ **Map** | Four map styles (**Map, Satellite, Terrain, Night**), color-coded pins by water type (river, lake, creek, pier & bay), photo cards for every spot, and **your own pins**: tap the map, use GPS, or type coordinates. Satellite view is great for spotting drop-offs, weed beds and fallen trees. |
+| 📷 **Spot photos** | Each suggested spot shows real photos from Wikimedia Commons plus an aerial view, and your own catch photos from that spot. |
 | 🎓 **Learn** | *My Tackle Box* (every item you own: when and how to use it, Senko rigging, Trout Magnet setup, 3 knots for 8 lb mono), *Fishing Basics* (casting, bites, hook sets, handling, catch-and-release, safety), glossary, and *Safety, Advisories & Rules*. |
 | 📶 **Offline (PWA)** | Installable on your phone. The app shell, viewed map tiles and the last weather/river data are cached. Catches logged with no signal sync automatically later. |
 | ❔ **Beginner tooltips** | Tap any **?** for an explanation of the term. |
@@ -33,7 +34,8 @@ Live site (after setup): `https://simplecleanspleen.github.io/Fishing-Guide/`
 - **Open-Meteo** (no key): weather, pressure, sunrise/sunset, and historical weather for older catches.
 - **USGS Water Services** (no key): live river gauges, found automatically within the location's bounding box.
 - **Moon phase** is calculated locally (pure astronomy, no API).
-- **Leaflet + OpenStreetMap** tiles (no key).
+- **Leaflet** with keyless tiles: Esri World Topo (Map), Esri World Imagery (Satellite), OpenTopoMap (Terrain), Esri Dark Gray (Night).
+- **Spot photos:** Wikimedia Commons thumbnails (each spot lists exact file names) and Esri aerial snapshots. No key.
 - Responses are cached in `localStorage` (weather 30 min, river 1 h, past weather forever) and by the service worker to stay well inside rate limits.
 - **Demo mode:** until you paste your Firebase config, the app runs fully with data saved in the browser, so you can try it immediately.
 
@@ -116,10 +118,10 @@ If you see *"This website isn't on your Firebase Authorized domains list"* when 
 Open the site on your phone → browser menu → **Add to Home Screen / Install app**. It now opens like an app and works with weak or no signal.
 
 ### Before you fish
-- 🪪 **Buy a Tennessee fishing license** (required for ages 13+): <https://www.gooutdoorstennessee.com/>
-- 📜 **Read the current TWRA regulations** (size and creel limits vary by water body): <https://www.tn.gov/twra/fishing.html>
+- 🪪 **Tennessee:** license required for ages 13+ (<https://www.gooutdoorstennessee.com/>); read the TWRA regulations: <https://www.tn.gov/twra/fishing.html>
+- 🪪 **Maryland:** license required for ages 16+ (<https://compass.dnr.maryland.gov/>). Tidal water (Severn River, Bay) and non-tidal water (lakes, Patapsco) need different licenses; read the DNR regulations: <https://dnr.maryland.gov/fisheries/Pages/regulations/index.aspx>
 - 📍 **All suggested spot coordinates are approximate.** Verify access, parking, hours and posted rules before visiting.
-- 🧪 Check **TDEC fish consumption advisories** before eating fish (see the app's *Safety, Advisories & Rules* page).
+- 🧪 Check **fish consumption advisories** (TDEC in Tennessee, MDE in Maryland) before eating fish (see the app's *Safety, Advisories & Rules* page).
 
 ---
 
@@ -156,6 +158,7 @@ src/
     analytics.js               Insights engine + fishing outlook (client-side)
     bitingNow.js               "What's biting now" ranking
     image.js                   In-browser photo resize/compress (and how to move to Storage)
+    photos.js                  Spot photos: Wikimedia Commons thumbnails + Esri aerial view
     cache.js                   localStorage cache with expiry
   data/
     locations/                 One JSON file per location (spots, advisories, regulations)
@@ -215,7 +218,11 @@ To switch to Firebase Storage later:
 
 1. Copy `src/data/locations/clarksville-tn.json` to e.g. `src/data/locations/knoxville-tn.json`.
 2. Edit: `id`, `name`, `region`, `center`, `zoom`, `timezone`, `usgs.bbox` (`west,south,east,north`) and `usgs.preferName`
-   (main river name), `commonSpecies`, `regulations`, `advisories`, and the `spots` (mark them `"approximate": true`).
+   (main river name), `commonSpecies`, `regulations`, `advisories`, `bankSafety` (local safety tips), and the `spots`
+   (mark them `"approximate": true`).
+   - A spot's `type` picks its pin: words like *pier/bay/shore/tidal* → Pier & bay, *river/dam* → River, *creek/stream* → Creek, anything else → Lake.
+   - Optional `photos: [{ "file": "Exact Commons file name.jpg", "caption": "..." }]`. Find photos at
+     <https://commons.wikimedia.org> and copy the file name without the `File:` prefix. Every spot also gets an aerial view automatically.
 3. Register it in `src/data/locations/index.js`.
 
 The location picker in the header appears automatically. Weather, gauges, the map, the Fish Guide, and Insights all

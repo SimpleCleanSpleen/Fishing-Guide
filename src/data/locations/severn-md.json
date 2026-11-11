@@ -1,0 +1,293 @@
+{
+  "id": "severn-md",
+  "name": "Severn, MD",
+  "region": "Anne Arundel County - Severn River & Chesapeake Bay",
+  "center": {
+    "lat": 39.1100,
+    "lng": -76.6000
+  },
+  "zoom": 11,
+  "timezone": "America/New_York",
+  "usgs": {
+    "bbox": "-76.85,38.95,-76.45,39.20",
+    "preferName": "patuxent"
+  },
+  "spotsNotice": "All coordinates are APPROXIMATE. Verify access, parking fees, park hours and posted rules before visiting. Maryland requires a license for anglers 16 and older. Tidal water (the Severn River and the Bay) needs a Chesapeake Bay & Coastal sport license; lakes and streams need a non-tidal license.",
+  "commonSpecies": [
+    "Striped Bass",
+    "White Perch",
+    "Spot",
+    "Atlantic Croaker",
+    "Blue Catfish",
+    "Channel Catfish",
+    "Largemouth Bass",
+    "Chain Pickerel",
+    "Yellow Perch",
+    "Bluegill",
+    "Pumpkinseed",
+    "Crappie",
+    "Rainbow Trout",
+    "Northern Snakehead"
+  ],
+  "regulations": {
+    "agency": "Maryland Department of Natural Resources (DNR)",
+    "summary": "Anglers 16 and older need a Maryland fishing license: a Chesapeake Bay & Coastal sport license for tidal water (Severn River, Bay, creeks), or a non-tidal license (plus a trout stamp to keep trout) for lakes and streams. Striped bass (rockfish) have seasons, slot limits and spawning closures that change every year: always check before keeping one.",
+    "links": [
+      {
+        "label": "DNR fishing regulations",
+        "url": "https://dnr.maryland.gov/fisheries/Pages/regulations/index.aspx"
+      },
+      {
+        "label": "Buy a license: Maryland Compass",
+        "url": "https://compass.dnr.maryland.gov/"
+      },
+      {
+        "label": "DNR trout stocking",
+        "url": "https://dnr.maryland.gov/fisheries/Pages/trout/stocking.aspx"
+      },
+      {
+        "label": "Northern snakehead (DNR)",
+        "url": "https://dnr.maryland.gov/fisheries/Pages/snakehead.aspx"
+      }
+    ],
+    "tips": [
+      "Rockfish (striped bass) rules change often, with closed seasons in spring. If you're unsure, release it.",
+      "Blue catfish and northern snakehead are invasive. DNR encourages keeping them, and it is illegal to move a live snakehead.",
+      "County parks on the water (Fort Smallwood, Downs) charge a per-car entry fee, as does Sandy Point State Park.",
+      "Patuxent Research Refuge has its own fishing rules and check-in. Read the refuge page before going."
+    ]
+  },
+  "advisories": {
+    "agency": "Maryland Department of the Environment (MDE)",
+    "summary": "MDE publishes fish consumption advisories for Anne Arundel County and a separate chart for the Patapsco River and Baltimore Harbor, which affects Fort Smallwood at the mouth of the Patapsco. Check the current charts before keeping fish to eat.",
+    "items": [
+      {
+        "title": "Patapsco River / Baltimore Harbor (incl. Fort Smallwood area)",
+        "level": "Precautionary",
+        "detail": "PCB limits on catfish, white perch, striped bass and other species caught near the mouth of the Patapsco. Children and women who are or may become pregnant should follow the strictest guidance."
+      },
+      {
+        "title": "Chesapeake Bay & tidal rivers",
+        "level": "Precautionary",
+        "detail": "Larger striped bass, white perch and catfish from the Bay carry meal limits for PCBs and mercury. Smaller fish and spot/croaker are generally safer."
+      },
+      {
+        "title": "Tidal creeks after rain",
+        "level": "Bacterial / no contact",
+        "detail": "Anne Arundel's creeks and beaches often have high bacteria for 48 hours after heavy rain. Avoid wading and swimming, and wash hands before eating."
+      }
+    ],
+    "links": [
+      {
+        "label": "MDE fish consumption advisories",
+        "url": "https://mde.maryland.gov/programs/Marylander/fishandshellfish/Pages/fishconsumptionadvisory.aspx"
+      },
+      {
+        "label": "MDE fish & shellfish",
+        "url": "https://mde.maryland.gov/programs/marylander/fishandshellfish/pages/index.aspx"
+      }
+    ]
+  },
+  "bankSafety": [
+    "Piers and jetties get slippery with algae and spray. Wear grippy shoes and keep kids off the rocks.",
+    "Bay water is cold until June. A fall in from a pier is dangerous even on a warm spring day.",
+    "Watch for jellyfish (sea nettles) in summer when handling lines and fish in tidal water."
+  ],
+  "spots": [
+    {
+      "id": "seed-md-lake-waterford",
+      "name": "Lake Waterford Park",
+      "type": "Lake",
+      "lat": 39.1140,
+      "lng": -76.5617,
+      "approximate": true,
+      "description": "County park around a quiet, tree-lined lake in Pasadena, about 15 minutes from Severn. Calm water, easy bank access and plenty of fallen-tree cover.",
+      "species": [
+        "Largemouth Bass",
+        "Bluegill",
+        "Chain Pickerel",
+        "Crappie",
+        "Rainbow Trout"
+      ],
+      "beginnerTip": "The fallen trees along the edges hold bass and pickerel. Cast a weightless Senko next to them and let it sink slowly.",
+      "access": "Bank, paths",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Picnic areas",
+        "Playground"
+      ],
+      "photos": [
+        {
+          "file": "Lake Waterford Reflections.jpg",
+          "caption": "Lake Waterford"
+        },
+        {
+          "file": "LakeWaterfd Fallen Tree.jpg",
+          "caption": "Fallen-tree cover at Lake Waterford"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-lake-allen",
+      "name": "Lake Allen (Patuxent Research Refuge)",
+      "type": "Lake",
+      "lat": 39.0838,
+      "lng": -76.7334,
+      "approximate": true,
+      "description": "Wooded lake on the refuge's North Tract next to Fort Meade, about 10 minutes from Severn. Wild and quiet. Refuge fishing rules, hours and check-in apply.",
+      "species": [
+        "Largemouth Bass",
+        "Bluegill",
+        "Chain Pickerel",
+        "Pumpkinseed"
+      ],
+      "beginnerTip": "Bring everything you need: there are no shops on the refuge. Read the refuge's fishing page before you go, since some waters are catch-and-release.",
+      "access": "Bank; refuge rules and check-in",
+      "amenities": [
+        "Parking",
+        "Visitor contact station",
+        "Trails"
+      ],
+      "photos": [
+        {
+          "file": "Lake Allen (49451214248).jpg",
+          "caption": "Lake Allen on the North Tract"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-severn-run",
+      "name": "Severn Run Natural Environment Area",
+      "type": "Creek",
+      "lat": 39.0688,
+      "lng": -76.6047,
+      "approximate": true,
+      "description": "Protected forest around the headwaters of the Severn River. A small, clear stream: more of an exploring trip than a big-catch spot. Parking and access are limited.",
+      "species": [
+        "Bluegill",
+        "Pumpkinseed",
+        "Chain Pickerel"
+      ],
+      "beginnerTip": "Use your lightest setup and a tiny piece of worm. Walk slowly and keep your shadow off the water.",
+      "access": "Limited; verify trails and parking",
+      "amenities": []
+    },
+    {
+      "id": "seed-md-fort-smallwood",
+      "name": "Fort Smallwood Park",
+      "type": "Pier & shore (Bay / Patapsco mouth)",
+      "lat": 39.1628,
+      "lng": -76.4855,
+      "approximate": true,
+      "description": "County park where the Patapsco meets the Chesapeake, with a fishing pier, rocky shoreline and views of the Bay. One of the most popular shore fishing spots in the area.",
+      "species": [
+        "White Perch",
+        "Striped Bass",
+        "Spot",
+        "Atlantic Croaker",
+        "Blue Catfish"
+      ],
+      "beginnerTip": "Bloodworm or shrimp on a two-hook bottom rig catches white perch and spot all summer. Fish the change of tide, when the current starts moving.",
+      "access": "Pier, rocky shore (per-car fee)",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Fishing pier",
+        "Picnic areas"
+      ],
+      "advisory": "Patapsco / Baltimore Harbor advisory area: see Safety page.",
+      "photos": [
+        {
+          "file": "FortSmallwoodParkMaryland.jpg",
+          "caption": "Fort Smallwood Park shoreline"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-downs-park",
+      "name": "Downs Park",
+      "type": "Pier & shore (Chesapeake Bay)",
+      "lat": 39.1128,
+      "lng": -76.4325,
+      "approximate": true,
+      "description": "Big county park on the Bay with a long fishing pier, beach and wooded trails. Beautiful at sunrise and sunset.",
+      "species": [
+        "White Perch",
+        "Striped Bass",
+        "Spot",
+        "Atlantic Croaker"
+      ],
+      "beginnerTip": "Evenings on the pier are prime. Use a float with a piece of shrimp for perch, and keep your drag loose in case a rockfish grabs it.",
+      "access": "Pier, beach (per-car fee)",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Fishing pier",
+        "Trails",
+        "Playground"
+      ],
+      "photos": [
+        {
+          "file": "Downs Park.jpg",
+          "caption": "The Downs Park pier at sunset"
+        },
+        {
+          "file": "Downs park - panoramio.jpg",
+          "caption": "Downs Park beach on the Chesapeake"
+        }
+      ]
+    },
+    {
+      "id": "seed-md-jonas-green",
+      "name": "Jonas Green Park pier",
+      "type": "Pier (Severn River, tidal)",
+      "lat": 38.9945,
+      "lng": -76.4930,
+      "approximate": true,
+      "description": "Free county park at the foot of the Naval Academy Bridge, with a fishing pier built from the old bridge. Tidal Severn River water, across from the Naval Academy.",
+      "species": [
+        "White Perch",
+        "Striped Bass",
+        "Spot",
+        "Blue Catfish"
+      ],
+      "beginnerTip": "White perch gather around the bridge pilings. Drop a small bait straight down next to them and lift gently when you feel taps.",
+      "access": "Pier, free",
+      "amenities": [
+        "Parking",
+        "Fishing pier",
+        "Kayak launch"
+      ]
+    },
+    {
+      "id": "seed-md-sandy-point",
+      "name": "Sandy Point State Park",
+      "type": "Shore & jetty (Chesapeake Bay)",
+      "lat": 39.0194,
+      "lng": -76.4055,
+      "approximate": true,
+      "description": "State park beside the Bay Bridge with beaches, a jetty and a boat ramp. Big open water: rockfish and bluefish in fall, spot and perch in summer.",
+      "species": [
+        "Striped Bass",
+        "White Perch",
+        "Spot",
+        "Atlantic Croaker"
+      ],
+      "beginnerTip": "Fish early or late to avoid summer beach crowds. Bring a heavier sinker (1-2 oz) to hold bottom in the current near the bridge.",
+      "access": "Shore, jetty (park entry fee)",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Boat ramp",
+        "Beach"
+      ],
+      "photos": [
+        {
+          "file": "Chesapeake Bay Bridge at Sandy Point MD1.jpg",
+          "caption": "Sandy Point jetty and the Bay Bridge in winter"
+        }
+      ]
+    }
+  ]
+}

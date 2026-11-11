@@ -18,5 +18,12 @@ export const IDENTIFY = {
   'Freshwater Drum': { look: 'Silver, humped back, long top fin, rounded tail. Makes a croaking sound.', size: '1-5 lb', habitat: 'Bottom of rivers and lakes.' },
   'Common Carp': { look: 'Large gold-bronze scales and two pairs of small barbels by the mouth.', size: '3-15 lb', habitat: 'Muddy shallows in rivers and lakes.' },
   'Skipjack Herring': { look: 'Slender, bright silver, jumps when hooked.', size: '10-16 inches', habitat: 'Fast water below dams. Great catfish bait.' },
+  Pumpkinseed: { look: 'Like a bluegill but brightly colored: orange belly, wavy blue lines on the cheek, and a bright red-orange spot on the ear flap.', size: '4-7 inches', habitat: 'Weedy, shallow edges of ponds, lakes and slow creeks.' },
+  'Chain Pickerel': { look: 'Long, thin green body covered in a dark chain-link pattern, duck-bill snout full of sharp teeth.', size: '15-24 inches', habitat: 'Weedy lakes, ponds and slow creeks. Very common in Maryland.' },
+  'Yellow Perch': { look: 'Golden-yellow with 6-8 dark vertical bars and orange lower fins.', size: '7-12 inches', habitat: 'Lakes and tidal creeks; runs upstream to spawn in late winter.' },
+  'White Perch': { look: 'Silvery and deep-bodied with no stripes (unlike white or striped bass). The two top fins are joined.', size: '6-11 inches', habitat: 'Chesapeake Bay, tidal rivers and piers; around pilings and rocks.' },
+  Spot: { look: 'Silver with a distinct dark spot just behind the gill cover and faint slanted bars on the back.', size: '6-10 inches', habitat: 'Sandy and muddy bottoms in the Bay, summer to early fall.' },
+  'Atlantic Croaker': { look: 'Silver-bronze with small barbels on the chin and rows of faint spots. Makes a loud croaking noise.', size: '8-14 inches', habitat: 'Bottom of the Bay and tidal rivers in summer.' },
+  'Northern Snakehead': { look: 'Long, round body with dark blotches like a python, a long fin down the back and a big mouth with teeth. Can breathe air.', size: '18-30 inches; up to 15+ lb', habitat: 'Shallow, weedy, warm water in tidal creeks, ponds and Columbia lakes. INVASIVE.' },
   Catfish: { look: 'Whiskers (barbels) around the mouth and no scales.', size: 'Varies', habitat: 'Bottom of rivers and lakes.' },
 };
