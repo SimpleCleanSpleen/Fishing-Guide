@@ -175,3 +175,9 @@ export const SPECIES = {
 };
 
 export const SPECIES_NAMES = Object.keys(SPECIES);
+
+// Dex number for a species ("007"), from its position in SPECIES. Null for unknown/Other.
+export function dexNo(name) {
+  const i = SPECIES_NAMES.indexOf(name);
+  return i < 0 || name === 'Other' ? null : String(i + 1).padStart(3, '0');
+}

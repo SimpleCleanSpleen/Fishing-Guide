@@ -4,7 +4,7 @@ import FishIcon, { FishArtCredit } from '../components/FishIcon.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useData } from '../context/DataContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
-import { MONTHS, SPECIES, TIME_BUCKETS, TIME_LABELS } from '../data/species.js';
+import { dexNo, MONTHS, SPECIES, TIME_BUCKETS, TIME_LABELS } from '../data/species.js';
 import { IDENTIFY } from '../data/identify.js';
 import { useTackle } from '../utils/useTackle.js';
 import { SpeciesInsightPanel } from './Insights.jsx';
@@ -23,10 +23,12 @@ export default function FishDetail() {
   return (
     <div className="space-y-4">
       <Link to="/fish" className="text-sm font-medium text-river-700">← Fish Guide</Link>
-      <PageHeader title={name} subtitle={sp.group} />
-      <div className="card flex flex-col items-center gap-2 bg-gradient-to-b from-sky-100 via-sky-50 to-river-50 py-6">
-        <FishIcon name={name} size={320} className="h-auto max-w-full drop-shadow-md" />
-        <FishArtCredit name={name} />
+      <PageHeader title={name} subtitle={`${dexNo(name) ? `No. ${dexNo(name)} · ` : ''}${sp.group}`} />
+      <div className="card space-y-2 p-2">
+        <div className="lcd flex items-center justify-center rounded-lg px-4 py-8">
+          <FishIcon name={name} size={320} className="h-auto max-w-full drop-shadow-[0_4px_0_rgb(0_0_0/0.35)]" />
+        </div>
+        <div className="px-2 pb-1"><FishArtCredit name={name} /></div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">

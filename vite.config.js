@@ -42,7 +42,7 @@ export default defineConfig({
       },
       workbox: {
         // The app shell (HTML/JS/CSS/icons) is precached so the app opens with no signal.
-        globPatterns: ['**/*.{js,css,html,svg,png,json}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,json,woff2}'],
         navigateFallback: 'index.html',
         runtimeCaching: [
           {

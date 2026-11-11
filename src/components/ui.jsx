@@ -4,8 +4,9 @@ export function PageHeader({ title, subtitle, children }) {
   return (
     <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
-        {subtitle && <p className="mt-0.5 text-sm text-slate-500">{subtitle}</p>}
+        <h1 className="text-2xl text-shell-900">{title}</h1>
+        <span className="mt-1 block h-1 w-10 rounded-full bg-amber-400" aria-hidden />
+        {subtitle && <p className="mt-1.5 text-sm text-slate-500">{subtitle}</p>}
       </div>
       {children && <div className="flex flex-wrap gap-2">{children}</div>}
     </div>

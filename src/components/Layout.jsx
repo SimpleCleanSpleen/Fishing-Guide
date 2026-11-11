@@ -51,10 +51,13 @@ export default function Layout() {
         </div>
       )}
       <UsernameNudge />
-      <main className="mx-auto w-full max-w-5xl px-4 pt-4">
-        <Suspense fallback={<div className="p-8 text-center text-slate-400">Loading…</div>}>
-          <Outlet />
-        </Suspense>
+      <main className="mx-auto w-full max-w-5xl px-2 pt-3 sm:px-4">
+        {/* The device's screen: every page renders inside it. */}
+        <div className="screen-panel px-3 py-4 sm:px-5 sm:py-5">
+          <Suspense fallback={<div className="p-8 text-center text-slate-400">Loading…</div>}>
+            <Outlet />
+          </Suspense>
+        </div>
       </main>
       <BottomNav />
     </div>
@@ -67,11 +70,19 @@ function Header() {
   const [menu, setMenu] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b-2 border-black/25 bg-shell-900/95 text-white shadow-[0_2px_0_rgb(255_255_255/0.06)] backdrop-blur">
       <div className="mx-auto flex h-14 max-w-5xl items-center gap-3 px-4">
-        <Link to="/" className="flex items-center gap-2 font-bold text-river-800">
-          <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="h-8 w-8" />
-          <span className="hidden sm:inline">Fishing Guide</span>
+        <Link to="/" className="flex items-center gap-2 text-white">
+          {/* The device's camera lens + indicator lights (decorative). */}
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/90 ring-2 ring-black/30" aria-hidden>
+            <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="h-7 w-7" />
+          </span>
+          <span className="hidden font-pixel text-lg sm:inline">Fishing Guide</span>
+          <span className="hidden items-center gap-1 sm:flex" aria-hidden>
+            <span className="h-2 w-2 rounded-full bg-rose-400 shadow-[0_0_6px_rgb(251_113_133)]" />
+            <span className="h-2 w-2 rounded-full bg-amber-300 shadow-[0_0_6px_rgb(252_211_77)]" />
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgb(52_211_153)]" />
+          </span>
         </Link>
 
         <label className="relative">
@@ -92,21 +103,21 @@ function Header() {
               key={n.to}
               to={n.to}
               end={n.end}
-              className={({ isActive }) => `rounded-lg px-3 py-1.5 text-sm font-medium ${isActive ? 'bg-river-50 text-river-800' : 'text-slate-600 hover:bg-slate-100'}`}
+              className={({ isActive }) => `rounded-lg px-3 py-1.5 text-sm font-medium ${isActive ? 'bg-white/15 text-white ring-1 ring-white/25' : 'text-white/75 hover:bg-white/10 hover:text-white'}`}
             >
               {n.label}
               {n.badge && <InviteBadge className="ml-1" />}
             </NavLink>
           ))}
-          <NavLink to="/learn" className={({ isActive }) => `rounded-lg px-3 py-1.5 text-sm font-medium ${isActive ? 'bg-river-50 text-river-800' : 'text-slate-600 hover:bg-slate-100'}`}>Learn</NavLink>
-          <Link to="/log" className="btn-primary ml-2 py-1.5">+ Log a catch</Link>
+          <NavLink to="/learn" className={({ isActive }) => `rounded-lg px-3 py-1.5 text-sm font-medium ${isActive ? 'bg-white/15 text-white ring-1 ring-white/25' : 'text-white/75 hover:bg-white/10 hover:text-white'}`}>Learn</NavLink>
+          <Link to="/log" className="btn ml-2 bg-amber-400 py-1.5 text-shell-900 shadow-[0_3px_0_#92400e] hover:bg-amber-300 active:shadow-[0_1px_0_#92400e]">+ Log a catch</Link>
         </nav>
 
-        <Link to="/learn" className="ml-auto rounded-lg px-2 py-1 text-sm font-medium text-river-800 md:hidden">🎓 Learn</Link>
+        <Link to="/learn" className="ml-auto rounded-lg px-2 py-1 text-sm font-medium text-white md:hidden">🎓 Learn</Link>
 
         <div className="relative">
           {user ? (
-            <button type="button" onClick={() => setMenu((m) => !m)} className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-river-100 font-semibold text-river-800 ring-1 ring-river-200" aria-label="Account menu" aria-expanded={menu}>
+            <button type="button" onClick={() => setMenu((m) => !m)} className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-river-100 font-semibold text-river-800 ring-2 ring-white/70" aria-label="Account menu" aria-expanded={menu}>
               {user.photoURL ? <img src={user.photoURL} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" /> : (user.displayName || '?')[0]}
             </button>
           ) : (
@@ -131,21 +142,27 @@ function Header() {
 
 function BottomNav() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" aria-label="Main">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-black/25 bg-shell-900/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_0_rgb(255_255_255/0.06)] backdrop-blur md:hidden" aria-label="Main">
       <ul className="grid h-16 grid-cols-6">
         {NAV.map((n) => (
           <li key={n.to}>
             <NavLink
               to={n.to}
               end={n.end}
-              className={({ isActive }) => `flex h-full flex-col items-center justify-center gap-0.5 text-[11px] font-medium ${isActive ? 'text-river-700' : 'text-slate-500'}`}
+              className={({ isActive }) => `group relative flex h-full flex-col items-center justify-center gap-0.5 text-[11px] font-medium ${isActive ? 'text-white' : 'text-white/65'}`}
             >
-              {n.primary ? (
-                <span className="-mt-5 flex h-12 w-12 items-center justify-center rounded-full bg-river-700 text-2xl text-white shadow-lg ring-4 ring-white" aria-hidden>+</span>
-              ) : (
-                <span className="relative text-xl" aria-hidden>{n.icon}{n.badge && <InviteBadge className="absolute -right-2.5 -top-1" />}</span>
+              {({ isActive }) => (
+                <>
+                  {/* Lit indicator above the active button. */}
+                  {!n.primary && <span className={`absolute top-1 h-1 w-6 rounded-full transition ${isActive ? 'bg-amber-300 shadow-[0_0_6px_rgb(252_211_77)]' : 'bg-white/10'}`} aria-hidden />}
+                  {n.primary ? (
+                    <span className="-mt-5 flex h-12 w-12 items-center justify-center rounded-full bg-amber-400 text-2xl font-bold text-shell-900 shadow-[0_3px_0_#92400e] ring-4 ring-shell-900 transition group-active:translate-y-[2px] group-active:shadow-[0_1px_0_#92400e]" aria-hidden>+</span>
+                  ) : (
+                    <span className="relative text-xl" aria-hidden>{n.icon}{n.badge && <InviteBadge className="absolute -right-2.5 -top-1" />}</span>
+                  )}
+                  {n.label}
+                </>
               )}
-              {n.label}
             </NavLink>
           </li>
         ))}

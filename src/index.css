@@ -2,6 +2,16 @@
 
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Pixel display font: headings, labels and dex numbers only (body text stays in --font-sans). */
+  --font-pixel: 'Jersey 10', ui-sans-serif, system-ui, sans-serif;
+  /* Handheld device shell + screen */
+  --color-shell-500: #14a394;
+  --color-shell-600: #0f8f82;
+  --color-shell-700: #0c766c;
+  --color-shell-800: #0a5c55;
+  --color-shell-900: #073f3a;
+  --color-screen: #eef5f0;
+  --color-lcd: #22514b;
   --color-river-50: #f0fdfa;
   --color-river-100: #ccfbf1;
   --color-river-200: #99f6e4;
@@ -14,19 +24,53 @@
 
 @layer base {
   html { -webkit-tap-highlight-color: transparent; }
-  body { @apply bg-slate-50 text-slate-800 antialiased; }
+  /* The device shell: teal plastic with a faint molded texture. */
+  body {
+    @apply text-slate-800 antialiased;
+    background-color: var(--color-shell-700);
+    background-image:
+      radial-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1.5px),
+      linear-gradient(160deg, var(--color-shell-600), var(--color-shell-800) 70%);
+    background-size: 6px 6px, 100% 100%;
+    background-attachment: fixed;
+  }
   h1, h2, h3 { @apply text-slate-900; }
+  /* font-size-adjust scales the compact pixel font up to the body text's x-height. */
+  h1, h2 { font-family: var(--font-pixel); font-weight: 400; letter-spacing: 0.02em; font-size-adjust: 0.56; }
+  /* Pixel headings are never smaller than 16px, so they stay easy to read. */
+  h2 { font-size: max(1em, 1rem); }
 }
 
 /* Reusable component classes (Tailwind v4 @utility so they can be combined with other utilities) */
-@utility card { @apply rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200; }
-@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-river-500 disabled:opacity-50; }
-@utility btn-primary { @apply btn bg-river-700 text-white hover:bg-river-800; }
-@utility btn-secondary { @apply btn bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50; }
-@utility btn-danger { @apply btn bg-rose-600 text-white hover:bg-rose-700; }
-@utility input { @apply w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 placeholder:text-slate-400 focus:border-river-500 focus:outline-none focus:ring-2 focus:ring-river-200; }
+/* Game-menu panels: a firm outline and a hard "pixel" drop shadow. */
+@utility card { @apply rounded-xl bg-white p-4 ring-2 ring-shell-900/15; box-shadow: 0 3px 0 rgb(7 63 58 / 0.16); }
+/* Chunky buttons that press down when tapped. */
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-[transform,box-shadow,background-color] duration-75 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 active:translate-y-[2px] disabled:opacity-50 disabled:active:translate-y-0; }
+@utility btn-primary { @apply btn bg-river-700 text-white hover:bg-river-800; box-shadow: 0 3px 0 var(--color-shell-900); &:active { box-shadow: 0 1px 0 var(--color-shell-900); } }
+@utility btn-secondary { @apply btn bg-white text-slate-700 ring-2 ring-shell-900/15 hover:bg-slate-50; box-shadow: 0 3px 0 rgb(7 63 58 / 0.18); &:active { box-shadow: 0 1px 0 rgb(7 63 58 / 0.18); } }
+@utility btn-danger { @apply btn bg-rose-600 text-white hover:bg-rose-700; box-shadow: 0 3px 0 #9f1239; &:active { box-shadow: 0 1px 0 #9f1239; } }
+@utility input { @apply w-full rounded-xl border-2 border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 placeholder:text-slate-400 focus:border-river-500 focus:outline-none focus:ring-2 focus:ring-river-200; }
 @utility label { @apply mb-1 flex items-center gap-1 text-sm font-medium text-slate-700; }
-@utility chip { @apply inline-flex items-center gap-1 rounded-full bg-river-50 px-2.5 py-0.5 text-xs font-medium text-river-800 ring-1 ring-river-200; }
+@utility chip { @apply inline-flex items-center gap-1 rounded-lg bg-river-50 px-2.5 py-0.5 text-xs font-medium text-river-800 ring-1 ring-river-200; }
+/* Pixel font for short labels (dex numbers, menu captions). Never for paragraphs. */
+@utility font-pixel { font-family: var(--font-pixel); font-weight: 400; letter-spacing: 0.03em; font-size-adjust: 0.56; }
+/* The device "screen" that holds each page. */
+@utility screen-panel {
+  background: var(--color-screen);
+  border: 3px solid var(--color-shell-900);
+  border-radius: 22px;
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.7), inset 0 0 0 1px rgb(7 63 58 / 0.08), 0 4px 0 rgb(0 0 0 / 0.18);
+}
+/* Small dark LCD window behind fish sprites. */
+@utility lcd {
+  background-color: var(--color-lcd);
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 45%, rgb(153 246 228 / 0.35), transparent 75%);
+  background-size: 6px 6px, 6px 6px, 100% 100%;
+  box-shadow: inset 0 0 0 2px rgb(0 0 0 / 0.35), inset 0 2px 8px rgb(0 0 0 / 0.5);
+}
 @utility prose-tight {
   & p { @apply mb-2 leading-relaxed; }
   & ul { @apply mb-2 list-disc space-y-1 pl-5; }
