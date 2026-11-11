@@ -24,7 +24,7 @@ export function spotPhotos(spot) {
     src: commonsThumb(p.file, 960),
     thumb: commonsThumb(p.file, 330),
     caption: p.caption,
-    credit: 'Wikimedia Commons',
+    credit: p.artist ? `${p.artist} · ${p.license}` : 'Wikimedia Commons',
     href: commonsPage(p.file),
   }));
   list.push({

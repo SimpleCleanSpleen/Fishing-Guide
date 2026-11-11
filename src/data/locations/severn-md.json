@@ -3,8 +3,8 @@
   "name": "Severn, MD",
   "region": "Anne Arundel County - Severn River & Chesapeake Bay",
   "center": {
-    "lat": 39.1100,
-    "lng": -76.6000
+    "lat": 39.11,
+    "lng": -76.6
   },
   "zoom": 11,
   "timezone": "America/New_York",
@@ -57,6 +57,11 @@
       "Patuxent Research Refuge has its own fishing rules and check-in. Read the refuge page before going."
     ]
   },
+  "license": {
+    "general": "Maryland non-tidal fishing license (ages 16+)",
+    "tidal": "Maryland Chesapeake Bay & Coastal sport fishing license (ages 16+)",
+    "trout": "Maryland trout stamp, to keep trout from non-tidal water"
+  },
   "advisories": {
     "agency": "Maryland Department of the Environment (MDE)",
     "summary": "MDE publishes fish consumption advisories for Anne Arundel County and a separate chart for the Patapsco River and Baltimore Harbor, which affects Fort Smallwood at the mouth of the Patapsco. Check the current charts before keeping fish to eat.",
@@ -98,7 +103,7 @@
       "id": "seed-md-lake-waterford",
       "name": "Lake Waterford Park",
       "type": "Lake",
-      "lat": 39.1140,
+      "lat": 39.114,
       "lng": -76.5617,
       "approximate": true,
       "description": "County park around a quiet, tree-lined lake in Pasadena, about 15 minutes from Severn. Calm water, easy bank access and plenty of fallen-tree cover.",
@@ -120,11 +125,26 @@
       "photos": [
         {
           "file": "Lake Waterford Reflections.jpg",
-          "caption": "Lake Waterford"
+          "caption": "Lake Waterford",
+          "artist": "JefferyGoldman",
+          "license": "CC BY-SA 4.0"
         },
         {
           "file": "LakeWaterfd Fallen Tree.jpg",
-          "caption": "Fallen-tree cover at Lake Waterford"
+          "caption": "Fallen-tree cover at Lake Waterford",
+          "artist": "JefferyGoldman",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.114&mlon=-76.5617#map=16/39.114/-76.5617"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -152,7 +172,24 @@
       "photos": [
         {
           "file": "Lake Allen (49451214248).jpg",
-          "caption": "Lake Allen on the North Tract"
+          "caption": "Lake Allen on the North Tract",
+          "artist": "U. S. Fish and Wildlife Service - Northeast Region",
+          "license": "Public domain"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.0838&mlon=-76.7334#map=16/39.0838/-76.7334"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        },
+        {
+          "label": "U.S. Fish & Wildlife Service: Patuxent Research Refuge",
+          "url": "https://www.fws.gov/refuge/patuxent-research"
         }
       ]
     },
@@ -171,7 +208,18 @@
       ],
       "beginnerTip": "Use your lightest setup and a tiny piece of worm. Walk slowly and keep your shadow off the water.",
       "access": "Limited; verify trails and parking",
-      "amenities": []
+      "amenities": [],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.0688&mlon=-76.6047#map=16/39.0688/-76.6047"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
     },
     {
       "id": "seed-md-fort-smallwood",
@@ -200,7 +248,20 @@
       "photos": [
         {
           "file": "FortSmallwoodParkMaryland.jpg",
-          "caption": "Fort Smallwood Park shoreline"
+          "caption": "Fort Smallwood Park shoreline",
+          "artist": "Gradygirl07",
+          "license": "CC BY 3.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.1628&mlon=-76.4855#map=16/39.1628/-76.4855"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -230,11 +291,26 @@
       "photos": [
         {
           "file": "Downs Park.jpg",
-          "caption": "The Downs Park pier at sunset"
+          "caption": "The Downs Park pier at sunset",
+          "artist": "Patrick Gillespie",
+          "license": "CC BY-SA 4.0"
         },
         {
           "file": "Downs park - panoramio.jpg",
-          "caption": "Downs Park beach on the Chesapeake"
+          "caption": "Downs Park beach on the Chesapeake",
+          "artist": "Lkar Kasamon",
+          "license": "CC BY-SA 3.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.1128&mlon=-76.4325#map=16/39.1128/-76.4325"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -243,7 +319,7 @@
       "name": "Jonas Green Park pier",
       "type": "Pier (Severn River, tidal)",
       "lat": 38.9945,
-      "lng": -76.4930,
+      "lng": -76.493,
       "approximate": true,
       "description": "Free county park at the foot of the Naval Academy Bridge, with a fishing pier built from the old bridge. Tidal Severn River water, across from the Naval Academy.",
       "species": [
@@ -258,6 +334,17 @@
         "Parking",
         "Fishing pier",
         "Kayak launch"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=38.9945&mlon=-76.493#map=16/38.9945/-76.493"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
       ]
     },
     {
@@ -285,9 +372,23 @@
       "photos": [
         {
           "file": "Chesapeake Bay Bridge at Sandy Point MD1.jpg",
-          "caption": "Sandy Point jetty and the Bay Bridge in winter"
+          "caption": "Sandy Point jetty and the Bay Bridge in winter",
+          "artist": "Acroterion",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.0194&mlon=-76.4055#map=16/39.0194/-76.4055"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     }
-  ]
+  ],
+  "spotsCredit": "Suggested spots, descriptions and tips were written by Claude (an AI assistant made by Anthropic) from general knowledge, with locations checked against OpenStreetMap and Esri aerial imagery. They can be wrong: verify access and rules locally."
 }

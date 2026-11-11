@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import ConditionsCard from '../components/ConditionsCard.jsx';
+import FishIcon from '../components/FishIcon.jsx';
 import RiverCard from '../components/RiverCard.jsx';
 import CatchCard from '../components/CatchCard.jsx';
 import InfoTip from '../components/InfoTip.jsx';
@@ -53,7 +54,7 @@ export default function Home() {
               return (
                 <li key={r.name}>
                   <Link to={`/fish/${encodeURIComponent(r.name)}`} className="flex items-center gap-3 py-2 hover:bg-slate-50">
-                    <span className="text-xl" aria-hidden>{r.sp.emoji}</span>
+                    <FishIcon name={r.name} size={44} className="shrink-0" />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-medium">{r.name}{r.caught && <span className="ml-1 text-xs text-emerald-600" title="You've caught this species">✓</span>}</span>
                       <span className="block truncate text-xs text-slate-500">Try: {r.sp.baits[0]}</span>

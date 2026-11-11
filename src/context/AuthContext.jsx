@@ -6,6 +6,7 @@ import {
   signOut as fbSignOut,
 } from 'firebase/auth';
 import { auth, googleProvider, isFirebaseConfigured } from '../firebase/init.js';
+import { subscribeProfile } from '../services/repository.js';
 
 const AuthContext = createContext(null);
 const DEMO_USER = { uid: 'demo-user', displayName: 'Demo Angler', email: null, photoURL: null, isDemo: true };
@@ -15,6 +16,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [profile, setProfile] = useState(null); // { username } once loaded
 
   useEffect(() => {
     if (!isFirebaseConfigured) {
@@ -30,8 +32,16 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
+  // Your username lives in your angler profile; other anglers use it to invite you.
+  useEffect(() => {
+    if (!user) { setProfile(null); return undefined; }
+    return subscribeProfile(user.uid, setProfile, () => setProfile({}));
+  }, [user]);
+
   const value = useMemo(() => ({
     user,
+    profile,
+    username: profile?.username || null,
     loading,
     error,
     isDemo: !isFirebaseConfigured,
@@ -63,7 +73,7 @@ export function AuthProvider({ children }) {
       }
       await fbSignOut(auth);
     },
-  }), [user, loading, error]);
+  }), [user, profile, loading, error]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

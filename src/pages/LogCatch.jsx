@@ -5,6 +5,7 @@ import RequireAuth from '../components/RequireAuth.jsx';
 import { Callout, PageHeader } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useData } from '../context/DataContext.jsx';
+import SpotOptions from '../components/SpotOptions.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
 import { MY_BAITS, SPECIES_NAMES } from '../data/species.js';
 import { addCatch, updateCatch } from '../services/repository.js';
@@ -202,14 +203,7 @@ function LogCatchForm() {
             <label className="label" htmlFor="spot">Spot</label>
             <select id="spot" value={form.spotId} onChange={set('spotId')} className="input">
               <option value="">Somewhere in {location.name}</option>
-              <optgroup label="Suggested spots">
-                {allSpots.filter((s) => !s.custom).map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-              </optgroup>
-              {allSpots.some((s) => s.custom) && (
-                <optgroup label="My spots">
-                  {allSpots.filter((s) => s.custom).map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-                </optgroup>
-              )}
+              <SpotOptions spots={allSpots} />
             </select>
             <p className="mt-1 text-xs text-slate-500">Fishing somewhere new? <Link to="/map" className="font-medium text-river-700">Pin it on the map</Link> first.</p>
           </div>

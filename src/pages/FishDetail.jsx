@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { Bars, Callout, PageHeader } from '../components/ui.jsx';
+import FishIcon, { FishArtCredit } from '../components/FishIcon.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useData } from '../context/DataContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
@@ -20,7 +21,11 @@ export default function FishDetail() {
   return (
     <div className="space-y-4">
       <Link to="/fish" className="text-sm font-medium text-river-700">← Fish Guide</Link>
-      <PageHeader title={`${sp.emoji} ${name}`} subtitle={sp.group} />
+      <PageHeader title={name} subtitle={sp.group} />
+      <div className="card flex flex-col items-center gap-2 bg-gradient-to-b from-sky-100 via-sky-50 to-river-50 py-6">
+        <FishIcon name={name} size={320} className="h-auto max-w-full drop-shadow-md" />
+        <FishArtCredit name={name} />
+      </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <section className="card space-y-2 text-sm">

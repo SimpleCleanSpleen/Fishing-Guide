@@ -54,6 +54,11 @@
       "Columbia's lakes (Kittamaqundi, Elkhorn) are run by the Columbia Association. Follow posted rules for each lake."
     ]
   },
+  "license": {
+    "general": "Maryland non-tidal fishing license (ages 16+)",
+    "tidal": "Maryland Chesapeake Bay & Coastal sport fishing license (ages 16+)",
+    "trout": "Maryland trout stamp, to keep trout from non-tidal water"
+  },
   "advisories": {
     "agency": "Maryland Department of the Environment (MDE)",
     "summary": "MDE publishes fish consumption advisories for every county, plus a dedicated chart for the Patapsco River and Baltimore Harbor. The tidal Patapsco below Elkridge flows into the harbor, so check that chart before keeping fish from the lower river.",
@@ -115,15 +120,40 @@
       "photos": [
         {
           "file": "Avalon Area Patapsco Valley State Park 17.JPG",
-          "caption": "The Patapsco in the Avalon Area"
+          "caption": "The Patapsco in the Avalon Area",
+          "artist": "Bohemian Baltimore",
+          "license": "CC BY-SA 4.0"
         },
         {
           "file": "Thomas Viaduct wide angle shot.jpg",
-          "caption": "Thomas Viaduct (1835), at the park entrance"
+          "caption": "Thomas Viaduct (1835), at the park entrance",
+          "artist": "The United States Illustrated (ed. Charles A. Dana)",
+          "license": "Public domain"
         },
         {
           "file": "Avalon Area Patapsco Valley State Park 22.JPG",
-          "caption": "Old railroad tunnel along the river trail"
+          "caption": "Old railroad tunnel along the river trail",
+          "artist": "Bohemian Baltimore",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.2274&mlon=-76.7252#map=16/39.2274/-76.7252"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        },
+        {
+          "label": "Maryland DNR: Patapsco Valley State Park",
+          "url": "https://dnr.maryland.gov/publiclands/Pages/central/patapsco.aspx"
+        },
+        {
+          "label": "Maryland DNR trout stocking (Patapsco River, Avalon)",
+          "url": "https://dnr.maryland.gov/fisheries/Pages/trout/stocking.aspx"
         }
       ]
     },
@@ -150,7 +180,24 @@
       "photos": [
         {
           "file": "Glen Artney Stream (15978065635).jpg",
-          "caption": "Glen Artney stream"
+          "caption": "Glen Artney stream",
+          "artist": "Nicolas Raymond",
+          "license": "CC BY 2.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.2343&mlon=-76.7296#map=16/39.2343/-76.7296"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        },
+        {
+          "label": "Maryland DNR: Patapsco Valley State Park",
+          "url": "https://dnr.maryland.gov/publiclands/Pages/central/patapsco.aspx"
         }
       ]
     },
@@ -178,11 +225,30 @@
       "photos": [
         {
           "file": "Orange Grove Bridge - HDR (15938911802).jpg",
-          "caption": "The Swinging Bridge at Orange Grove"
+          "caption": "The Swinging Bridge at Orange Grove",
+          "artist": "Nicolas Raymond",
+          "license": "CC BY 2.0"
         },
         {
           "file": "Orange Grove Stream (15861443812).jpg",
-          "caption": "Stream near Orange Grove in autumn"
+          "caption": "Stream near Orange Grove in autumn",
+          "artist": "Nicolas Raymond",
+          "license": "CC BY 2.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.2412&mlon=-76.7495#map=16/39.2412/-76.7495"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        },
+        {
+          "label": "Maryland DNR: Patapsco Valley State Park",
+          "url": "https://dnr.maryland.gov/publiclands/Pages/central/patapsco.aspx"
         }
       ]
     },
@@ -208,7 +274,24 @@
       "photos": [
         {
           "file": "Bloede Dam (29865612801).jpg",
-          "caption": "Bloede Dam before it was removed in 2018"
+          "caption": "Bloede Dam before it was removed in 2018",
+          "artist": "U.S. Fish and Wildlife Service Northeast Region",
+          "license": "Public domain"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.247&mlon=-76.7575#map=16/39.247/-76.7575"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        },
+        {
+          "label": "Maryland DNR: Patapsco Valley State Park",
+          "url": "https://dnr.maryland.gov/publiclands/Pages/central/patapsco.aspx"
         }
       ]
     },
@@ -235,7 +318,24 @@
       "photos": [
         {
           "file": "Daniels Dam Daniels Maryland 01.JPG",
-          "caption": "Daniels Dam on the Patapsco"
+          "caption": "Daniels Dam on the Patapsco",
+          "artist": "Bohemian Baltimore",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.3138&mlon=-76.8071#map=16/39.3138/-76.8071"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        },
+        {
+          "label": "Maryland DNR: Patapsco Valley State Park",
+          "url": "https://dnr.maryland.gov/publiclands/Pages/central/patapsco.aspx"
         }
       ]
     },
@@ -265,7 +365,20 @@
       "photos": [
         {
           "file": "Centennial Lake.jpg",
-          "caption": "Centennial Lake"
+          "caption": "Centennial Lake",
+          "artist": "MrSparkle17",
+          "license": "CC BY-SA 3.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.2426&mlon=-76.8561#map=16/39.2426/-76.8561"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -294,7 +407,20 @@
       "photos": [
         {
           "file": "Lake Kittamaqundi in September 2022.jpg",
-          "caption": "Lake Kittamaqundi"
+          "caption": "Lake Kittamaqundi",
+          "artist": "DiscoA340",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.2162&mlon=-76.8537#map=16/39.2162/-76.8537"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -324,7 +450,20 @@
       "photos": [
         {
           "file": "Lake Elkhorn docks 2016.jpg",
-          "caption": "Anglers on the Lake Elkhorn docks"
+          "caption": "Anglers on the Lake Elkhorn docks",
+          "artist": "Jstuby",
+          "license": "CC0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.1837&mlon=-76.8386#map=16/39.1837/-76.8386"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -348,7 +487,19 @@
         "Parking",
         "Trails",
         "Restrooms (seasonal)"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=39.1346&mlon=-76.8206#map=16/39.1346/-76.8206"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
       ]
     }
-  ]
+  ],
+  "spotsCredit": "Suggested spots, descriptions and tips were written by Claude (an AI assistant made by Anthropic) from general knowledge, with locations checked against OpenStreetMap and Esri aerial imagery. They can be wrong: verify access and rules locally."
 }

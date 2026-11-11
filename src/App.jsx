@@ -13,6 +13,10 @@ const Learn = lazy(() => import('./pages/Learn.jsx'));
 const GearGuide = lazy(() => import('./pages/GearGuide.jsx'));
 const Basics = lazy(() => import('./pages/Basics.jsx'));
 const Safety = lazy(() => import('./pages/Safety.jsx'));
+const Trips = lazy(() => import('./pages/Trips.jsx'));
+const TripForm = lazy(() => import('./pages/TripForm.jsx'));
+const TripDetail = lazy(() => import('./pages/TripDetail.jsx'));
+const Profile = lazy(() => import('./pages/Profile.jsx'));
 
 export default function App() {
   return (
@@ -31,6 +35,11 @@ export default function App() {
           <Route path="learn/gear" element={<GearGuide />} />
           <Route path="learn/basics" element={<Basics />} />
           <Route path="learn/safety" element={<Safety />} />
+          <Route path="trips" element={<Trips />} />
+          <Route path="trips/new" element={<TripForm />} />
+          <Route path="trips/:id" element={<TripDetail />} />
+          <Route path="trips/:id/edit" element={<TripForm />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

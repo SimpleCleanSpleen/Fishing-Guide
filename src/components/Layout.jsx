@@ -1,6 +1,7 @@
 import { Suspense, useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation as useRoute } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useData } from '../context/DataContext.jsx';
 import { useLocation as useFishingLocation } from '../context/LocationContext.jsx';
 import { useOnline } from '../utils/useOnline.js';
 
@@ -9,8 +10,28 @@ const NAV = [
   { to: '/fish', label: 'Fish Guide', icon: '📖' },
   { to: '/log', label: 'Log', icon: '➕', primary: true },
   { to: '/map', label: 'Map', icon: '🗺️' },
+  { to: '/trips', label: 'Trips', icon: '🗓️', badge: true },
   { to: '/journal', label: 'Journal', icon: '📓' },
 ];
+
+// Red dot with the number of trip invitations you haven't answered yet.
+function InviteBadge({ className = '' }) {
+  const { pendingInvites } = useData();
+  if (!pendingInvites) return null;
+  return <span className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-bold leading-none text-white ${className}`}>{pendingInvites}</span>;
+}
+
+function UsernameNudge() {
+  const { user, profile, username } = useAuth();
+  const route = useRoute();
+  if (!user || profile === null || username || route.pathname === '/profile') return null;
+  return (
+    <div className="bg-river-50 px-4 py-1.5 text-center text-xs text-river-900">
+      👋 Pick a username so friends can invite you on trips.{' '}
+      <Link to="/profile" className="font-semibold underline">Choose one</Link>
+    </div>
+  );
+}
 
 export default function Layout() {
   const online = useOnline();
@@ -28,6 +49,7 @@ export default function Layout() {
           Demo mode: data is saved in this browser only. Connect Firebase (see README) for Google Sign-In & sync.
         </div>
       )}
+      <UsernameNudge />
       <main className="mx-auto w-full max-w-5xl px-4 pt-4">
         <Suspense fallback={<div className="p-8 text-center text-slate-400">Loading…</div>}>
           <Outlet />
@@ -39,7 +61,7 @@ export default function Layout() {
 }
 
 function Header() {
-  const { user, signIn, signOut } = useAuth();
+  const { user, username, signIn, signOut } = useAuth();
   const { location, locations, setLocationId } = useFishingLocation();
   const [menu, setMenu] = useState(false);
 
@@ -72,6 +94,7 @@ function Header() {
               className={({ isActive }) => `rounded-lg px-3 py-1.5 text-sm font-medium ${isActive ? 'bg-river-50 text-river-800' : 'text-slate-600 hover:bg-slate-100'}`}
             >
               {n.label}
+              {n.badge && <InviteBadge className="ml-1" />}
             </NavLink>
           ))}
           <NavLink to="/learn" className={({ isActive }) => `rounded-lg px-3 py-1.5 text-sm font-medium ${isActive ? 'bg-river-50 text-river-800' : 'text-slate-600 hover:bg-slate-100'}`}>Learn</NavLink>
@@ -92,6 +115,10 @@ function Header() {
             <div className="absolute right-0 top-11 w-56 rounded-xl bg-white p-2 text-sm shadow-lg ring-1 ring-slate-200">
               <p className="truncate px-2 py-1 font-medium">{user.displayName}</p>
               {user.email && <p className="truncate px-2 pb-2 text-xs text-slate-500">{user.email}</p>}
+              <Link to="/profile" onClick={() => setMenu(false)} className="block rounded-lg px-2 py-1.5 hover:bg-slate-50">
+                {username ? <>👤 @{username}</> : <span className="font-medium text-river-700">👋 Pick a username</span>}
+              </Link>
+              <Link to="/trips" onClick={() => setMenu(false)} className="flex items-center gap-1 rounded-lg px-2 py-1.5 hover:bg-slate-50">🗓️ My trips <InviteBadge /></Link>
               <button type="button" onClick={() => { setMenu(false); signOut(); }} className="w-full rounded-lg px-2 py-1.5 text-left text-rose-600 hover:bg-rose-50">Sign out</button>
             </div>
           )}
@@ -104,7 +131,7 @@ function Header() {
 function BottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" aria-label="Main">
-      <ul className="grid h-16 grid-cols-5">
+      <ul className="grid h-16 grid-cols-6">
         {NAV.map((n) => (
           <li key={n.to}>
             <NavLink
@@ -115,7 +142,7 @@ function BottomNav() {
               {n.primary ? (
                 <span className="-mt-5 flex h-12 w-12 items-center justify-center rounded-full bg-river-700 text-2xl text-white shadow-lg ring-4 ring-white" aria-hidden>+</span>
               ) : (
-                <span className="text-xl" aria-hidden>{n.icon}</span>
+                <span className="relative text-xl" aria-hidden>{n.icon}{n.badge && <InviteBadge className="absolute -right-2.5 -top-1" />}</span>
               )}
               {n.label}
             </NavLink>

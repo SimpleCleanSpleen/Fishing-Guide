@@ -7,8 +7,8 @@ import { Badge, Callout, PageHeader } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useData } from '../context/DataContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
-import { SPECIES } from '../data/species.js';
-import { addSpot, deleteSpot } from '../services/repository.js';
+import FishIcon from '../components/FishIcon.jsx';
+import { addSharedSpot, addSpot, deleteSharedSpot, deleteSpot } from '../services/repository.js';
 import { spotPhotos } from '../services/photos.js';
 import { fmtDate, fmtWeight } from '../utils/time.js';
 
@@ -43,11 +43,21 @@ const KINDS = {
   lake: { label: 'Lake & pond', emoji: '💧', c1: '#0f766e', c2: '#2dd4bf' },
   creek: { label: 'Creek', emoji: '🌿', c1: '#166534', c2: '#4ade80' },
   bay: { label: 'Pier & bay', emoji: '⚓', c1: '#1e3a8a', c2: '#818cf8' },
+  community: { label: 'Shared by anglers', emoji: '👥', c1: '#7e22ce', c2: '#d8b4fe' },
   mine: { label: 'My spots', emoji: '⭐', c1: '#c2410c', c2: '#fb923c' },
 };
 
+// Who added a spot: Claude for the suggested ones, otherwise the angler's username.
+function spotAuthor(s) {
+  if (s.custom && s.shared) return { icon: '⭐', text: 'Shared by you' };
+  if (s.custom) return { icon: '🔒', text: 'Your private spot' };
+  if (s.shared) return { icon: '👤', text: `Added by @${s.ownerName}` };
+  return { icon: '✨', text: `Added by ${s.addedBy || 'Claude'}` };
+}
+
 function waterKind(s) {
   if (s.custom) return 'mine';
+  if (s.shared) return 'community';
   const t = (s.type || '').toLowerCase();
   if (/pier|bay|jetty|shore|tidal/.test(t)) return 'bay';
   if (/river|tailwater|dam/.test(t)) return 'river';
@@ -87,7 +97,7 @@ function readBasemap() {
 export default function MapPage() {
   const { user } = useAuth();
   const { location } = useLocation();
-  const { seedSpots, customSpots, catches } = useData();
+  const { seedSpots, customSpots, communitySpots, catches } = useData();
   const [selectedId, setSelectedId] = useState(null);
   const [draft, setDraft] = useState(null); // { lat, lng }
   const [filter, setFilter] = useState('all');
@@ -96,11 +106,12 @@ export default function MapPage() {
   const [me, setMe] = useState(null);
 
   const spots = useMemo(() => {
-    const all = [...seedSpots, ...customSpots];
-    return filter === 'mine' ? customSpots : filter === 'suggested' ? seedSpots : all;
-  }, [seedSpots, customSpots, filter]);
-  const selected = [...seedSpots, ...customSpots].find((s) => s.id === selectedId) || null;
-  const kindsShown = [...new Set([...seedSpots, ...customSpots].map(waterKind))];
+    const byFilter = { mine: customSpots, suggested: seedSpots, community: communitySpots };
+    return byFilter[filter] || [...seedSpots, ...communitySpots, ...customSpots];
+  }, [seedSpots, customSpots, communitySpots, filter]);
+  const everyHere = [...seedSpots, ...communitySpots, ...customSpots];
+  const selected = everyHere.find((s) => s.id === selectedId) || null;
+  const kindsShown = [...new Set(everyHere.map(waterKind))];
 
   useEffect(() => { setSelectedId(null); }, [location.id]);
 
@@ -115,7 +126,7 @@ export default function MapPage() {
   }
 
   function fitAll() {
-    const pts = [...seedSpots, ...customSpots].map((s) => [s.lat, s.lng]);
+    const pts = everyHere.map((s) => [s.lat, s.lng]);
     if (map && pts.length) map.flyToBounds(pts, { padding: [40, 40], maxZoom: 13, duration: 0.8 });
   }
 
@@ -135,7 +146,7 @@ export default function MapPage() {
   const base = BASEMAPS[basemap];
   return (
     <div>
-      <PageHeader title="Fishing Map" subtitle={`${seedSpots.length} suggested spots around ${location.name}${customSpots.length ? ` · ${customSpots.length} of yours` : ''}`} />
+      <PageHeader title="Fishing Map" subtitle={`${seedSpots.length} suggested spots around ${location.name}${communitySpots.length ? ` · ${communitySpots.length} shared by anglers` : ''}${customSpots.length ? ` · ${customSpots.length} of yours` : ''}`} />
       <Callout tone="amber" icon="⚠️" className="mb-3">
         {location.spotsNotice}
       </Callout>
@@ -219,7 +230,7 @@ export default function MapPage() {
 
           <div className="card p-3">
             <div className="mb-2 flex gap-1 text-xs font-medium">
-              {[['all', 'All'], ['suggested', 'Suggested'], ['mine', 'My spots']].map(([k, label]) => (
+              {[['all', 'All'], ['suggested', 'Suggested'], ['community', 'Shared'], ['mine', 'Mine']].map(([k, label]) => (
                 <button key={k} type="button" onClick={() => setFilter(k)} className={`rounded-full px-3 py-1 ${filter === k ? 'bg-river-700 text-white' : 'bg-slate-100 text-slate-600'}`}>{label}</button>
               ))}
             </div>
@@ -237,6 +248,7 @@ export default function MapPage() {
                       <span className="min-w-0">
                         <span className="block truncate text-sm font-semibold">{s.name}</span>
                         <span className="block truncate text-xs text-slate-500">{s.type}{s.species?.length ? ` · ${s.species.slice(0, 3).join(', ')}` : ''}</span>
+                        <span className="block truncate text-[11px] text-slate-400">{spotAuthor(s).icon} {spotAuthor(s).text}</span>
                       </span>
                     </button>
                   </li>
@@ -295,6 +307,7 @@ function SpotPopup({ s, catches }) {
         </div>
         {(s.description || s.notes) && <p className="!my-1 line-clamp-3 text-slate-600">{s.description || s.notes}</p>}
         {s.species?.length > 0 && <p className="!my-1"><b>Fish:</b> {s.species.join(', ')}</p>}
+        <p className="!my-1 text-xs text-slate-500">{spotAuthor(s).icon} {spotAuthor(s).text}</p>
         <div className="flex flex-wrap gap-3 pt-1 text-sm font-semibold">
           {user && <Link to={`/log?spot=${encodeURIComponent(s.id)}`}>+ Log a catch</Link>}
           <a href={`https://www.openstreetmap.org/directions?to=${s.lat}%2C${s.lng}`} target="_blank" rel="noreferrer">Directions ↗</a>
@@ -320,7 +333,7 @@ function SpotDetail({ s, catches, onClose }) {
       </div>
       <p className="flex items-center justify-between gap-2 px-3 pt-1.5 text-[11px] text-slate-500">
         <span className="truncate">{photo.caption}</span>
-        <a href={photo.href} target="_blank" rel="noreferrer" className="shrink-0">{photo.aerial ? 'Open in Google Maps' : photo.credit} ↗</a>
+        <a href={photo.href} target="_blank" rel="noreferrer" className="shrink-0 truncate" title={photo.credit}>{photo.aerial ? 'Open in Google Maps' : `📷 ${photo.credit}`} ↗</a>
       </p>
       {photos.length > 1 && (
         <div className="flex gap-1.5 overflow-x-auto px-3 pt-2">
@@ -340,7 +353,7 @@ function SpotDetail({ s, catches, onClose }) {
         {(s.description || s.notes) && <p className="leading-relaxed text-slate-600">{s.description || s.notes}</p>}
         {s.species?.length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {s.species.map((n) => <span key={n} className="chip">{(SPECIES[n] || SPECIES.Other).emoji} {n}</span>)}
+            {s.species.map((n) => <span key={n} className="chip"><FishIcon name={n} size={22} /> {n}</span>)}
           </div>
         )}
         {s.beginnerTip && <p className="rounded-xl bg-river-50 p-2.5 text-river-900">💡 {s.beginnerTip}</p>}
@@ -355,7 +368,7 @@ function SpotDetail({ s, catches, onClose }) {
                 <div key={c.id} className="relative aspect-square overflow-hidden rounded-lg bg-river-50">
                   {c.photo
                     ? <img src={c.photo} alt={`${c.species} catch`} className="h-full w-full object-cover" loading="lazy" />
-                    : <span className="flex h-full items-center justify-center text-3xl" aria-hidden>{(SPECIES[c.species] || SPECIES.Other).emoji}</span>}
+                    : <span className="flex h-full items-center justify-center p-1.5"><FishIcon name={c.species} size={72} className="max-w-full" /></span>}
                   <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-1.5 pb-1 pt-3 text-[10px] font-medium leading-tight text-white">
                     {c.species}{c.weightLb ? ` · ${fmtWeight(c.weightLb)}` : ''}<br />{fmtDate(c.date)}
                   </span>
@@ -365,12 +378,13 @@ function SpotDetail({ s, catches, onClose }) {
           </div>
         )}
 
+        <SpotAttribution s={s} photos={photos} />
         <p className="text-xs text-slate-400">{s.lat.toFixed(4)}, {s.lng.toFixed(4)}</p>
         <div className="flex flex-wrap gap-2 pt-1">
           {user && <Link to={`/log?spot=${encodeURIComponent(s.id)}`} className="btn-primary px-3 py-2">+ Log a catch here</Link>}
           <a href={`https://www.openstreetmap.org/directions?to=${s.lat}%2C${s.lng}`} target="_blank" rel="noreferrer" className="btn-secondary px-3 py-2">Directions ↗</a>
           {s.custom && user && (
-            <button type="button" className="btn-secondary px-3 py-2 text-rose-600" onClick={() => window.confirm(`Delete "${s.name}"?`) && deleteSpot(user.uid, s.id).then(onClose)}>Delete</button>
+            <button type="button" className="btn-secondary px-3 py-2 text-rose-600" onClick={() => window.confirm(`Delete "${s.name}"?`) && (s.shared ? deleteSharedSpot(s.id) : deleteSpot(user.uid, s.id)).then(onClose)}>Delete</button>
           )}
         </div>
       </div>
@@ -378,12 +392,36 @@ function SpotDetail({ s, catches, onClose }) {
   );
 }
 
+function SpotAttribution({ s, photos }) {
+  const { location } = useLocation();
+  const author = spotAuthor(s);
+  const credited = photos.filter((p) => !p.aerial);
+  return (
+    <details className="rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600" open={!s.custom && !s.shared}>
+      <summary className="cursor-pointer font-semibold text-slate-700">{author.icon} {author.text}</summary>
+      {!s.custom && !s.shared && <p className="mt-1.5 leading-relaxed">{location.spotsCredit}</p>}
+      {s.sources?.length > 0 && (
+        <p className="mt-1.5">Sources:{' '}
+          {s.sources.map((src, i) => <span key={src.url}>{i > 0 && ' · '}<a href={src.url} target="_blank" rel="noreferrer" className="underline">{src.label}</a></span>)}
+        </p>
+      )}
+      {credited.length > 0 && (
+        <p className="mt-1.5">Photos via Wikimedia Commons:{' '}
+          {credited.map((p, i) => <span key={p.href}>{i > 0 && ' · '}<a href={p.href} target="_blank" rel="noreferrer" className="underline">{p.credit}</a></span>)}
+        </p>
+      )}
+      <p className="mt-1.5">Aerial view: Esri World Imagery.</p>
+    </details>
+  );
+}
+
 function AddSpotForm({ draft, setDraft, map, onSaved }) {
-  const { user } = useAuth();
+  const { user, username } = useAuth();
   const { location } = useLocation();
   const [name, setName] = useState('');
   const [type, setType] = useState('Bank spot');
   const [notes, setNotes] = useState('');
+  const [share, setShare] = useState(false);
   const [coords, setCoords] = useState('');
   const [err, setErr] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -419,8 +457,10 @@ function AddSpotForm({ draft, setDraft, map, onSaved }) {
     if (!name.trim()) { setErr('Give your spot a name.'); return; }
     setBusy(true);
     try {
-      await addSpot(user.uid, { name: name.trim(), type, notes: notes.trim(), lat: draft.lat, lng: draft.lng, locationId: location.id });
-      setName(''); setNotes(''); setCoords(''); setDraft(null); setErr(null);
+      const spot = { name: name.trim(), type, notes: notes.trim(), lat: draft.lat, lng: draft.lng, locationId: location.id };
+      if (share) await addSharedSpot({ ...spot, ownerUid: user.uid, ownerName: username });
+      else await addSpot(user.uid, spot);
+      setName(''); setNotes(''); setCoords(''); setDraft(null); setErr(null); setShare(false);
       onSaved?.();
     } catch (e2) {
       setErr(e2.message);
@@ -446,9 +486,17 @@ function AddSpotForm({ draft, setDraft, map, onSaved }) {
         {['Bank spot', 'River', 'Creek', 'Pond', 'Lake', 'Pier / dock', 'Boat ramp'].map((t) => <option key={t}>{t}</option>)}
       </select>
       <textarea className="input" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Notes: parking, depth, what bites…" maxLength={500} aria-label="Notes" />
+      {username ? (
+        <label className="flex items-start gap-2 text-sm">
+          <input type="checkbox" checked={share} onChange={(e) => setShare(e.target.checked)} className="mt-1" />
+          <span>Share with other anglers<span className="block text-xs text-slate-500">Everyone will see this spot on the map, listed as added by @{username}.</span></span>
+        </label>
+      ) : (
+        <p className="text-xs text-slate-500">Want to share spots with other anglers? <Link to="/profile" className="font-medium text-river-700">Pick a username</Link> first.</p>
+      )}
       {err && <p className="text-sm text-rose-600">{err}</p>}
       <div className="flex gap-2">
-        <button type="submit" disabled={busy} className="btn-primary flex-1">{busy ? 'Saving…' : 'Save spot'}</button>
+        <button type="submit" disabled={busy} className="btn-primary flex-1">{busy ? 'Saving…' : share ? 'Save & share spot' : 'Save spot'}</button>
         {draft && <button type="button" onClick={() => { setDraft(null); setCoords(''); }} className="btn-secondary">Clear</button>}
       </div>
     </form>

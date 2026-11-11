@@ -53,6 +53,10 @@
       "Military members stationed at Fort Campbell: ask TWRA about resident license eligibility. Fishing on post needs separate Fort Campbell permits."
     ]
   },
+  "license": {
+    "general": "Tennessee fishing license (ages 13+)",
+    "trout": "Check whether you need TWRA's trout add-on to fish for or keep trout"
+  },
   "advisories": {
     "agency": "Tennessee Department of Environment & Conservation (TDEC)",
     "summary": "Clarksville itself has few direct stream restrictions on the state's main posted list, but parts of the Cumberland River system do carry advisories. Check the current TDEC list before you keep fish to eat.",
@@ -109,6 +113,17 @@
         "Parking",
         "Restrooms",
         "Shade"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.5095&mlon=-87.3712#map=16/36.5095/-87.3712"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
       ]
     },
     {
@@ -137,11 +152,26 @@
       "photos": [
         {
           "file": "American Queen Clarksville Riverfront.jpg",
-          "caption": "The American Queen riverboat at the Clarksville riverfront"
+          "caption": "The American Queen riverboat at the Clarksville riverfront",
+          "artist": "NachoServant",
+          "license": "CC BY-SA 4.0"
         },
         {
           "file": "Cumberland River Swing Bridge.jpg",
-          "caption": "Cumberland River swing bridge, downtown"
+          "caption": "Cumberland River swing bridge, downtown",
+          "artist": "Just an image guy",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.531&mlon=-87.365#map=16/36.531/-87.365"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -167,7 +197,20 @@
       "photos": [
         {
           "file": "Fort Defiance, Clarksville, TN (54).jpg",
-          "caption": "View from Fort Defiance over the confluence"
+          "caption": "View from Fort Defiance over the confluence",
+          "artist": "Amanda Blount, Amandablount2",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.5407&mlon=-87.3722#map=16/36.5407/-87.3722"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -196,11 +239,26 @@
       "photos": [
         {
           "file": "Dunbar Cave.jpg",
-          "caption": "Swan Lake in front of the Dunbar Cave entrance"
+          "caption": "Swan Lake in front of the Dunbar Cave entrance",
+          "artist": "Joe Mojohovits",
+          "license": "Public domain"
         },
         {
           "file": "Dunbar cave sp pano.jpg",
-          "caption": "Dunbar Cave State Park"
+          "caption": "Dunbar Cave State Park",
+          "artist": "Lindsey Boise",
+          "license": "CC BY-SA 2.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.5503&mlon=-87.3039#map=16/36.5503/-87.3039"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -220,7 +278,18 @@
       ],
       "beginnerTip": "Fallen trees (laydowns) hold fish. Cast parallel to the log rather than over it to avoid snags.",
       "access": "Bank; verify public access",
-      "amenities": []
+      "amenities": [],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.5445&mlon=-87.3367#map=16/36.5445/-87.3367"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
     },
     {
       "id": "seed-port-royal",
@@ -245,7 +314,20 @@
       "photos": [
         {
           "file": "A historic trail trace and bridge at Port Royal State Historic Park in Adams, Tennessee (f22ef1eb-31bf-43ec-8b48-5c85c8f8458f).JPG",
-          "caption": "Trail and bridge at Port Royal State Historic Park"
+          "caption": "Trail and bridge at Port Royal State Historic Park",
+          "artist": "National Trails Office (US National Park Service)",
+          "license": "Public domain"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.5547&mlon=-87.1427#map=16/36.5547/-87.1427"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     },
@@ -265,7 +347,18 @@
       ],
       "beginnerTip": "Walk quietly and keep your shadow off the water. Creek fish spook easily.",
       "access": "Limited public access; verify",
-      "amenities": []
+      "amenities": [],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.6002&mlon=-87.3692#map=16/36.6002/-87.3692"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
     },
     {
       "id": "seed-yellow-creek",
@@ -282,7 +375,18 @@
       ],
       "beginnerTip": "Clear water means fish can see your line: 8 lb mono is great here. Use natural colors like the green pumpkin Senko.",
       "access": "Road crossings; verify",
-      "amenities": []
+      "amenities": [],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.3106&mlon=-87.5539#map=16/36.3106/-87.5539"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
     },
     {
       "id": "seed-lock-b",
@@ -303,6 +407,17 @@
       "amenities": [
         "Parking",
         "Boat ramp"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.4928&mlon=-87.34#map=16/36.4928/-87.34"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
       ]
     },
     {
@@ -330,9 +445,23 @@
       "photos": [
         {
           "file": "D-Day vessel navigates through Cheatham Lock - 7996403785.jpg",
-          "caption": "A vessel in Cheatham Lock"
+          "caption": "A vessel in Cheatham Lock",
+          "artist": "U.S. Army Corps of Engineers Nashville District/Fred Tucker",
+          "license": "CC BY-SA 2.0"
+        }
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=36.3207&mlon=-87.2238#map=16/36.3207/-87.2238"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
         }
       ]
     }
-  ]
+  ],
+  "spotsCredit": "Suggested spots, descriptions and tips were written by Claude (an AI assistant made by Anthropic) from general knowledge, with locations checked against OpenStreetMap and Esri aerial imagery. They can be wrong: verify access and rules locally."
 }

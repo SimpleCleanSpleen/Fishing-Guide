@@ -1,12 +1,16 @@
 // Data access layer. Components never talk to Firestore directly; they call these
 // functions, which use Cloud Firestore when Firebase is configured and fall back to
 // browser localStorage in demo mode. Collections:
+//   anglers/{uid}                    your profile ({ username })
 //   anglers/{uid}/catches/{catchId}
-//   anglers/{uid}/spots/{spotId}
+//   anglers/{uid}/spots/{spotId}     private pins
+//   anglerNames/{lowercase name}     claims a unique username ({ uid, name })
+//   trips/{tripId}                   shared by the organizer and invited anglers (members[])
+//   sharedSpots/{spotId}             pins people chose to share, with their username
 // (The Firebase project is shared with Zombie Evac, which uses users/{uid}; the
 // separate top-level collection keeps the two apps' data apart.)
 import {
-  collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc,
+  collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where, writeBatch,
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase/init.js';
 
@@ -43,10 +47,11 @@ const fsDelete = (uid, name, id) => {
   return settle(p);
 };
 
-// Writes that fail after we stopped waiting (e.g. rules rejected them) are logged.
+// Resolve when the server confirms, or after 2 s if we're offline (Firestore keeps the
+// write queued and syncs later). Failures that arrive after that (e.g. rules) are logged.
 function settle(p) {
   p.catch((e) => console.warn('Firestore write failed:', e));
-  return settle(p);
+  return Promise.race([p, new Promise((resolve) => { setTimeout(resolve, 2000); })]);
 }
 
 function stripUndefined(obj) {
@@ -91,6 +96,98 @@ async function lsDelete(uid, name, id) {
   lsWrite(key, lsRead(key).filter((it) => it.id !== id));
 }
 
+// ---------- Usernames, trips & shared spots (Firestore) ----------
+export const USERNAME_RE = /^[A-Za-z0-9_]{3,20}$/;
+const nameId = (name) => name.trim().toLowerCase();
+const withId = (d) => ({ id: d.id, ...d.data(), createdAt: toMillis(d.data().createdAt) });
+
+const fsSocial = {
+  subscribeProfile: (uid, cb, onError) => onSnapshot(doc(db, ROOT, uid), (snap) => cb(snap.data() || {}), onError),
+  async findAngler(name) {
+    const snap = await getDoc(doc(db, 'anglerNames', nameId(name)));
+    return snap.exists() ? snap.data() : null;
+  },
+  async claimUsername(uid, name, oldName) {
+    const taken = await fsSocial.findAngler(name);
+    if (taken && taken.uid !== uid) throw new Error(`@${taken.name} is already taken. Try another name.`);
+    // The rules only accept a name your profile points to, so write both together.
+    const batch = writeBatch(db);
+    batch.set(doc(db, ROOT, uid), { username: name }, { merge: true });
+    if (taken) batch.update(doc(db, 'anglerNames', nameId(name)), { name });
+    else batch.set(doc(db, 'anglerNames', nameId(name)), { uid, name });
+    if (oldName && nameId(oldName) !== nameId(name)) batch.delete(doc(db, 'anglerNames', nameId(oldName)));
+    await batch.commit();
+  },
+  subscribeTrips(uid, cb, onError) {
+    const q = query(collection(db, 'trips'), where('members', 'array-contains', uid));
+    return onSnapshot(q, (snap) => cb(snap.docs.map(withId)), onError);
+  },
+  addTrip(data) {
+    const ref = doc(collection(db, 'trips'));
+    return settle(setDoc(ref, { ...stripUndefined(data), createdAt: serverTimestamp() })).then(() => ref.id);
+  },
+  updateTrip: (id, data) => settle(updateDoc(doc(db, 'trips', id), { ...stripUndefined(data), updatedAt: serverTimestamp() })),
+  setRsvp: (id, uid, status) => settle(updateDoc(doc(db, 'trips', id), { [`rsvp.${uid}`]: status, updatedAt: serverTimestamp() })),
+  deleteTrip: (id) => settle(deleteDoc(doc(db, 'trips', id))),
+  subscribeSharedSpots(locationId, cb, onError) {
+    const q = query(collection(db, 'sharedSpots'), where('locationId', '==', locationId));
+    return onSnapshot(q, (snap) => cb(snap.docs.map(withId)), onError);
+  },
+  addSharedSpot(data) {
+    const ref = doc(collection(db, 'sharedSpots'));
+    return settle(setDoc(ref, { ...stripUndefined(data), createdAt: serverTimestamp() })).then(() => ref.id);
+  },
+  deleteSharedSpot: (id) => settle(deleteDoc(doc(db, 'sharedSpots', id))),
+};
+
+// ---------- Usernames, trips & shared spots (demo mode) ----------
+// One shared list per kind in localStorage; "other anglers" only exist in this browser.
+function lsList(key) {
+  return {
+    read: () => lsRead(key),
+    write: (items) => lsWrite(key, items),
+    subscribe(cb, filter = () => true) {
+      if (!listeners.has(key)) listeners.set(key, new Set());
+      const wrapped = (items) => cb(items.filter(filter));
+      listeners.get(key).add(wrapped);
+      wrapped(lsRead(key));
+      return () => listeners.get(key).delete(wrapped);
+    },
+  };
+}
+const lsNames = lsList('fishguide:names');
+const lsTrips = lsList('fishguide:trips');
+const lsShared = lsList('fishguide:sharedSpots');
+const lsProfiles = lsList('fishguide:profiles');
+
+const lsSocial = {
+  subscribeProfile: (uid, cb) => lsProfiles.subscribe((items) => cb(items.find((p) => p.id === uid) || {})),
+  findAngler: async (name) => lsNames.read().find((n) => n.id === nameId(name)) || null,
+  async claimUsername(uid, name, oldName) {
+    const taken = lsNames.read().find((n) => n.id === nameId(name));
+    if (taken && taken.uid !== uid) throw new Error(`@${taken.name} is already taken. Try another name.`);
+    const keep = lsNames.read().filter((n) => n.id !== nameId(name) && (!oldName || n.id !== nameId(oldName)));
+    lsNames.write([...keep, { id: nameId(name), uid, name }]);
+    lsProfiles.write([...lsProfiles.read().filter((p) => p.id !== uid), { id: uid, username: name }]);
+  },
+  subscribeTrips: (uid, cb) => lsTrips.subscribe(cb, (t) => t.members?.includes(uid)),
+  async addTrip(data) {
+    const id = newId();
+    lsTrips.write([{ ...data, id, createdAt: Date.now() }, ...lsTrips.read()]);
+    return id;
+  },
+  async updateTrip(id, data) { lsTrips.write(lsTrips.read().map((t) => (t.id === id ? { ...t, ...data, updatedAt: Date.now() } : t))); },
+  async setRsvp(id, uid, status) { lsTrips.write(lsTrips.read().map((t) => (t.id === id ? { ...t, rsvp: { ...t.rsvp, [uid]: status } } : t))); },
+  async deleteTrip(id) { lsTrips.write(lsTrips.read().filter((t) => t.id !== id)); },
+  subscribeSharedSpots: (locationId, cb) => lsShared.subscribe(cb, (s) => s.locationId === locationId),
+  async addSharedSpot(data) {
+    const id = newId();
+    lsShared.write([{ ...data, id, createdAt: Date.now() }, ...lsShared.read()]);
+    return id;
+  },
+  async deleteSharedSpot(id) { lsShared.write(lsShared.read().filter((s) => s.id !== id)); },
+};
+
 // ---------- Public API ----------
 const impl = isFirebaseConfigured
   ? { subscribe: fsSubscribe, add: fsAdd, update: fsUpdate, remove: fsDelete }
@@ -105,3 +202,21 @@ export const subscribeSpots = (uid, cb, onError) => impl.subscribe(uid, 'spots',
 export const addSpot = (uid, data) => impl.add(uid, 'spots', data);
 export const updateSpot = (uid, id, data) => impl.update(uid, 'spots', id, data);
 export const deleteSpot = (uid, id) => impl.remove(uid, 'spots', id);
+
+const social = isFirebaseConfigured ? fsSocial : lsSocial;
+export const subscribeProfile = (uid, cb, onError) => social.subscribeProfile(uid, cb, onError);
+export const findAngler = (name) => social.findAngler(name);
+export function claimUsername(uid, name, oldName) {
+  if (!USERNAME_RE.test(name)) return Promise.reject(new Error('Use 3-20 letters, numbers or underscores.'));
+  return social.claimUsername(uid, name.trim(), oldName);
+}
+
+export const subscribeTrips = (uid, cb, onError) => social.subscribeTrips(uid, cb, onError);
+export const addTrip = (data) => social.addTrip(data);
+export const updateTrip = (id, data) => social.updateTrip(id, data);
+export const setRsvp = (id, uid, status) => social.setRsvp(id, uid, status);
+export const deleteTrip = (id) => social.deleteTrip(id);
+
+export const subscribeSharedSpots = (locationId, cb, onError) => social.subscribeSharedSpots(locationId, cb, onError);
+export const addSharedSpot = (data) => social.addSharedSpot(data);
+export const deleteSharedSpot = (id) => social.deleteSharedSpot(id);

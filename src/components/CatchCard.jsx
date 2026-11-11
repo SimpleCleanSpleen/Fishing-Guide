@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SPECIES, TIME_LABELS } from '../data/species.js';
+import FishIcon from './FishIcon.jsx';
 import { fmtDate, fmtWeight } from '../utils/time.js';
 
 export default function CatchCard({ c, onDelete, compact = false }) {
@@ -9,7 +10,7 @@ export default function CatchCard({ c, onDelete, compact = false }) {
       <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-river-50">
         {c.photo
           ? <img src={c.photo} alt={`${c.species} catch`} className="h-full w-full object-cover" loading="lazy" />
-          : <div className="flex h-full items-center justify-center text-3xl" aria-hidden>{sp.emoji}</div>}
+          : <div className="flex h-full items-center justify-center p-1"><FishIcon name={c.species} size={72} /></div>}
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">

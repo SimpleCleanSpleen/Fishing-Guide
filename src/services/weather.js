@@ -130,3 +130,42 @@ export function compass(deg) {
   if (deg == null) return '';
   return ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round(deg / 45) % 8];
 }
+
+// Weather for a planned trip: the day's summary plus the hour you plan to arrive.
+// Open-Meteo forecasts 16 days out; past that (or for past dates) this returns null
+// and the trip planner falls back to seasonal patterns.
+export async function getTripWeather({ lat, lng }, dateISO, hhmm, tz = DEFAULT_TZ) {
+  const ahead = daysBetween(todayISO(), dateISO);
+  if (ahead < 0 || ahead > 15) return null;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${r2(lat)}&longitude=${r2(lng)}`
+    + `&start_date=${dateISO}&end_date=${dateISO}`
+    + `&hourly=${HOURLY_VARS},precipitation_probability`
+    + '&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max,weather_code,wind_speed_10m_max'
+    + `&${UNITS}&timezone=${encodeURIComponent(tz)}`;
+  const { data, fetchedAt } = await cachedFetchJson(`trip:${r2(lat)},${r2(lng)}:${dateISO}`, url, 2 * 60 * 60 * 1000);
+  const d = data.daily;
+  const h = data.hourly;
+  const hour = Number((hhmm || '07:00').split(':')[0]);
+  const i = Math.max(0, h.time.indexOf(`${dateISO}T${String(hour).padStart(2, '0')}:00`));
+  return {
+    fetchedAt,
+    daysAhead: ahead,
+    sunrise: d.sunrise[0],
+    sunset: d.sunset[0],
+    hiF: d.temperature_2m_max[0],
+    loF: d.temperature_2m_min[0],
+    rainChance: d.precipitation_probability_max[0],
+    uv: d.uv_index_max[0],
+    maxWindMph: d.wind_speed_10m_max[0],
+    weatherCode: d.weather_code[0],
+    atHour: {
+      tempF: h.temperature_2m[i],
+      windMph: h.wind_speed_10m[i],
+      cloudCover: h.cloud_cover[i],
+      rainChance: h.precipitation_probability?.[i],
+      pressureInHg: hPaToInHg(h.pressure_msl[i]),
+      pressureTrend: pressureTrend(h.pressure_msl[i], h.pressure_msl[i - 3]),
+      weatherCode: h.weather_code[i],
+    },
+  };
+}
