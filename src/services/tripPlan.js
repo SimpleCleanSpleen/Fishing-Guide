@@ -137,18 +137,43 @@ export function tripOutlook(fish, weather) {
 }
 
 // Calendar file so everyone can add the trip to their phone's calendar.
-// Times are written as local wall-clock time in the trip's timezone (TZID).
-export function tripIcs(trip, placeName, tz = 'America/New_York') {
+// Times are written as local wall-clock time in the trip's timezone (TZID). Two alarms act
+// as reminders: 7 PM the evening before, and an hour before the start.
+export function tripIcs(trip, placeName, tz = 'America/New_York', url = '') {
   const start = tripDate(trip);
   const end = new Date(start.getTime() + (Number(trip.hours) || 3) * 3600 * 1000);
   const z = (n) => String(n).padStart(2, '0');
   const local = (d) => `${d.getFullYear()}${z(d.getMonth() + 1)}${z(d.getDate())}T${z(d.getHours())}${z(d.getMinutes())}00`;
   const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   const esc = (t) => String(t || '').replace(/[\\,;]/g, (c) => `\\${c}`).replace(/\n/g, '\\n');
+  const eveBefore = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 1, 19, 0);
+  const minsBefore = Math.max(60, Math.round((start - eveBefore) / 60000));
+  const alarm = (mins, text) => ['BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${esc(text)}`, `TRIGGER:-PT${mins}M`, 'END:VALARM'];
+  const details = [trip.notes, url && `Forecast, packing list & chat: ${url}`].filter(Boolean).join('\n\n');
   return [
     'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Fishing Guide//Trips//EN', 'BEGIN:VEVENT',
     `UID:${trip.id}@fishing-guide`, `DTSTAMP:${fmt(new Date())}`, `DTSTART;TZID=${tz}:${local(start)}`, `DTEND;TZID=${tz}:${local(end)}`,
-    `SUMMARY:${esc(`🎣 ${trip.title}`)}`, `LOCATION:${esc(placeName)}`, `DESCRIPTION:${esc(trip.notes)}`,
+    `SUMMARY:${esc(`🎣 ${trip.title}`)}`, `LOCATION:${esc(placeName)}`, `DESCRIPTION:${esc(details)}`,
+    ...(url ? [`URL:${url}`] : []),
+    ...alarm(minsBefore, `Tomorrow: ${trip.title}. Check the forecast and pack your gear!`),
+    ...alarm(60, `${trip.title} starts in 1 hour`),
     'END:VEVENT', 'END:VCALENDAR',
   ].join('\r\n');
+}
+
+// "Add to Google Calendar" link (Google applies the user's default reminders).
+export function tripGoogleCalendarUrl(trip, placeName, tz, url = '') {
+  const start = tripDate(trip);
+  const end = new Date(start.getTime() + (Number(trip.hours) || 3) * 3600 * 1000);
+  const z = (n) => String(n).padStart(2, '0');
+  const local = (d) => `${d.getFullYear()}${z(d.getMonth() + 1)}${z(d.getDate())}T${z(d.getHours())}${z(d.getMinutes())}00`;
+  const p = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: `🎣 ${trip.title}`,
+    dates: `${local(start)}/${local(end)}`,
+    ctz: tz,
+    location: placeName,
+    details: [trip.notes, url && `Forecast, packing list & chat: ${url}`].filter(Boolean).join('\n\n'),
+  });
+  return `https://calendar.google.com/calendar/render?${p}`;
 }

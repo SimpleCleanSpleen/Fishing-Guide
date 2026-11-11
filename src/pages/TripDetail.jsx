@@ -9,7 +9,7 @@ import { useData } from '../context/DataContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
 import { getLocation } from '../data/locations/index.js';
 import { deleteTrip } from '../services/repository.js';
-import { tripDate, tripIcs } from '../services/tripPlan.js';
+import { tripDate, tripGoogleCalendarUrl, tripIcs } from '../services/tripPlan.js';
 import { fmtClock, todayISO } from '../utils/time.js';
 import { RSVP, RsvpButtons } from './Trips.jsx';
 
@@ -50,8 +50,10 @@ function TripView({ trip }) {
   const dirTo = trip.lat != null ? `${trip.lat}%2C${trip.lng}` : `${loc.center.lat}%2C${loc.center.lng}`;
   const end = new Date(d.getTime() + (trip.hours || 3) * 3600 * 1000);
 
+  const tripUrl = `${window.location.origin}${window.location.pathname}#/trips/${trip.id}`;
+
   function downloadIcs() {
-    const blob = new Blob([tripIcs(trip, placeName, loc.timezone)], { type: 'text/calendar' });
+    const blob = new Blob([tripIcs(trip, placeName, loc.timezone, tripUrl)], { type: 'text/calendar' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = `${trip.title.replace(/[^\w-]+/g, '-').toLowerCase() || 'fishing-trip'}.ics`;
@@ -94,7 +96,8 @@ function TripView({ trip }) {
         <div className="mt-3 flex flex-wrap gap-2">
           <a href={`https://www.openstreetmap.org/directions?to=${dirTo}`} target="_blank" rel="noreferrer" className="btn-secondary px-3 py-2">Directions ↗</a>
           {trip.spotId && <button type="button" onClick={() => { setLocationId(trip.locationId); navigate('/map'); }} className="btn-secondary px-3 py-2">🗺️ Map</button>}
-          <button type="button" onClick={downloadIcs} className="btn-secondary px-3 py-2">📅 Add to calendar</button>
+          <button type="button" onClick={downloadIcs} className="btn-secondary px-3 py-2" title="Includes reminders the evening before and 1 hour before">📅 Calendar + reminders</button>
+          <a href={tripGoogleCalendarUrl(trip, placeName, loc.timezone, tripUrl)} target="_blank" rel="noreferrer" className="btn-secondary px-3 py-2">Google Calendar ↗</a>
           {isOwner && <Link to={`/trips/${trip.id}/edit`} className="btn-secondary px-3 py-2">✏️ Edit</Link>}
           {isOwner && <button type="button" onClick={cancel} className="btn-secondary px-3 py-2 text-rose-600">Cancel trip</button>}
         </div>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import ConditionsCard from '../components/ConditionsCard.jsx';
 import FishIcon from '../components/FishIcon.jsx';
+import UpcomingTrip from '../components/UpcomingTrip.jsx';
 import { useTackle } from '../utils/useTackle.js';
 import RiverCard from '../components/RiverCard.jsx';
 import CatchCard from '../components/CatchCard.jsx';
@@ -37,6 +38,8 @@ export default function Home() {
         </h1>
         <p className="text-sm text-slate-500">Your fishing guide for {location.name} · {location.region}</p>
       </div>
+
+      <UpcomingTrip />
 
       <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         <ConditionsCard forecast={forecast} moon={moon} gauge={gauges.data?.sites?.[0]} locationName={location.name} />
