@@ -1,10 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useAuth } from './AuthContext.jsx';
 import { useLocation } from './LocationContext.jsx';
 import { subscribeCatches, subscribeSharedSpots, subscribeSpots, subscribeTrips } from '../services/repository.js';
 import { LOCATIONS } from '../data/locations/index.js';
 
 const DataContext = createContext(null);
+const CHAT_SEEN_KEY = 'fishguide:chatSeen';
 const ALL_SEED_SPOTS = LOCATIONS.flatMap((l) => l.spots.map((s) => ({ ...s, locationId: l.id })));
 
 export function DataProvider({ children }) {
@@ -15,6 +16,18 @@ export function DataProvider({ children }) {
   const [sharedSpots, setSharedSpots] = useState([]);
   const [trips, setTrips] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  // When you last read each trip's chat (this device only): { tripId: millis }.
+  const [chatSeen, setChatSeen] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(CHAT_SEEN_KEY)) || {}; } catch { return {}; }
+  });
+  const markChatSeen = useCallback((tripId, at) => {
+    setChatSeen((s) => {
+      if ((s[tripId] || 0) >= at) return s;
+      const next = { ...s, [tripId]: at };
+      try { localStorage.setItem(CHAT_SEEN_KEY, JSON.stringify(next)); } catch { /* storage off */ }
+      return next;
+    });
+  }, []);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -53,11 +66,14 @@ export function DataProvider({ children }) {
       allSpots: [...location.spots, ...mine, ...community],
       spotById: (id) => everySpot.find((s) => s.id === id),
       trips: [...trips].sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`)),
+      unreadChat: (t) => !!t.lastMessage && t.lastMessage.uid !== user?.uid && t.lastMessage.at > (chatSeen[t.id] || 0),
+      unreadChats: trips.filter((t) => t.lastMessage && t.lastMessage.uid !== user?.uid && t.lastMessage.at > (chatSeen[t.id] || 0)).length,
+      markChatSeen,
       pendingInvites: trips.filter((t) => t.ownerUid !== user?.uid && !['going', 'maybe', 'declined'].includes(t.rsvp?.[user?.uid])).length,
       loaded,
       error,
     };
-  }, [catches, customSpots, sharedSpots, trips, user, loaded, error, location]);
+  }, [catches, customSpots, sharedSpots, trips, user, loaded, error, location, chatSeen, markChatSeen]);
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

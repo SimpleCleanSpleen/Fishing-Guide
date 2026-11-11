@@ -10,11 +10,13 @@ import { describeWeather, getTripWeather } from '../services/weather.js';
 import { TIME_LABELS } from '../data/species.js';
 import { fmtClock, todayISO } from '../utils/time.js';
 import { useAsync } from '../utils/useAsync.js';
+import { useTackle } from '../utils/useTackle.js';
 
 // Everything the planner predicts for a trip: weather (when it's within the 16-day
 // forecast window), which fish should be active, and what to pack.
 export function useTripForecast(trip) {
   const { allCatches } = useData();
+  const tackle = useTackle();
   const location = getLocation(trip.locationId);
   const lat = trip.lat ?? location.center.lat;
   const lng = trip.lng ?? location.center.lng;
@@ -34,10 +36,11 @@ export function useTripForecast(trip) {
       weatherLoading: wx.loading,
       fish,
       outlook: tripOutlook(fish, weather),
-      supplies: tripSupplies(trip, fish, weather, location),
+      supplies: tripSupplies(trip, fish, weather, location, tackle),
+      tackle,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trip.date, trip.time, trip.locationId, (trip.spotSpecies || []).join(), allCatches, weather, wx.loading, valid]);
+  }, [trip.date, trip.time, trip.locationId, (trip.spotSpecies || []).join(), allCatches, weather, wx.loading, valid, tackle]);
 }
 
 export function WeatherSummary({ forecast, date }) {
@@ -94,7 +97,7 @@ export function FishForecast({ forecast, limit = 6 }) {
                 <FishIcon name={r.name} size={48} className="shrink-0" />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-medium">{r.name}</span>
-                  <span className="block truncate text-xs text-slate-500">{r.atSpot && <span className="text-river-700">📍 Here · </span>}Try: {r.sp.baits.slice(0, 2).join(' or ') || 'local bait'}</span>
+                  <span className="block truncate text-xs text-slate-500">{r.atSpot && <span className="text-river-700">📍 Here · </span>}Try: {r.sp.baits.slice(0, 2).map(forecast.tackle.bait).join(' or ') || 'local bait'}</span>
                 </span>
                 <span className="h-2 w-16 overflow-hidden rounded-full bg-slate-100" aria-hidden>
                   <span className="block h-full rounded-full bg-river-500" style={{ width: `${Math.min(100, r.score * 100)}%` }} />
@@ -137,7 +140,7 @@ export function SupplyList({ forecast, tripId }) {
                     {tripId && <input type="checkbox" className="mt-1" checked={!!packed[it.id]} onChange={(e) => setPacked((p) => ({ ...p, [it.id]: e.target.checked }))} />}
                     <span aria-hidden>{it.icon}</span>
                     <span className="min-w-0">
-                      {it.gearId ? <Link to="/learn/gear" title="In your tackle box: see how to use it" className="font-medium text-slate-800 hover:underline">{it.name}</Link> : <span className="font-medium text-slate-800">{it.name}</span>}
+                      {it.gearId ? <Link to="/learn/gear" title="See how to use it" className="font-medium text-slate-800 hover:underline">{it.name}</Link> : <span className="font-medium text-slate-800">{it.name}</span>}
                       {it.why && <span className="block text-xs text-slate-500 no-underline">{it.why}</span>}
                     </span>
                   </label>

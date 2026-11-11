@@ -7,7 +7,8 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useData } from '../context/DataContext.jsx';
 import SpotOptions from '../components/SpotOptions.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
-import { MY_BAITS, SPECIES_NAMES } from '../data/species.js';
+import { SPECIES_NAMES } from '../data/species.js';
+import { useTackle } from '../utils/useTackle.js';
 import { addCatch, updateCatch } from '../services/repository.js';
 import { compressImage } from '../services/image.js';
 import { buildConditions } from '../services/enrich.js';
@@ -27,6 +28,7 @@ const EMPTY = {
 };
 
 function LogCatchForm() {
+  const { quickBaits } = useTackle();
   const { id } = useParams();
   const [params] = useSearchParams();
   const navigate = useNavigate();
@@ -47,7 +49,7 @@ function LogCatchForm() {
     loadedId.current = existing.id;
     const lbNum = +existing.weightLb || 0;
     const known = SPECIES_NAMES.includes(existing.species);
-    const knownBait = MY_BAITS.includes(existing.bait);
+    const knownBait = quickBaits.includes(existing.bait);
     setForm({
       ...EMPTY,
       species: known ? existing.species : 'Other',
@@ -183,7 +185,7 @@ function LogCatchForm() {
             <InfoTip>Logging the bait every time is what lets Insights find your most successful bait for each fish.</InfoTip>
           </label>
           <div className="flex flex-wrap gap-2">
-            {MY_BAITS.map((b) => (
+            {quickBaits.map((b) => (
               <button
                 type="button"
                 key={b}

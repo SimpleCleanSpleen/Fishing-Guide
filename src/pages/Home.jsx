@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import ConditionsCard from '../components/ConditionsCard.jsx';
 import FishIcon from '../components/FishIcon.jsx';
+import { useTackle } from '../utils/useTackle.js';
 import RiverCard from '../components/RiverCard.jsx';
 import CatchCard from '../components/CatchCard.jsx';
 import InfoTip from '../components/InfoTip.jsx';
@@ -16,6 +17,7 @@ import { GLOSSARY } from '../data/basics.js';
 import { fmtWeight } from '../utils/time.js';
 
 export default function Home() {
+  const tackle = useTackle();
   const { user } = useAuth();
   const { location } = useLocation();
   const { catches } = useData();
@@ -57,7 +59,7 @@ export default function Home() {
                     <FishIcon name={r.name} size={44} className="shrink-0" />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-medium">{r.name}{r.caught && <span className="ml-1 text-xs text-emerald-600" title="You've caught this species">✓</span>}</span>
-                      <span className="block truncate text-xs text-slate-500">Try: {r.sp.baits[0]}</span>
+                      <span className="block truncate text-xs text-slate-500">Try: {tackle.bait(r.sp.baits[0])}</span>
                     </span>
                     <Badge tone={a.tone}>{a.label}</Badge>
                   </Link>
@@ -101,7 +103,7 @@ export default function Home() {
 
       <div className="grid gap-3 sm:grid-cols-3">
         <LinkCard to="/learn/basics" icon="🎯" title="Fishing Basics">Casting, hook sets, handling and release.</LinkCard>
-        <LinkCard to="/learn/gear" icon="🧰" title="My Tackle Box">When & how to use every item you own.</LinkCard>
+        <LinkCard to="/learn/gear" icon="🧰" title={tackle.boxName}>{tackle.personal ? 'When & how to use every item you own.' : 'What to buy first and how to rig it.'}</LinkCard>
         <LinkCard to="/learn/safety" icon="⚠️" title="Safety, Advisories & Rules">Fish consumption advisories and license info.</LinkCard>
       </div>
     </div>

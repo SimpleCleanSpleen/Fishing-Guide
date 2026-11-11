@@ -2,22 +2,29 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import InfoTip from '../components/InfoTip.jsx';
 import { Callout, PageHeader } from '../components/ui.jsx';
-import { GEAR, GEAR_CATEGORIES } from '../data/gear.js';
+import { GEAR_CATEGORIES } from '../data/gear.js';
+import { useTackle } from '../utils/useTackle.js';
 
 export default function GearGuide() {
+  const tackle = useTackle();
   const [cat, setCat] = useState('All');
   const [open, setOpen] = useState(() => new Set(['rod-reel']));
-  const items = GEAR.filter((g) => cat === 'All' || g.category === cat);
+  const items = tackle.gear.filter((g) => cat === 'All' || g.category === cat);
   const toggle = (id) => setOpen((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
   return (
     <div className="space-y-4">
       <Link to="/learn" className="text-sm font-medium text-river-700">← Learn</Link>
-      <PageHeader title="My Tackle Box" subtitle="When and how to use every piece of gear you own." />
+      <PageHeader title={tackle.boxName} subtitle={tackle.personal ? 'When and how to use every piece of gear you own.' : 'A simple beginner kit: what each piece is for, when to use it and how to rig it.'} />
 
       <Callout icon="🧭" title="Two setups to start with">
-        <b>Panfish & trout:</b> Trout Magnet under a bobber (or worm on the Aberdeen #8). <b>Bass:</b> Texas-rigged or weightless
-        Senko on the EWG 3/0. Rig one, and if nothing bites in 20-30 minutes, switch or move.
+        {tackle.personal ? (
+          <><b>Panfish & trout:</b> Trout Magnet under a bobber (or worm on the Aberdeen #8). <b>Bass:</b> Texas-rigged or weightless
+          Senko on the EWG 3/0.</>
+        ) : (
+          <><b>Panfish & trout:</b> a small jig or a piece of worm on a size 8 hook under a float. <b>Bass:</b> a Texas-rigged or
+          weightless soft plastic stick worm on a 3/0 worm hook.</>
+        )}{' '}Rig one, and if nothing bites in 20-30 minutes, switch or move.
       </Callout>
 
       <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">

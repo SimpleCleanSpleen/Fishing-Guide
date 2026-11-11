@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import RequireAuth from '../components/RequireAuth.jsx';
+import TripChat from '../components/TripChat.jsx';
 import { FishForecast, SupplyList, useTripForecast, WeatherSummary } from '../components/TripForecast.jsx';
 import { Badge, Callout } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -113,6 +114,8 @@ function TripView({ trip }) {
           ))}
         </ul>
       </section>
+
+      <TripChat trip={trip} />
 
       {forecast && (
         <>

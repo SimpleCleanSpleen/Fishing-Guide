@@ -175,15 +175,3 @@ export const SPECIES = {
 };
 
 export const SPECIES_NAMES = Object.keys(SPECIES);
-
-// Baits from your tackle box (used for the log form's quick picks).
-export const MY_BAITS = [
-  'Leland Trout Magnet (Neon)',
-  'PowerBait Trout Dough (Garlic/Chartreuse)',
-  '5" Yamamoto Senko - Texas rig',
-  '5" Yamamoto Senko - Weightless/Wacky',
-  'Spinnerbait',
-  'Live worm on Aberdeen #8',
-  'Nightcrawler (bottom rig)',
-  'Other',
-];

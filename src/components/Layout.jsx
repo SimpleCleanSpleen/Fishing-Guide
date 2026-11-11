@@ -14,11 +14,12 @@ const NAV = [
   { to: '/journal', label: 'Journal', icon: '📓' },
 ];
 
-// Red dot with the number of trip invitations you haven't answered yet.
+// Red dot: trip invitations you haven't answered plus trips with unread chat messages.
 function InviteBadge({ className = '' }) {
-  const { pendingInvites } = useData();
-  if (!pendingInvites) return null;
-  return <span className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-bold leading-none text-white ${className}`}>{pendingInvites}</span>;
+  const { pendingInvites, unreadChats } = useData();
+  const n = pendingInvites + unreadChats;
+  if (!n) return null;
+  return <span className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-bold leading-none text-white ${className}`}>{n}</span>;
 }
 
 function UsernameNudge() {

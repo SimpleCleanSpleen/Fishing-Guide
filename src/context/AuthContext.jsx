@@ -7,6 +7,7 @@ import {
 } from 'firebase/auth';
 import { auth, googleProvider, isFirebaseConfigured } from '../firebase/init.js';
 import { subscribeProfile } from '../services/repository.js';
+import { isOwnerEmail } from '../data/tackle.js';
 
 const AuthContext = createContext(null);
 const DEMO_USER = { uid: 'demo-user', displayName: 'Demo Angler', email: null, photoURL: null, isDemo: true };
@@ -17,6 +18,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [profile, setProfile] = useState(null); // { username } once loaded
+  const [personalGear, setPersonalGear] = useState(false); // the app owner's own tackle box
 
   useEffect(() => {
     if (!isFirebaseConfigured) {
@@ -32,6 +34,13 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
+  useEffect(() => {
+    let alive = true;
+    setPersonalGear(false);
+    isOwnerEmail(user?.email).then((yes) => alive && setPersonalGear(yes)).catch(() => {});
+    return () => { alive = false; };
+  }, [user?.email]);
+
   // Your username lives in your angler profile; other anglers use it to invite you.
   useEffect(() => {
     if (!user) { setProfile(null); return undefined; }
@@ -42,6 +51,7 @@ export function AuthProvider({ children }) {
     user,
     profile,
     username: profile?.username || null,
+    personalGear,
     loading,
     error,
     isDemo: !isFirebaseConfigured,
@@ -73,7 +83,7 @@ export function AuthProvider({ children }) {
       }
       await fbSignOut(auth);
     },
-  }), [user, profile, loading, error]);
+  }), [user, profile, personalGear, loading, error]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

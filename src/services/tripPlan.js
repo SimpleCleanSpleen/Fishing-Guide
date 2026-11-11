@@ -2,7 +2,7 @@
 // build a packing list from the target fish, the weather and the time of day.
 import { bitingNow } from './bitingNow.js';
 import { moonPhase } from './moon.js';
-import { GEAR } from '../data/gear.js';
+import { tackleFor } from '../data/tackle.js';
 import { timeOfDay } from '../utils/time.js';
 
 // Parse "YYYY-MM-DD" + "HH:MM" as local time (new Date(iso) would be UTC midnight).
@@ -32,8 +32,6 @@ export function tripFish(trip, location, spot, catches, weather) {
   return { bucket, moon, rows: ranked };
 }
 
-const gear = (id) => GEAR.find((g) => g.id === id);
-
 // Map a species' bait strings onto tackle-box items, or a shopping item if you don't own it.
 const BAIT_TO_GEAR = [
   [/senko/i, 'senko'], [/spinnerbait/i, 'spinnerbait'], [/trout magnet/i, 'trout-magnet'],
@@ -42,7 +40,9 @@ const BAIT_TO_GEAR = [
 const BAIT_SHOP = /nightcrawler|live worm|minnow|shad|cut bait|chicken liver|bloodworm|shrimp|corn|bluegill/i;
 
 // Build the packing list. Each item: { id, name, icon, why, group, gearId?, buy? }
-export function tripSupplies(trip, fish, weather, location) {
+// `tackle` (from useTackle) decides between the owner's exact gear and a generic kit.
+export function tripSupplies(trip, fish, weather, location, tackle = tackleFor(false)) {
+  const gear = (id) => tackle.gear.find((g) => g.id === id);
   const items = new Map();
   const add = (id, group, name, icon, why, extra = {}) => {
     if (!items.has(id)) items.set(id, { id, group, name, icon, why, ...extra });

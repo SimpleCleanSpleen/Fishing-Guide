@@ -100,10 +100,29 @@ service cloud.firestore {
           && request.resource.data.ownerUid == request.auth.uid
           && validTrip(request.resource.data))
         || (request.auth.uid in resource.data.members
-          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rsvp', 'updatedAt'])
-          && request.resource.data.rsvp.diff(resource.data.rsvp).affectedKeys().hasOnly([request.auth.uid])
-          && request.resource.data.rsvp[request.auth.uid] in ['going', 'maybe', 'declined']));
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rsvp', 'updatedAt', 'lastMessage'])
+          && (request.resource.data.rsvp == resource.data.rsvp
+            || (request.resource.data.rsvp.diff(resource.data.rsvp).affectedKeys().hasOnly([request.auth.uid])
+              && request.resource.data.rsvp[request.auth.uid] in ['going', 'maybe', 'declined']))
+          && (!('lastMessage' in request.resource.data)
+            || request.resource.data.get('lastMessage', {}) == resource.data.get('lastMessage', {})
+            || request.resource.data.lastMessage.uid == request.auth.uid)));
       allow delete: if signedIn() && resource.data.ownerUid == request.auth.uid;
+
+      // Trip chat: every member can read and post (as themselves). You can delete your
+      // own messages; the organizer can delete any (used when cancelling the trip).
+      match /messages/{msgId} {
+        function trip() { return get(/databases/$(database)/documents/trips/$(tripId)).data; }
+        allow read: if signedIn() && request.auth.uid in trip().members;
+        allow create: if signedIn() && request.auth.uid in trip().members
+          && request.resource.data.keys().hasOnly(['uid', 'name', 'text', 'createdAt'])
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.name is string && request.resource.data.name.size() <= 40
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 1000
+          && request.resource.data.createdAt == request.time;
+        allow delete: if signedIn() && (resource.data.uid == request.auth.uid || trip().ownerUid == request.auth.uid);
+      }
     }
 
     // Spots anglers chose to share. Anyone can see them; only the owner can change them.

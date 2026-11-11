@@ -6,6 +6,7 @@ import { useData } from '../context/DataContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
 import { MONTHS, SPECIES, TIME_BUCKETS, TIME_LABELS } from '../data/species.js';
 import { IDENTIFY } from '../data/identify.js';
+import { useTackle } from '../utils/useTackle.js';
 import { SpeciesInsightPanel } from './Insights.jsx';
 
 export default function FishDetail() {
@@ -14,6 +15,7 @@ export default function FishDetail() {
   const { location } = useLocation();
   const { catches, seedSpots } = useData();
   const sp = SPECIES[name] || SPECIES.Other;
+  const tackle = useTackle();
   const id = IDENTIFY[name];
   const where = seedSpots.filter((s) => s.species?.some((x) => x === name || (name.includes('Catfish') && x === 'Catfish')));
   const now = new Date().getMonth();
@@ -37,8 +39,8 @@ export default function FishDetail() {
         </section>
 
         <section className="card space-y-2 text-sm">
-          <h2 className="font-semibold">Best baits from your tackle box</h2>
-          <ul className="list-disc space-y-1 pl-5">{sp.baits.map((b) => <li key={b}>{b}</li>)}</ul>
+          <h2 className="font-semibold">{tackle.personal ? 'Best baits from your tackle box' : 'Best baits to try'}</h2>
+          <ul className="list-disc space-y-1 pl-5">{sp.baits.map((b) => <li key={b}>{tackle.bait(b)}</li>)}</ul>
           <Link to="/learn/gear" className="font-medium text-river-700">How to rig them →</Link>
         </section>
       </div>

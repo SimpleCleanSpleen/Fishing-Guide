@@ -75,6 +75,7 @@ function TripList() {
 
 function TripRow({ t, invite }) {
   const { user } = useAuth();
+  const { unreadChat } = useData();
   const d = tripDate(t);
   const mine = t.rsvp?.[user.uid];
   const going = Object.values(t.rsvp || {}).filter((s) => s === 'going').length;
@@ -93,7 +94,13 @@ function TripRow({ t, invite }) {
           <span className="block truncate text-xs text-slate-400">
             {t.ownerUid === user.uid ? 'You organized' : `From @${t.ownerName}`} · {going} going · {t.members.length} invited
           </span>
+          {t.lastMessage && (
+            <span className={`block truncate text-xs ${unreadChat(t) ? 'font-semibold text-river-800' : 'text-slate-400'}`}>
+              💬 {t.lastMessage.uid === user.uid ? 'You' : `@${t.lastMessage.name}`}: {t.lastMessage.text}
+            </span>
+          )}
         </span>
+        {unreadChat(t) && <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-rose-600" title="New messages" />}
         {!invite && mine && RSVP[mine] && t.ownerUid !== user.uid && <Badge tone={RSVP[mine].tone}>{RSVP[mine].label}</Badge>}
       </Link>
       {invite && <RsvpButtons trip={t} className="border-t border-slate-100 px-3 py-2" />}

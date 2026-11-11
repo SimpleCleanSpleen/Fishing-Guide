@@ -6,11 +6,12 @@
 //   anglers/{uid}/spots/{spotId}     private pins
 //   anglerNames/{lowercase name}     claims a unique username ({ uid, name })
 //   trips/{tripId}                   shared by the organizer and invited anglers (members[])
+//   trips/{tripId}/messages/{msgId}  trip chat, readable by the trip's members
 //   sharedSpots/{spotId}             pins people chose to share, with their username
 // (The Firebase project is shared with Zombie Evac, which uses users/{uid}; the
 // separate top-level collection keeps the two apps' data apart.)
 import {
-  collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where, writeBatch,
+  collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where, writeBatch,
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase/init.js';
 
@@ -128,7 +129,30 @@ const fsSocial = {
   },
   updateTrip: (id, data) => settle(updateDoc(doc(db, 'trips', id), { ...stripUndefined(data), updatedAt: serverTimestamp() })),
   setRsvp: (id, uid, status) => settle(updateDoc(doc(db, 'trips', id), { [`rsvp.${uid}`]: status, updatedAt: serverTimestamp() })),
-  deleteTrip: (id) => settle(deleteDoc(doc(db, 'trips', id))),
+  async deleteTrip(id) {
+    // Remove the chat first: the rules check trip ownership, which needs the trip to exist.
+    const msgs = await getDocs(collection(db, 'trips', id, 'messages'));
+    for (let i = 0; i < msgs.docs.length; i += 400) {
+      const batch = writeBatch(db);
+      msgs.docs.slice(i, i + 400).forEach((m) => batch.delete(m.ref));
+      await batch.commit();
+    }
+    return settle(deleteDoc(doc(db, 'trips', id)));
+  },
+  subscribeMessages(tripId, cb, onError) {
+    const q = query(collection(db, 'trips', tripId, 'messages'), orderBy('createdAt', 'desc'), limit(200));
+    return onSnapshot(q, (snap) => cb(snap.docs.map(withId).reverse()), onError);
+  },
+  async sendMessage(tripId, { uid, name, text }) {
+    const ref = doc(collection(db, 'trips', tripId, 'messages'));
+    const at = Date.now();
+    const batch = writeBatch(db);
+    batch.set(ref, { uid, name, text, createdAt: serverTimestamp() });
+    // A preview on the trip itself powers the "new messages" badge without extra reads.
+    batch.update(doc(db, 'trips', tripId), { lastMessage: { uid, name, text: text.slice(0, 80), at } });
+    return settle(batch.commit());
+  },
+  deleteMessage: (tripId, id) => settle(deleteDoc(doc(db, 'trips', tripId, 'messages', id))),
   subscribeSharedSpots(locationId, cb, onError) {
     const q = query(collection(db, 'sharedSpots'), where('locationId', '==', locationId));
     return onSnapshot(q, (snap) => cb(snap.docs.map(withId)), onError);
@@ -159,6 +183,7 @@ const lsNames = lsList('fishguide:names');
 const lsTrips = lsList('fishguide:trips');
 const lsShared = lsList('fishguide:sharedSpots');
 const lsProfiles = lsList('fishguide:profiles');
+const lsMessages = lsList('fishguide:tripMessages');
 
 const lsSocial = {
   subscribeProfile: (uid, cb) => lsProfiles.subscribe((items) => cb(items.find((p) => p.id === uid) || {})),
@@ -178,7 +203,17 @@ const lsSocial = {
   },
   async updateTrip(id, data) { lsTrips.write(lsTrips.read().map((t) => (t.id === id ? { ...t, ...data, updatedAt: Date.now() } : t))); },
   async setRsvp(id, uid, status) { lsTrips.write(lsTrips.read().map((t) => (t.id === id ? { ...t, rsvp: { ...t.rsvp, [uid]: status } } : t))); },
-  async deleteTrip(id) { lsTrips.write(lsTrips.read().filter((t) => t.id !== id)); },
+  async deleteTrip(id) {
+    lsMessages.write(lsMessages.read().filter((m) => m.tripId !== id));
+    lsTrips.write(lsTrips.read().filter((t) => t.id !== id));
+  },
+  subscribeMessages: (tripId, cb) => lsMessages.subscribe(cb, (m) => m.tripId === tripId),
+  async sendMessage(tripId, { uid, name, text }) {
+    const at = Date.now();
+    lsMessages.write([...lsMessages.read(), { id: newId(), tripId, uid, name, text, createdAt: at }]);
+    lsTrips.write(lsTrips.read().map((t) => (t.id === tripId ? { ...t, lastMessage: { uid, name, text: text.slice(0, 80), at } } : t)));
+  },
+  async deleteMessage(tripId, id) { lsMessages.write(lsMessages.read().filter((m) => m.id !== id)); },
   subscribeSharedSpots: (locationId, cb) => lsShared.subscribe(cb, (s) => s.locationId === locationId),
   async addSharedSpot(data) {
     const id = newId();
@@ -216,6 +251,14 @@ export const addTrip = (data) => social.addTrip(data);
 export const updateTrip = (id, data) => social.updateTrip(id, data);
 export const setRsvp = (id, uid, status) => social.setRsvp(id, uid, status);
 export const deleteTrip = (id) => social.deleteTrip(id);
+
+export const subscribeMessages = (tripId, cb, onError) => social.subscribeMessages(tripId, cb, onError);
+export function sendMessage(tripId, msg) {
+  const text = msg.text.trim().slice(0, 1000);
+  if (!text) return Promise.resolve();
+  return social.sendMessage(tripId, { ...msg, text });
+}
+export const deleteMessage = (tripId, id) => social.deleteMessage(tripId, id);
 
 export const subscribeSharedSpots = (locationId, cb, onError) => social.subscribeSharedSpots(locationId, cb, onError);
 export const addSharedSpot = (data) => social.addSharedSpot(data);

@@ -50,10 +50,9 @@ export default function FishGuide() {
               <Link to={`/fish/${encodeURIComponent(r.name)}`} className="card flex h-full flex-col gap-1 p-3 transition hover:ring-river-300">
                 <div className="flex items-start justify-between">
                   <Badge tone={a.tone}>{a.label}</Badge>
-                  {!r.caught && <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">???</span>}
                 </div>
                 <div className="flex h-16 items-center justify-center rounded-xl bg-gradient-to-b from-sky-50 to-river-50">
-                  <FishIcon name={r.name} size={96} dim={!r.caught} className="max-h-14 w-auto" />
+                  <FishIcon name={r.name} size={96} className="max-h-14 w-auto" />
                 </div>
                 <span className="font-semibold leading-tight">{r.name}</span>
                 <span className="text-xs text-slate-500">{(SPECIES[r.name] || SPECIES.Other).group} · {IDENTIFY[r.name]?.size?.split(';')[0] || ''}</span>
