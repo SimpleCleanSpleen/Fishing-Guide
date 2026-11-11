@@ -1,7 +1,7 @@
 // Data access layer. Components never talk to Firestore directly; they call these
 // functions, which use Cloud Firestore when Firebase is configured and fall back to
 // browser localStorage in demo mode. Collections:
-//   anglers/{uid}                    your profile ({ username })
+//   anglers/{uid}                    your profile ({ username, gear: { gearId: 'brand/model' } })
 //   anglers/{uid}/catches/{catchId}
 //   anglers/{uid}/spots/{spotId}     private pins
 //   anglerNames/{lowercase name}     claims a unique username ({ uid, name })
@@ -104,6 +104,8 @@ const withId = (d) => ({ id: d.id, ...d.data(), createdAt: toMillis(d.data().cre
 
 const fsSocial = {
   subscribeProfile: (uid, cb, onError) => onSnapshot(doc(db, ROOT, uid), (snap) => cb(snap.data() || {}), onError),
+  // mergeFields replaces the whole gear map, so un-ticked items really disappear.
+  saveGear: (uid, gear) => settle(setDoc(doc(db, ROOT, uid), { gear }, { mergeFields: ['gear'] })),
   async findAngler(name) {
     const snap = await getDoc(doc(db, 'anglerNames', nameId(name)));
     return snap.exists() ? snap.data() : null;
@@ -187,13 +189,18 @@ const lsMessages = lsList('fishguide:tripMessages');
 
 const lsSocial = {
   subscribeProfile: (uid, cb) => lsProfiles.subscribe((items) => cb(items.find((p) => p.id === uid) || {})),
+  async saveGear(uid, gear) {
+    const prev = lsProfiles.read().find((p) => p.id === uid) || {};
+    lsProfiles.write([...lsProfiles.read().filter((p) => p.id !== uid), { ...prev, id: uid, gear }]);
+  },
   findAngler: async (name) => lsNames.read().find((n) => n.id === nameId(name)) || null,
   async claimUsername(uid, name, oldName) {
     const taken = lsNames.read().find((n) => n.id === nameId(name));
     if (taken && taken.uid !== uid) throw new Error(`@${taken.name} is already taken. Try another name.`);
     const keep = lsNames.read().filter((n) => n.id !== nameId(name) && (!oldName || n.id !== nameId(oldName)));
     lsNames.write([...keep, { id: nameId(name), uid, name }]);
-    lsProfiles.write([...lsProfiles.read().filter((p) => p.id !== uid), { id: uid, username: name }]);
+    const prev = lsProfiles.read().find((p) => p.id === uid) || {};
+    lsProfiles.write([...lsProfiles.read().filter((p) => p.id !== uid), { ...prev, id: uid, username: name }]);
   },
   subscribeTrips: (uid, cb) => lsTrips.subscribe(cb, (t) => t.members?.includes(uid)),
   async addTrip(data) {
@@ -241,6 +248,7 @@ export const deleteSpot = (uid, id) => impl.remove(uid, 'spots', id);
 const social = isFirebaseConfigured ? fsSocial : lsSocial;
 export const subscribeProfile = (uid, cb, onError) => social.subscribeProfile(uid, cb, onError);
 export const findAngler = (name) => social.findAngler(name);
+export const saveGear = (uid, gear) => social.saveGear(uid, gear);
 export function claimUsername(uid, name, oldName) {
   if (!USERNAME_RE.test(name)) return Promise.reject(new Error('Use 3-20 letters, numbers or underscores.'));
   return social.claimUsername(uid, name.trim(), oldName);

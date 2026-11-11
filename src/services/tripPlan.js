@@ -50,7 +50,8 @@ export function tripSupplies(trip, fish, weather, location, tackle = tackleFor(f
   };
   const fromGear = (gid, group, why) => {
     const g = gear(gid);
-    return g ? add(gid, group, g.name, g.icon, why, { gearId: gid }) : null;
+    // `need`: the angler has set up their tackle box and doesn't own this yet.
+    return g ? add(gid, group, g.name, g.icon, why, { gearId: gid, need: tackle.setUp && !g.owned }) : null;
   };
   // Items picked for particular fish read "for Crappie, Bluegill" rather than repeating.
   const forFish = (item, prefix, fishName, suffix = '') => {

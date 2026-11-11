@@ -123,12 +123,21 @@ export function SupplyList({ forecast, tripId }) {
   }, [key, packed]);
   const all = forecast.supplies.flatMap((g) => g.items);
   const done = all.filter((i) => packed[i.id]).length;
+  const needed = all.filter((i) => i.need).length;
+  const { tackle } = forecast;
   return (
     <div>
       <div className="mb-2 flex items-center justify-between text-xs font-medium uppercase tracking-wide text-slate-500">
         <span>Recommended supplies</span>
         {tripId && <span className="normal-case tracking-normal">{done}/{all.length} packed</span>}
       </div>
+      {!tackle.personal && (
+        <p className="mb-3 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-600">
+          {tackle.setUp
+            ? <>Based on <Link to="/learn/gear" className="font-medium text-river-700 underline">your tackle box</Link>.{needed ? ` ${needed} item${needed > 1 ? 's' : ''} you don't have yet ${needed > 1 ? 'are' : 'is'} marked 🛒.` : ' You have everything on the list!'}</>
+            : <>Tip: tick the gear you own in the <Link to="/learn/gear" className="font-medium text-river-700 underline">tackle box</Link> and this list will show what you still need.</>}
+        </p>
+      )}
       <div className="space-y-3">
         {forecast.supplies.map((g) => (
           <div key={g.group}>
@@ -141,6 +150,7 @@ export function SupplyList({ forecast, tripId }) {
                     <span aria-hidden>{it.icon}</span>
                     <span className="min-w-0">
                       {it.gearId ? <Link to="/learn/gear" title="See how to use it" className="font-medium text-slate-800 hover:underline">{it.name}</Link> : <span className="font-medium text-slate-800">{it.name}</span>}
+                      {it.need && <span className="ml-1.5 inline-block rounded-full bg-amber-100 px-1.5 text-[10px] font-semibold text-amber-800 no-underline">🛒 Need</span>}
                       {it.why && <span className="block text-xs text-slate-500 no-underline">{it.why}</span>}
                     </span>
                   </label>

@@ -127,9 +127,26 @@ export const GENERIC_QUICK_BAITS = [
   'Other',
 ];
 
-// { personal, gear, bait(name), quickBaits, boxName }
-export function tackleFor(personal) {
-  return personal
-    ? { personal: true, gear: GEAR, bait: (b) => b, quickBaits: OWNER_QUICK_BAITS, boxName: 'My Tackle Box' }
-    : { personal: false, gear: GENERIC_GEAR, bait: genericBait, quickBaits: GENERIC_QUICK_BAITS, boxName: 'Starter Tackle Box' };
+// What a tackle box looks like for one angler.
+//   personal: the app owner -> their exact gear, all owned.
+//   owned:    everyone else's ticked items { gearId: 'optional brand/model' } from their profile.
+// Each gear item gets `owned` and, when they named it, their own name (generic name kept as `kind`).
+export function tackleFor(personal, owned = null) {
+  if (personal) {
+    return {
+      personal: true, setUp: true, gear: GEAR.map((g) => ({ ...g, owned: true })), bait: (b) => b,
+      quickBaits: OWNER_QUICK_BAITS, boxName: 'My Tackle Box', ownedCount: GEAR.length,
+    };
+  }
+  const mine = owned || {};
+  const setUp = Object.keys(mine).length > 0;
+  const gear = GENERIC_GEAR.map((g) => {
+    const has = Object.prototype.hasOwnProperty.call(mine, g.id);
+    const label = has && typeof mine[g.id] === 'string' ? mine[g.id].trim() : '';
+    return { ...g, owned: has, kind: g.name, name: label || g.name };
+  });
+  return {
+    personal: false, setUp, gear, bait: genericBait, quickBaits: GENERIC_QUICK_BAITS,
+    boxName: setUp ? 'My Tackle Box' : 'Starter Tackle Box', ownedCount: gear.filter((g) => g.owned).length,
+  };
 }
