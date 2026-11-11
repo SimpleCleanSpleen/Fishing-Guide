@@ -1,6 +1,6 @@
 // Firestore rules for Firebase project zombie-evac-vl6cz, which is SHARED by two apps:
 //   - Zombie Evac    (users/, screenNames/, leaderboard/)
-//   - Fishing Guide  (anglers/, anglerNames/, trips/, sharedSpots/)
+//   - Fishing Guide  (anglers/, anglerNames/, trips/ + messages/ & recaps/, sharedSpots/)
 // The SAME file is kept in both repos. Publishing either copy replaces the rules for
 // both apps, so edit both copies together.
 rules_version = '2';
@@ -122,6 +122,19 @@ service cloud.firestore {
           && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 1000
           && request.resource.data.createdAt == request.time;
         allow delete: if signedIn() && (resource.data.uid == request.auth.uid || trip().ownerUid == request.auth.uid);
+      }
+
+      // Trip recap: each member can share a summary of the catches they logged that day
+      // (no photos). Document id = that member's uid.
+      match /recaps/{memberUid} {
+        function recapTrip() { return get(/databases/$(database)/documents/trips/$(tripId)).data; }
+        allow read: if signedIn() && request.auth.uid in recapTrip().members;
+        allow create, update: if signedIn() && request.auth.uid == memberUid
+          && request.auth.uid in recapTrip().members
+          && request.resource.data.keys().hasOnly(['name', 'catches', 'updatedAt'])
+          && request.resource.data.name is string && request.resource.data.name.size() <= 40
+          && request.resource.data.catches is list && request.resource.data.catches.size() <= 100;
+        allow delete: if signedIn() && (request.auth.uid == memberUid || recapTrip().ownerUid == request.auth.uid);
       }
     }
 

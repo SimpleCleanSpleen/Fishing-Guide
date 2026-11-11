@@ -7,6 +7,7 @@
 //   anglerNames/{lowercase name}     claims a unique username ({ uid, name })
 //   trips/{tripId}                   shared by the organizer and invited anglers (members[])
 //   trips/{tripId}/messages/{msgId}  trip chat, readable by the trip's members
+//   trips/{tripId}/recaps/{uid}      catches a member chose to share from the trip day
 //   sharedSpots/{spotId}             pins people chose to share, with their username
 // (The Firebase project is shared with Zombie Evac, which uses users/{uid}; the
 // separate top-level collection keeps the two apps' data apart.)
@@ -132,12 +133,14 @@ const fsSocial = {
   updateTrip: (id, data) => settle(updateDoc(doc(db, 'trips', id), { ...stripUndefined(data), updatedAt: serverTimestamp() })),
   setRsvp: (id, uid, status) => settle(updateDoc(doc(db, 'trips', id), { [`rsvp.${uid}`]: status, updatedAt: serverTimestamp() })),
   async deleteTrip(id) {
-    // Remove the chat first: the rules check trip ownership, which needs the trip to exist.
-    const msgs = await getDocs(collection(db, 'trips', id, 'messages'));
-    for (let i = 0; i < msgs.docs.length; i += 400) {
-      const batch = writeBatch(db);
-      msgs.docs.slice(i, i + 400).forEach((m) => batch.delete(m.ref));
-      await batch.commit();
+    // Remove the chat and recaps first: the rules check trip ownership, which needs the trip to exist.
+    for (const sub of ['messages', 'recaps']) {
+      const snap = await getDocs(collection(db, 'trips', id, sub));
+      for (let i = 0; i < snap.docs.length; i += 400) {
+        const batch = writeBatch(db);
+        snap.docs.slice(i, i + 400).forEach((m) => batch.delete(m.ref));
+        await batch.commit();
+      }
     }
     return settle(deleteDoc(doc(db, 'trips', id)));
   },
@@ -155,6 +158,9 @@ const fsSocial = {
     return settle(batch.commit());
   },
   deleteMessage: (tripId, id) => settle(deleteDoc(doc(db, 'trips', tripId, 'messages', id))),
+  subscribeRecaps: (tripId, cb, onError) => onSnapshot(collection(db, 'trips', tripId, 'recaps'), (snap) => cb(snap.docs.map((d) => ({ uid: d.id, ...d.data() }))), onError),
+  saveRecap: (tripId, uid, data) => settle(setDoc(doc(db, 'trips', tripId, 'recaps', uid), { ...stripUndefined(data), updatedAt: serverTimestamp() })),
+  deleteRecap: (tripId, uid) => settle(deleteDoc(doc(db, 'trips', tripId, 'recaps', uid))),
   subscribeSharedSpots(locationId, cb, onError) {
     const q = query(collection(db, 'sharedSpots'), where('locationId', '==', locationId));
     return onSnapshot(q, (snap) => cb(snap.docs.map(withId)), onError);
@@ -186,6 +192,7 @@ const lsTrips = lsList('fishguide:trips');
 const lsShared = lsList('fishguide:sharedSpots');
 const lsProfiles = lsList('fishguide:profiles');
 const lsMessages = lsList('fishguide:tripMessages');
+const lsRecaps = lsList('fishguide:tripRecaps');
 
 const lsSocial = {
   subscribeProfile: (uid, cb) => lsProfiles.subscribe((items) => cb(items.find((p) => p.id === uid) || {})),
@@ -212,6 +219,7 @@ const lsSocial = {
   async setRsvp(id, uid, status) { lsTrips.write(lsTrips.read().map((t) => (t.id === id ? { ...t, rsvp: { ...t.rsvp, [uid]: status } } : t))); },
   async deleteTrip(id) {
     lsMessages.write(lsMessages.read().filter((m) => m.tripId !== id));
+    lsRecaps.write(lsRecaps.read().filter((r) => r.tripId !== id));
     lsTrips.write(lsTrips.read().filter((t) => t.id !== id));
   },
   subscribeMessages: (tripId, cb) => lsMessages.subscribe(cb, (m) => m.tripId === tripId),
@@ -221,6 +229,11 @@ const lsSocial = {
     lsTrips.write(lsTrips.read().map((t) => (t.id === tripId ? { ...t, lastMessage: { uid, name, text: text.slice(0, 80), at } } : t)));
   },
   async deleteMessage(tripId, id) { lsMessages.write(lsMessages.read().filter((m) => m.id !== id)); },
+  subscribeRecaps: (tripId, cb) => lsRecaps.subscribe(cb, (r) => r.tripId === tripId),
+  async saveRecap(tripId, uid, data) {
+    lsRecaps.write([...lsRecaps.read().filter((r) => !(r.tripId === tripId && r.uid === uid)), { ...data, tripId, uid, updatedAt: Date.now() }]);
+  },
+  async deleteRecap(tripId, uid) { lsRecaps.write(lsRecaps.read().filter((r) => !(r.tripId === tripId && r.uid === uid))); },
   subscribeSharedSpots: (locationId, cb) => lsShared.subscribe(cb, (s) => s.locationId === locationId),
   async addSharedSpot(data) {
     const id = newId();
@@ -267,6 +280,10 @@ export function sendMessage(tripId, msg) {
   return social.sendMessage(tripId, { ...msg, text });
 }
 export const deleteMessage = (tripId, id) => social.deleteMessage(tripId, id);
+
+export const subscribeRecaps = (tripId, cb, onError) => social.subscribeRecaps(tripId, cb, onError);
+export const saveRecap = (tripId, uid, data) => social.saveRecap(tripId, uid, data);
+export const deleteRecap = (tripId, uid) => social.deleteRecap(tripId, uid);
 
 export const subscribeSharedSpots = (locationId, cb, onError) => social.subscribeSharedSpots(locationId, cb, onError);
 export const addSharedSpot = (data) => social.addSharedSpot(data);

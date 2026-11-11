@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import RequireAuth from '../components/RequireAuth.jsx';
 import TripChat from '../components/TripChat.jsx';
+import TripRecap from '../components/TripRecap.jsx';
 import { FishForecast, SupplyList, useTripForecast, WeatherSummary } from '../components/TripForecast.jsx';
 import { Badge, Callout } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -9,7 +10,7 @@ import { useLocation } from '../context/LocationContext.jsx';
 import { getLocation } from '../data/locations/index.js';
 import { deleteTrip } from '../services/repository.js';
 import { tripDate, tripIcs } from '../services/tripPlan.js';
-import { fmtClock } from '../utils/time.js';
+import { fmtClock, todayISO } from '../utils/time.js';
 import { RSVP, RsvpButtons } from './Trips.jsx';
 
 export default function TripDetail() {
@@ -114,6 +115,8 @@ function TripView({ trip }) {
           ))}
         </ul>
       </section>
+
+      {trip.date <= todayISO() && <TripRecap trip={trip} />}
 
       <TripChat trip={trip} />
 
