@@ -4,7 +4,7 @@ import FishIcon from './FishIcon.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useData } from '../context/DataContext.jsx';
 import { deleteRecap, saveRecap, subscribeRecaps } from '../services/repository.js';
-import { fmtClock, fmtWeight } from '../utils/time.js';
+import { fmtClock, fmtDate, fmtWeight } from '../utils/time.js';
 
 // What a shared catch keeps: no photo, notes or exact coordinates.
 function summarize(c, spotById) {
@@ -101,7 +101,7 @@ export default function TripRecap({ trip }) {
       <div className="rounded-xl bg-river-50 p-3 text-sm text-river-900">
         {mine ? (
           <p>
-            You're sharing {myDay.length} catch{myDay.length === 1 ? '' : 'es'} from {trip.date}. New catches you log for that day are added automatically.{' '}
+            You're sharing {myDay.length} catch{myDay.length === 1 ? '' : 'es'} from {fmtDate(trip.date)}. New catches you log for that day are added automatically.{' '}
             <button type="button" onClick={unshare} className="font-medium underline">Stop sharing</button>
           </p>
         ) : myDay.length ? (
@@ -110,7 +110,7 @@ export default function TripRecap({ trip }) {
             <button type="button" onClick={share} className="btn-primary px-3 py-1.5">Share to recap</button>
           </div>
         ) : (
-          <p>No catches in your log for that day. <Link to="/log" className="font-medium underline">Log one</Link> (set the date to {trip.date}) and share it here.</p>
+          <p>No catches in your log for that day. <Link to="/log" className="font-medium underline">Log one</Link> (set the date to {fmtDate(trip.date)}) and share it here.</p>
         )}
       </div>
       {err && <p className="text-sm text-rose-600">{err}</p>}
