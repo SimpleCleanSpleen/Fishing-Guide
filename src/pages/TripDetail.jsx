@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import RequireAuth from '../components/RequireAuth.jsx';
 import TripChat from '../components/TripChat.jsx';
+import DirectionsMenu from '../components/Directions.jsx';
 import TripRecap from '../components/TripRecap.jsx';
 import { FishForecast, SupplyList, useTripForecast, WeatherSummary } from '../components/TripForecast.jsx';
 import { Badge, Callout } from '../components/ui.jsx';
@@ -47,7 +48,6 @@ function TripView({ trip }) {
   const isOwner = trip.ownerUid === user.uid;
   const d = tripDate(trip);
   const placeName = trip.spotName || loc.name;
-  const dirTo = trip.lat != null ? `${trip.lat}%2C${trip.lng}` : `${loc.center.lat}%2C${loc.center.lng}`;
   const end = new Date(d.getTime() + (trip.hours || 3) * 3600 * 1000);
 
   const tripUrl = `${window.location.origin}${window.location.pathname}#/trips/${trip.id}`;
@@ -94,7 +94,7 @@ function TripView({ trip }) {
         )}
 
         <div className="mt-3 flex flex-wrap gap-2">
-          <a href={`https://www.openstreetmap.org/directions?to=${dirTo}`} target="_blank" rel="noreferrer" className="btn-secondary px-3 py-2">Directions ↗</a>
+          <DirectionsMenu lat={trip.lat ?? loc.center.lat} lng={trip.lng ?? loc.center.lng} label={placeName} />
           {trip.spotId && <button type="button" onClick={() => { setLocationId(trip.locationId); navigate('/map'); }} className="btn-secondary px-3 py-2">🗺️ Map</button>}
           <button type="button" onClick={downloadIcs} className="btn-secondary px-3 py-2" title="Includes reminders the evening before and 1 hour before">📅 Calendar + reminders</button>
           <a href={tripGoogleCalendarUrl(trip, placeName, loc.timezone, tripUrl)} target="_blank" rel="noreferrer" className="btn-secondary px-3 py-2">Google Calendar ↗</a>

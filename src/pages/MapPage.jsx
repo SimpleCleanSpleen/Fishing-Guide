@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useData } from '../context/DataContext.jsx';
 import { useLocation } from '../context/LocationContext.jsx';
 import FishIcon from '../components/FishIcon.jsx';
+import DirectionsMenu, { DirectionsInline } from '../components/Directions.jsx';
 import { addSharedSpot, addSpot, deleteSharedSpot, deleteSpot } from '../services/repository.js';
 import { spotPhotos } from '../services/photos.js';
 import { fmtDate, fmtWeight } from '../utils/time.js';
@@ -310,7 +311,7 @@ function SpotPopup({ s, catches }) {
         <p className="!my-1 text-xs text-slate-500">{spotAuthor(s).icon} {spotAuthor(s).text}</p>
         <div className="flex flex-wrap gap-3 pt-1 text-sm font-semibold">
           {user && <Link to={`/log?spot=${encodeURIComponent(s.id)}`}>+ Log a catch</Link>}
-          <a href={`https://www.openstreetmap.org/directions?to=${s.lat}%2C${s.lng}`} target="_blank" rel="noreferrer">Directions ↗</a>
+          <DirectionsInline lat={s.lat} lng={s.lng} label={s.name} />
         </div>
       </div>
     </div>
@@ -382,7 +383,7 @@ function SpotDetail({ s, catches, onClose }) {
         <p className="text-xs text-slate-400">{s.lat.toFixed(4)}, {s.lng.toFixed(4)}</p>
         <div className="flex flex-wrap gap-2 pt-1">
           {user && <Link to={`/log?spot=${encodeURIComponent(s.id)}`} className="btn-primary px-3 py-2">+ Log a catch here</Link>}
-          <a href={`https://www.openstreetmap.org/directions?to=${s.lat}%2C${s.lng}`} target="_blank" rel="noreferrer" className="btn-secondary px-3 py-2">Directions ↗</a>
+          <DirectionsMenu lat={s.lat} lng={s.lng} label={s.name} />
           {s.custom && user && (
             <button type="button" className="btn-secondary px-3 py-2 text-rose-600" onClick={() => window.confirm(`Delete "${s.name}"?`) && (s.shared ? deleteSharedSpot(s.id) : deleteSpot(user.uid, s.id)).then(onClose)}>Delete</button>
           )}
