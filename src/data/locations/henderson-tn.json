@@ -1,0 +1,438 @@
+{
+  "id": "henderson-tn",
+  "name": "Henderson, TN",
+  "region": "West Tennessee - Chester County",
+  "center": {
+    "lat": 35.4392,
+    "lng": -88.6414
+  },
+  "zoom": 10,
+  "timezone": "America/Chicago",
+  "usgs": {
+    "bbox": "-89.10,34.95,-88.15,35.85",
+    "preferName": "forked deer"
+  },
+  "spotsNotice": "All coordinates are APPROXIMATE. Several spots are 35-55 minutes from Henderson. Verify access, park hours, permits and posted rules before visiting. Fishing in Tennessee requires a TWRA license for anglers 13 and older.",
+  "commonSpecies": [
+    "Largemouth Bass",
+    "Spotted Bass",
+    "Smallmouth Bass",
+    "Bluegill",
+    "Redear Sunfish",
+    "Crappie",
+    "Channel Catfish",
+    "Blue Catfish",
+    "Flathead Catfish",
+    "Sauger",
+    "White Bass",
+    "Striped Bass",
+    "Freshwater Drum",
+    "Common Carp"
+  ],
+  "regulations": {
+    "agency": "Tennessee Wildlife Resources Agency (TWRA)",
+    "summary": "Anglers 13 and older need a Tennessee fishing license. Size limits, daily creel limits and seasons differ by species and by water body, and they change, so read the current TWRA Fishing Guide every year. State park lakes and Family Fishing Lakes may post their own limits, and the Beech River Watershed lakes need a separate BRWDA permit.",
+    "links": [
+      {
+        "label": "TWRA fishing (regulations & guide)",
+        "url": "https://www.tn.gov/twra/fishing.html"
+      },
+      {
+        "label": "Buy a license: Go Outdoors Tennessee",
+        "url": "https://www.gooutdoorstennessee.com/"
+      },
+      {
+        "label": "TWRA bank fishing guide (PDF)",
+        "url": "https://www.tn.gov/content/dam/tn/twra/documents/fishing/bank_fishing.pdf"
+      },
+      {
+        "label": "TWRA: Brown's Creek Lake",
+        "url": "https://www.tn.gov/twra/fishing/where-to-fish/west-tennessee-r1/browns-creek-lake.html"
+      }
+    ],
+    "tips": [
+      "Keep your license on you (the Go Outdoors TN app can store it on your phone).",
+      "Tennessee usually holds a Free Fishing Day in early June when no license is needed. Check TWRA for the date.",
+      "Pickwick Lake borders Alabama and Mississippi. Check TWRA for the current reciprocal license rules before fishing across the state line."
+    ]
+  },
+  "license": {
+    "general": "Tennessee fishing license (ages 13+)",
+    "trout": "Check whether you need TWRA's trout add-on to fish for or keep trout"
+  },
+  "advisories": {
+    "agency": "Tennessee Department of Environment & Conservation (TDEC)",
+    "summary": "Few of the waters around Henderson are on TDEC's main posted list, but the list changes and covers mercury and PCBs in some reservoirs. Check the current TDEC list before you keep fish to eat, especially big catfish and bass from the Tennessee River.",
+    "items": [
+      {
+        "title": "Large reservoirs and rivers",
+        "level": "Check current list",
+        "detail": "TDEC posts precautionary advisories for mercury or PCBs on some Tennessee reservoirs. Children, pregnant or nursing women, and women who may become pregnant should follow the strictest guidance and eat fewer large, older fish."
+      },
+      {
+        "title": "After heavy rain",
+        "level": "General",
+        "detail": "Runoff from farms and roads raises bacteria levels for a day or two in creeks and rivers like the Forked Deer and Hatchie. Wash hands and gear, and cover cuts."
+      }
+    ],
+    "links": [
+      {
+        "label": "TDEC water quality & posted streams",
+        "url": "https://www.tn.gov/environment/program-areas/wr-water-resources/water-quality.html"
+      },
+      {
+        "label": "TDEC home",
+        "url": "https://www.tn.gov/environment.html"
+      }
+    ]
+  },
+  "bankSafety": [
+    "Don't wade the Hatchie or Forked Deer: muddy water hides sudden drop-offs and logs, and the banks are soft.",
+    "Below Pickwick Dam, water rises fast when generators start. Horns or sirens mean move to high ground.",
+    "West Tennessee bottomlands have ticks, chiggers and snakes in summer. Wear boots and long pants and check for ticks after."
+  ],
+  "spots": [
+    {
+      "id": "seed-hn-lake-placid",
+      "name": "Chickasaw State Park: Lake Placid",
+      "type": "Lake",
+      "lat": 35.3897,
+      "lng": -88.7726,
+      "approximate": true,
+      "description": "The main lake at Chickasaw State Park, about 15 minutes southwest of Henderson on TN-100. Calm water, easy bank and a boathouse that rents fishing boats and paddleboats (no private boats). The closest and most beginner-friendly spot.",
+      "species": [
+        "Bluegill",
+        "Largemouth Bass",
+        "Crappie",
+        "Channel Catfish"
+      ],
+      "beginnerTip": "Fish a worm under a float near the fishing pier or any shady bank. Length and creel limits are posted at the lake, so read the sign first.",
+      "access": "Bank, pier; rental boats",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Boat rental",
+        "Campground",
+        "Picnic area"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.3897&mlon=-88.7726#map=16/35.3897/-88.7726"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-forked-deer-pinson",
+      "name": "South Fork Forked Deer River (near Pinson Mounds)",
+      "type": "River (Forked Deer)",
+      "lat": 35.4967,
+      "lng": -88.6817,
+      "approximate": true,
+      "description": "The South Fork Forked Deer starts in Chester County and winds north past Pinson Mounds State Archaeological Park toward Jackson. Small, muddy, slow river with lots of fallen timber. Much of the bank is private: only fish where access is clearly public, and ask park staff before fishing on park land.",
+      "species": [
+        "Channel Catfish",
+        "Flathead Catfish",
+        "Bluegill",
+        "Largemouth Bass",
+        "Crappie"
+      ],
+      "beginnerTip": "Laydowns (fallen trees) hold catfish and sunfish. Drop a nightcrawler on a sinker right beside the log and keep your line tight.",
+      "access": "Limited bank; verify public access",
+      "amenities": [
+        "Historic park nearby"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.4967&mlon=-88.6817#map=16/35.4967/-88.6817"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-big-hill-pond",
+      "name": "Big Hill Pond State Park: Travis McNatt Lake",
+      "type": "Lake",
+      "lat": 35.059,
+      "lng": -88.718,
+      "approximate": true,
+      "description": "Spring-fed lake in a big wooded state park near Pocahontas, about 35 minutes south. Quiet, with a boat ramp and bank along the dam and day-use area. Electric motors only on the lake.",
+      "species": [
+        "Largemouth Bass",
+        "Bluegill",
+        "Crappie",
+        "Channel Catfish"
+      ],
+      "beginnerTip": "Clear, quiet water: use light line and natural colors. A green pumpkin Senko along the weed edges is a good first bass bait.",
+      "access": "Bank, boat ramp",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Boat ramp",
+        "Campground",
+        "Trails"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.059&mlon=-88.718#map=16/35.059/-88.718"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-hatchie-bolivar",
+      "name": "Hatchie River at Bolivar",
+      "type": "River (Hatchie)",
+      "lat": 35.283,
+      "lng": -88.996,
+      "approximate": true,
+      "description": "The Hatchie is the last big unchanneled river in the lower Mississippi valley: a muddy, winding, swampy State Scenic River about 35 minutes west. Known for catfish and crappie in the oxbows. Floods spread far into the woods; banks are soft and steep.",
+      "species": [
+        "Channel Catfish",
+        "Blue Catfish",
+        "Flathead Catfish",
+        "Crappie",
+        "Freshwater Drum"
+      ],
+      "beginnerTip": "Fish the slack water on the inside of a bend or behind a log jam. Soak cut bait or a nightcrawler on the bottom in the evening.",
+      "access": "Bank near bridges/ramps; verify",
+      "amenities": [
+        "Parking (limited)"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.283&mlon=-88.996#map=16/35.283/-88.996"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-pickwick-tailwater",
+      "name": "Pickwick Dam tailwater",
+      "type": "River (below dam)",
+      "lat": 35.072,
+      "lng": -88.252,
+      "approximate": true,
+      "description": "TVA tailwater below Pickwick Dam on the Tennessee River, about 55 minutes southeast near Counce. One of the best tailwaters in the South for smallmouth, sauger and big catfish, with bank fishing and a campground below the dam. Current is strong and rises fast when turbines run.",
+      "species": [
+        "Smallmouth Bass",
+        "Sauger",
+        "Striped Bass",
+        "White Bass",
+        "Blue Catfish",
+        "Skipjack Herring"
+      ],
+      "beginnerTip": "Stay behind the railings and out of restricted zones. Sirens or horns mean water releases. Watch what the regulars use and copy them: it is a great place to learn.",
+      "access": "Bank / fishing area (TVA rules apply)",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Boat ramp",
+        "Campground"
+      ],
+      "advisory": "Pickwick Lake is shared with Alabama and Mississippi: check current TWRA reciprocal license rules before fishing above the dam.",
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.072&mlon=-88.252#map=16/35.072/-88.252"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-saltillo",
+      "name": "Tennessee River at Saltillo",
+      "type": "River (Tennessee)",
+      "lat": 35.378,
+      "lng": -88.215,
+      "approximate": true,
+      "description": "River town on the upper end of Kentucky Lake, about 50 minutes east, where a small free ferry crosses the Tennessee River. Public ramp area with some bank. Wide water, current and barge traffic.",
+      "species": [
+        "Channel Catfish",
+        "Blue Catfish",
+        "White Bass",
+        "Sauger",
+        "Freshwater Drum",
+        "Spotted Bass"
+      ],
+      "beginnerTip": "Use enough sinker weight to hold bottom in the current. Rocky banks and the mouths of creeks are the best places to start.",
+      "access": "Bank near ramp; verify",
+      "amenities": [
+        "Parking",
+        "Boat ramp"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.378&mlon=-88.215#map=16/35.378/-88.215"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-beech-lake",
+      "name": "Beech Lake (Lexington)",
+      "type": "Lake",
+      "lat": 35.633,
+      "lng": -88.375,
+      "approximate": true,
+      "description": "One of the Beech River Watershed (BRWDA) lakes right beside Lexington, about 35 minutes northeast. The BRWDA lakes need a small daily or annual permit (check current fees with the BRWDA office in Lexington).",
+      "species": [
+        "Largemouth Bass",
+        "Crappie",
+        "Bluegill",
+        "Channel Catfish"
+      ],
+      "beginnerTip": "Docks and brush piles hold crappie in spring. Try a Trout Magnet or small minnow under a float right next to the cover.",
+      "access": "Bank, boat ramp; permit",
+      "amenities": [
+        "Parking",
+        "Boat ramp"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.633&mlon=-88.375#map=16/35.633/-88.375"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-pine-lake",
+      "name": "Pine Lake (Beech River Watershed)",
+      "type": "Lake",
+      "lat": 35.598,
+      "lng": -88.338,
+      "approximate": true,
+      "description": "BRWDA lake southeast of Lexington, lined with docks, points and ledges. Often named by locals as the best fishing of the Lexington lakes. Permit required, like the other BRWDA lakes.",
+      "species": [
+        "Largemouth Bass",
+        "Crappie",
+        "Bluegill",
+        "Blue Catfish",
+        "Striped Bass"
+      ],
+      "beginnerTip": "Fish the points (where the bank sticks out into the lake). Fish move along them between deep and shallow water.",
+      "access": "Limited bank, boat ramp; permit",
+      "amenities": [
+        "Parking",
+        "Boat ramp"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.598&mlon=-88.338#map=16/35.598/-88.338"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-browns-creek",
+      "name": "Natchez Trace State Park: Brown's Creek Lake",
+      "type": "Lake",
+      "lat": 35.765,
+      "lng": -88.283,
+      "approximate": true,
+      "description": "167-acre TWRA Family Fishing Lake in Natchez Trace State Park, about 50 minutes northeast (I-40 exit 116, then TN-114 south). Managed with families and beginners in mind.",
+      "species": [
+        "Largemouth Bass",
+        "Bluegill",
+        "Redear Sunfish",
+        "Crappie",
+        "Channel Catfish",
+        "Blue Catfish"
+      ],
+      "beginnerTip": "Family Fishing Lakes have their own rules (and sometimes a daily permit): read the sign at the lake. Bluegill on a worm under a float is the easy win here.",
+      "access": "Bank, pier, boat ramp",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Boat ramp",
+        "Campground"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.765&mlon=-88.283#map=16/35.765/-88.283"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    },
+    {
+      "id": "seed-hn-pin-oak",
+      "name": "Natchez Trace State Park: Pin Oak Lake",
+      "type": "Lake",
+      "lat": 35.8,
+      "lng": -88.255,
+      "approximate": true,
+      "description": "The park's biggest lake (about 690 acres), beside Pin Oak Lodge. Lots of standing timber and shallow coves; famous locally for crappie in spring.",
+      "species": [
+        "Crappie",
+        "Largemouth Bass",
+        "Bluegill",
+        "Channel Catfish"
+      ],
+      "beginnerTip": "In March and April crappie move into shallow brush. Fish a small minnow under a float slowly along the timber.",
+      "access": "Bank, boat ramp",
+      "amenities": [
+        "Parking",
+        "Restrooms",
+        "Boat ramp",
+        "Lodge",
+        "Campground"
+      ],
+      "addedBy": "Claude",
+      "sources": [
+        {
+          "label": "OpenStreetMap (location)",
+          "url": "https://www.openstreetmap.org/?mlat=35.8&mlon=-88.255#map=16/35.8/-88.255"
+        },
+        {
+          "label": "Esri World Imagery (aerial check)",
+          "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+        }
+      ]
+    }
+  ],
+  "spotsCredit": "Suggested spots, descriptions and tips were written by Claude (an AI assistant made by Anthropic) from general knowledge and public listings. Coordinates were not checked against a map and may be off: verify access and rules locally."
+}

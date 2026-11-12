@@ -4,7 +4,7 @@
 Live conditions, a "what's biting now" list, a fish encyclopedia you fill in as you
 catch fish, a map of spots, and a personal journal that learns your best times and baits.
 
-**Locations:** Clarksville, TN · Elkridge, MD · Severn, MD. Pick one from the 📍 menu in the header.
+**Locations:** Clarksville, TN · Henderson, TN · Elkridge, MD · Severn, MD. Pick one from the 📍 menu in the header.
 New areas can be added with one JSON file (see [Adding a location](#adding-a-new-location)).
 
 Live site (after setup): `https://simplecleanspleen.github.io/Fishing-Guide/`

@@ -5,8 +5,9 @@
 // Everything else (map, weather, river gauges, fish guide, insights) adapts.
 import clarksville from './clarksville-tn.json';
 import elkridge from './elkridge-md.json';
+import henderson from './henderson-tn.json';
 import severn from './severn-md.json';
 
-export const LOCATIONS = [clarksville, elkridge, severn];
+export const LOCATIONS = [clarksville, henderson, elkridge, severn];
 export const DEFAULT_LOCATION_ID = 'clarksville-tn';
 export const getLocation = (id) => LOCATIONS.find((l) => l.id === id) || LOCATIONS[0];

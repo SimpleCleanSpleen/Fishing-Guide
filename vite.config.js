@@ -28,7 +28,7 @@ export default defineConfig({
       manifest: {
         name: 'Fishing Guide',
         short_name: 'Fishing Guide',
-        description: 'Beginner-friendly fishing log, map and guide for Clarksville, TN and Severn & Elkridge, MD.',
+        description: 'Beginner-friendly fishing log, map and guide for Clarksville & Henderson, TN and Severn & Elkridge, MD.',
         theme_color: '#0f766e',
         background_color: '#f0fdfa',
         display: 'standalone',
