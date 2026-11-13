@@ -12,6 +12,7 @@ const Journal = lazy(() => import('./pages/Journal.jsx'));
 const Learn = lazy(() => import('./pages/Learn.jsx'));
 const GearGuide = lazy(() => import('./pages/GearGuide.jsx'));
 const Basics = lazy(() => import('./pages/Basics.jsx'));
+const Knots = lazy(() => import('./pages/Knots.jsx'));
 const Safety = lazy(() => import('./pages/Safety.jsx'));
 const Trips = lazy(() => import('./pages/Trips.jsx'));
 const TripForm = lazy(() => import('./pages/TripForm.jsx'));
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="learn" element={<Learn />} />
           <Route path="learn/gear" element={<GearGuide />} />
           <Route path="learn/basics" element={<Basics />} />
+          <Route path="learn/knots" element={<Knots />} />
           <Route path="learn/safety" element={<Safety />} />
           <Route path="trips" element={<Trips />} />
           <Route path="trips/new" element={<TripForm />} />

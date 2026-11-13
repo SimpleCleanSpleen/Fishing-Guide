@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import InfoTip from '../components/InfoTip.jsx';
+import KnotSteps, { KnotLegend } from '../components/KnotSteps.jsx';
 import { Callout, PageHeader } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { GEAR_CATEGORIES } from '../data/gear.js';
@@ -100,13 +101,8 @@ export default function GearGuide() {
                   {g.knots && (
                     <div className="space-y-2">
                       <p className="font-semibold">Knots you need</p>
-                      {g.knots.map((k) => (
-                        <div key={k.name} className="rounded-xl bg-slate-50 p-3">
-                          <p className="font-semibold text-slate-900">🪢 {k.name}</p>
-                          <p className="text-slate-600">{k.use}</p>
-                          <ol className="mt-1">{k.steps.map((s) => <li key={s}>{s}</li>)}</ol>
-                        </div>
-                      ))}
+                      <KnotLegend />
+                      {g.knots.map((k) => <KnotSteps key={k.name} knot={k} />)}
                     </div>
                   )}
                   {g.tips?.length > 0 && (

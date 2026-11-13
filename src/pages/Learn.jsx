@@ -10,6 +10,7 @@ export default function Learn() {
       <div className="grid gap-3 sm:grid-cols-2">
         <LinkCard to="/learn/basics" icon="🎯" title="Fishing Basics">First-trip checklist, casting, detecting bites, hook sets, landing, handling and catch-and-release.</LinkCard>
         <LinkCard to="/learn/gear" icon="🧰" title={tackle.boxName}>{tackle.personal ? 'Every item you own' : 'A beginner kit'}: when to use it, how to rig it, and the 3 knots you need.</LinkCard>
+        <LinkCard to="/learn/knots" icon="🪢" title="How to Tie Knots">Step-by-step pictures for the Improved Clinch, Palomar and Uni knots.</LinkCard>
         <LinkCard to="/fish" icon="📖" title="Fish Guide">How to identify each local fish, when they bite and what to use.</LinkCard>
         <LinkCard to="/learn/safety" icon="⚠️" title="Safety, Advisories & Rules">Fish consumption advisories, cleaning fish safely, licenses and regulations.</LinkCard>
       </div>
